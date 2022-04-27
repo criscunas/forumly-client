@@ -3,6 +3,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useRouter } from 'next/router';
 import { useState } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { v4 as uuidv4 } from "uuid";
 
 
 import {
@@ -57,6 +58,7 @@ export default function MainThreadContent (props) {
         {posts.map((posts, i) => {
           return (
             <Card
+              key={uuidv4()}
               variant="outlined"
               className={threadContentStyles.thread__post}
             >
@@ -78,14 +80,17 @@ export default function MainThreadContent (props) {
                 {posts.content}
               </p>
               <CardContent className={threadContentStyles.thread_post_card}>
-
-              {!username ? <p className = {threadContentStyles.thread__post_timestamp}> {posts.created.slice(11, 19)} </p>  : 
-                posts.username === username ? (
+                {!username ? (
+                  <p className={threadContentStyles.thread__post_timestamp}>
+                    {" "}
+                    {posts.created.slice(11, 19)}{" "}
+                  </p>
+                ) : posts.username === username ? (
                   <div className={threadContentStyles.thread__post_timestamp}>
                     <DeleteIcon
                       onClick={() => {
-                        deleteHandle(posts.id)
-                        refresh()
+                        deleteHandle(posts.id);
+                        refresh();
                       }}
                     />
                     <p> {posts.created.slice(11, 19)}</p>
@@ -96,17 +101,17 @@ export default function MainThreadContent (props) {
                   </p>
                 )}
 
-                {!username ? null :
-                <IconButton
-                  onClick={() => handleExpandClick(i)}
-                  aria-expanded={expandedId === i}
-                  aria-label="show more"
-                >
-                  <ExpandMoreIcon
-                    className={threadContentStyles.thread__post_comment}
-                  />
-                </IconButton>
-                }
+                {!username ? null : (
+                  <IconButton
+                    onClick={() => handleExpandClick(i)}
+                    aria-expanded={expandedId === i}
+                    aria-label="show more"
+                  >
+                    <ExpandMoreIcon
+                      className={threadContentStyles.thread__post_comment}
+                    />
+                  </IconButton>
+                )}
               </CardContent>
             </Card>
           );
