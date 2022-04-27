@@ -51,7 +51,7 @@ export default function LoginPage () {
     } catch (err) {
       console.log(err);
     }
-  }, []);
+  }, [mutateUser]);
 
 
   return (

@@ -34,7 +34,7 @@ export const getServerSideProps = withSessionSsr(
   }
 );
 
-export default function discoverIDPage ({user}) {
+export default function DiscoverIDPage ({user}) {
 
   const [expandedId, setExpandedId] = useState(-1);
 
