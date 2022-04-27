@@ -1,0 +1,16 @@
+.status {
+  // border: 1px solid red;
+  margin: 1rem 0;
+  display: flex;
+  justify-content: center;
+  &__form {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    
+  }
+
+  &__input {
+    background-color: white;
+  }
+}

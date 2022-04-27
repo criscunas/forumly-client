@@ -1,0 +1,96 @@
+@use './mixins.scss' as *;
+@use './variables.scss' as *;
+
+.home {
+  height: 100vh;
+  background-image: url('../public/images/homebg.jpg');
+  background-position: center;
+  background-size: cover;
+  position: relative;
+
+  &__main {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    margin: auto;
+    transform: translateY(-50%);
+    
+    @include tablet {
+      display: flex;
+      justify-content: space-evenly;
+    }
+    
+  }
+
+  &__welcome {
+    margin-top: 2rem;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  &__welcome__header {
+    font-size: 4rem;
+    color: #0798ec;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+  }
+
+  &__welcome__subhead {
+    color: #0798ec;
+    font-weight: 600;
+    font-size: 1.2rem;
+    padding: 1.5rem 1rem 0 1rem;
+  }
+  
+  &__create {
+    margin: 0 1rem;
+    padding: 1.5rem 0;
+    border-radius: 3px;
+    background-color: white;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.5);
+        
+    @include tablet {
+      flex-basis: 75%;
+      max-width: 500px;
+    }
+  }
+
+  &__create__header {
+    text-align: center;
+    padding: 1rem 0rem;
+    color: #0798ec;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+  }
+
+  &__create__form {
+    display: flex;
+    flex-direction: column;
+    padding: 0 1rem;
+    gap: 1rem;
+
+    label {
+      font-size: 1rem;  
+      font-family: 'Asap', sans-serif;
+      font-weight: 500;
+      
+    }
+    
+  }
+
+  &__create__input {
+    display: flex;
+    margin-top: 0.5rem;
+    flex-direction: column;
+    width: 100%;  
+    line-height: 2rem;  
+ 
+  }
+
+}

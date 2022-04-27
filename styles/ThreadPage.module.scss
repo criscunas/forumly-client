@@ -1,0 +1,29 @@
+@use '../styles/mixins.scss'as *;
+@use '../styles/variables.scss'as *;
+
+.mainThread {
+  padding-top: 1rem;
+
+  &__content {
+    margin: 0 1rem;
+    
+    @include tablet {
+      margin: 0 2rem;
+    }
+    
+    @include breakpoint {
+      margin: 0 2.5rem;
+    }
+  }
+
+  &__loading {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+  }
+}

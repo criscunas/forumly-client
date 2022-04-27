@@ -1,0 +1,16 @@
+@use './mixins.scss' as *;
+@use './variables.scss' as *;
+
+.profile {
+  margin: 1rem;
+  max-width: 900px;
+
+  @include tablet {
+    margin: 2rem;
+  }
+
+  @include breakpoint {
+    margin: 2rem auto;  
+  }
+  
+}

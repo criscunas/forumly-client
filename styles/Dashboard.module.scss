@@ -1,0 +1,8 @@
+@use '../styles/mixins.scss'as *;
+@use '../styles/variables.scss'as *;
+
+.dashboard {
+  max-width: 1000px;
+  margin: 0 auto;
+  
+}

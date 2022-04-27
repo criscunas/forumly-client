@@ -1,0 +1,46 @@
+@use '../../../styles/variables.scss'as *;
+@use '../../../styles/mixins.scss'as *;
+
+.feedcard {
+  
+  // margin: 1rem 0.5rem;
+  margin: 1rem 0;
+
+  @include tablet {
+    margin: 1.5rem 0;
+  }
+
+  &__user {
+
+  }
+
+  &__header {
+    padding: 1rem 0 0.5rem 1rem;
+    font-size: 1.2rem;
+  }
+
+  &__post {
+    font-size: 0.9rem;
+    line-height: 1.4rem;
+  }
+
+  &__post_time {
+    padding: 1.5rem 0 0 0;
+    justify-content: flex-end;
+    display: flex;
+    align-items: center;
+
+  }
+
+  &__icons {
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: 1rem;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
