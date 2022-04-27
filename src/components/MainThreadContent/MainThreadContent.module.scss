@@ -1,0 +1,105 @@
+@use '../../../styles/variables.scss'as *;
+@use '../../../styles/mixins.scss'as *;
+
+.initial {
+  
+  margin: 1rem 0;
+
+  @include breakpoint {
+    margin: 1.5rem 0;
+  }
+
+  &__header {
+    padding: 1rem;
+    font-size: 1.3rem;
+    font-weight: bold;
+
+    @include breakpoint {
+      padding: 1rem 1.5rem;
+    }
+  }
+
+  &__description {
+    line-height: 1.5rem;
+
+    padding: 0rem 1rem 1.5rem 1rem;
+
+    @include breakpoint {
+      padding: 0.5rem 1.5rem 2rem 1.5rem;
+    }
+  }
+
+  &__card {
+    margin: 1rem 0;
+    position: relative;
+  }
+
+  &_username {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #264653;
+    padding-top: 1rem;
+  }
+
+  &__timestamp {
+    text-align: right;
+    padding: 1rem;
+  }
+
+  &_icons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+  }
+
+  &-icon {
+    cursor: pointer;
+  }
+}
+
+.thread {
+
+  &__post {
+    margin: 1rem 0;
+
+    @include tablet {
+      margin: 1.5rem 0;
+    }
+  }
+
+  &__post-username {
+    color: #264653;
+    padding: 1rem;
+  }
+
+  &__post_content {
+    padding: 1rem 1.5rem;
+    border-radius: 3px;
+
+    @include breakpoint {
+      padding: 1rem 1.5rem;
+    }
+  }
+
+  &__post_comment {
+    display: flex;
+    flex-direction: row-reverse;
+  }
+
+  &__post_timestamp {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    @include breakpoint {
+      padding-right: 0.5rem;
+    }
+  }
+
+  &__btn {
+    display: inline-flex;
+  }
+
+}

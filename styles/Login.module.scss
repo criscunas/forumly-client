@@ -1,0 +1,52 @@
+@use './mixins.scss'as *;
+@use './variables.scss'as *;
+
+
+.login {
+  
+  
+
+  &__header {
+    padding: 1rem;
+    text-align: center;
+    color: #0798ec;
+    font-size: 1.5rem;
+    font-weight: bold;
+
+    @include tablet {
+      padding: 2rem ;
+    }
+  }
+  &__body {
+    display: flex;
+    margin: 0 auto;
+    background-color: whitesmoke;
+    border-radius: 5px;
+    padding: 2rem;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+    rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+    gap: 1rem;
+    max-width: 300px;
+    // text-align: center;
+    flex-direction: column;
+
+  }
+
+  &__body__input{
+    padding: 0.3rem;
+    border-radius: 3px;
+    border-color: transparent;
+    display: flex;
+    margin-top: 0.5rem;
+    // border-color: none;
+    width: 100%;    
+    // margin: 0 auto;
+    
+  }
+
+  label {
+    font-size: 1.1rem;
+    @include p-text;
+    line-height: 1.7rem;
+  }
+}

@@ -1,0 +1,27 @@
+@use '../../../styles/variables.scss'as *;
+@use '../../../styles/mixins.scss'as *;
+
+.categoryPost {
+
+  background-color: white;
+  
+  &__header {
+    padding: 1rem;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 250px;
+    padding: 1rem;
+    
+    @include tablet {
+      width: 350px;
+      padding: 1rem;
+      
+    }
+  }
+
+
+}

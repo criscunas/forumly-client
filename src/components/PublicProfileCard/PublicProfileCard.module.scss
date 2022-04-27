@@ -1,0 +1,110 @@
+@use '../../../styles/variables.scss'as *;
+@use '../../../styles/mixins.scss'as *;
+
+.public {
+
+  margin: 1rem 0;
+
+
+  &__main {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding-top: 1rem;
+  }
+
+  &__name {
+    padding-top: 1.5rem;
+  }
+
+  &__bio {
+    padding-bottom:1rem ;
+  }
+
+  &__button {
+    padding-top: 1rem;
+  }
+
+  &__content {
+    text-align: center;
+  }
+
+  &__status {
+    margin: 1rem 0 ;  
+  }
+
+  &__status_text {
+    margin-top: 1rem;
+    
+    @include tablet {
+      margin-left: 0.5rem;
+    }
+    
+  }
+
+  &__status_time {
+    text-align: right;
+  }
+
+  &__options {
+    margin: 1rem 0;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  &__options_list {
+    display: flex;
+    flex: 1;
+  }
+
+  &__options_list_item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex: 1;
+    justify-content: center;
+    padding: 1rem 0;
+    cursor: pointer;
+  }
+
+  &__blog {
+    margin: 1rem 0;
+  }
+
+  &__blog_content {
+    padding: 1rem;
+
+    @include tablet {
+      padding: 1.5rem;
+    }
+  }
+
+  &__blog_created {
+    text-align: right;
+    padding: 1rem;
+
+    @include tablet {
+      padding: 1.5rem;
+    }
+  }
+
+  &__loading {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+  }
+
+  &__button {
+      text-align: center;
+      margin-bottom: 1rem;
+  }
+
+  &__button_text {
+    padding-top: 1rem;
+  }
+}

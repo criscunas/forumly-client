@@ -1,0 +1,30 @@
+@use './mixins.scss'as *;
+@use './variables.scss'as *;
+
+.publicProfile {
+  margin: 1rem;
+  
+  @include tablet {
+    margin: 2rem;
+  }
+
+  @include breakpoint {
+    margin: 2.5rem;
+  }
+
+  &__loading {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+  }
+
+  &__container {
+    margin: 0 auto;
+    max-width: 1000px;
+  }
+}

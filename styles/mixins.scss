@@ -1,0 +1,52 @@
+@use "../styles/variables.scss"as *;
+
+@mixin p-text {
+  line-height: 1.175rem;
+  font-weight: 400;
+  font-family: 'Asap', sans-serif;
+  // @include tablet {
+  //     font-size: 0.875rem;
+  //     line-height: 1.375rem;
+  //     font-weight: 400;
+  // }
+}
+
+@mixin h3-text {
+  line-height: 1.125rem;
+  font-weight: 700;
+  font-family: 'Asap',
+  sans-serif;
+  // @include tablet {
+  //     font-size: 0.875rem;
+  //     line-height: 1.375rem;
+  // }
+}
+
+@mixin header-text {
+  line-height: 2rem;
+  font-weight: 600;
+  font-family: 'Asap',
+  sans-serif;
+  // @include tablet {
+  // font-size: 2.063rem;
+  // line-height: 2.75rem;
+  // }
+}
+
+@mixin tablet {
+  @media screen and (min-width: $tablet-size) {
+    @content;
+  }
+}
+
+@mixin breakpoint {
+  @media screen and (min-width: $midpoint-size) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media screen and (min-width: $desktop-size) {
+    @content;
+  }
+}

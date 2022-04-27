@@ -1,0 +1,27 @@
+.postCard {
+  
+  
+  &__form {
+    display: flex;  
+    flex-direction: column;
+    margin: 0 auto;
+    max-width: 750px;
+  }
+
+  &__form_input {
+    flex: 1;
+  }
+
+  &-collapse {
+    padding: 1rem;
+  }
+
+  &__title {
+    padding: 0.5rem;
+    font-size: 1.1rem;
+  }
+}
+
+.Collapsible__contentInner {
+  margin: 1rem;
+}
