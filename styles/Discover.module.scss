@@ -1,0 +1,39 @@
+@use '../styles/mixins.scss' as *;
+@use '../styles/variables.scss' as *;
+
+.discover {
+
+  margin: 0 1rem;
+  padding: 2rem 0;
+
+  @include tablet {
+    margin: 0 2rem;
+    padding: 1.5rem 0;
+  }
+
+  @include breakpoint {
+    margin: 0 2.5rem;
+  }
+
+
+  &__categoryList {
+    margin-top: 1rem;
+    text-align: center;
+    margin: 0 auto;
+    max-width: 900px;
+
+    @include tablet {
+      margin-top: 2rem;
+    }
+  }
+
+  &__categoryList_item {
+    cursor: pointer;
+    padding: 0.5rem 0;
+
+    &:hover {
+      color: #1976d2;
+    }
+  }
+}
+

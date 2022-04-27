@@ -1,0 +1,26 @@
+@use '../styles/mixins.scss'as *;
+@use '../styles/variables.scss'as *;
+
+.userFeed {
+  margin: 0 1rem;
+  
+
+  @include tablet {
+    margin: 0 2rem;
+  }
+
+  @include breakpoint {
+    margin: 0 2.5rem;
+  }
+
+  &__empty {
+    display: flex;
+    justify-content: center;
+    padding-top: 5rem;
+  }
+
+  &__wrapper {
+    margin: 0 auto;
+    max-width: 900px;
+  }
+}

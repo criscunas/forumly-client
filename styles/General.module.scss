@@ -1,0 +1,36 @@
+@use '../styles/mixins.scss'as *;
+@use '../styles/variables.scss'as *;
+
+.general {
+  
+  margin: 0 1rem;
+  max-width: 900px;
+
+  @include tablet {
+    margin: 0 2rem;
+  }
+
+  @include breakpoint {
+    
+    margin: 1rem auto;    
+  }
+
+  &__header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  
+    // padding: 1.5rem 0;
+    padding: 1.5rem 0 1rem 0 ;
+
+    @include tablet {
+      padding: 2rem 0 1rem 0;
+    }
+  }
+
+  &__title {
+    font-size: 2rem;
+    font-weight: 500;
+  }
+
+}
