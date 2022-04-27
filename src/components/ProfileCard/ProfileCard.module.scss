@@ -1,0 +1,54 @@
+@use '../../../styles/variables.scss'as *;
+@use '../../../styles/mixins.scss'as *;
+
+.profilecard {
+
+  margin: 1rem 0;
+  
+  display: flex;
+  flex-direction: column;
+
+  &__avatar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem 0;
+  }
+
+  &__name {
+    padding-top: 1rem;
+    font-size: 1.5rem;
+    cursor: default;
+  }
+
+  &__bio_edit {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0 0.5rem 0.5rem 0;
+    
+  }
+
+  &__bio_text {
+    padding: 1.5rem 0 0.5rem 0;
+    text-align: center;
+    font-size: 0.9rem;
+    line-height: 1.2rem;
+  }
+
+  &__bio_followers {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  &__forms {
+
+    @include tablet { 
+      display: flex;
+      align-items: baseline;
+    }
+    
+    
+  }
+}

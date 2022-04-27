@@ -1,0 +1,179 @@
+@use '../../../styles/variables.scss'as *;
+@use '../../../styles/mixins.scss'as *;
+
+
+.user {
+
+  &__personal {
+    padding: 1rem 0rem;
+
+    @include tablet {
+      padding: 1.3rem 0;
+    }
+  }
+
+  &__personal_list {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 1rem 0;
+    background-color: #1976d2;
+    color: white;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+
+  &__personal_card {
+    margin: 1rem 0rem;
+
+  }
+
+  &__personal_post {
+    padding-left: 1rem;
+    padding-top: 1rem;
+    font-size: 1rem;
+    
+    @include tablet {
+      padding-left: 1.5rem;
+    }
+
+  }
+  &__personal_created {
+    font-size: 11px;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  &__options {
+    display: flex;
+    flex-wrap: wrap;
+    
+  }
+
+  &__options_list{
+    flex: 1;
+    justify-content: center;
+    padding: 0.7rem;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 0.2rem;
+    cursor: pointer; 
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+  }
+
+  &__thread {
+    
+  }
+
+  &__thread_card {
+    margin: 1rem 0rem;
+
+    @include tablet {
+      margin: 1.5rem 0;
+    }
+  }
+
+  &__thread_title {
+    padding: 1rem 1rem 0.5rem 1rem;
+    font-size: 1.3rem;
+    font-weight: bold;
+    cursor: pointer;
+
+    @include tablet {
+      padding: 1.5rem 1.5rem 0.5rem 1.5rem;
+    }
+  }
+
+  &__thread_initial {
+    padding: 1rem;
+    font-size: 1rem;
+
+    @include tablet {
+      padding: 1.5rem 1.5rem 1rem 1.5rem;
+    }
+
+  }
+
+  &__thread_created {
+    text-align: right;
+    padding: 0.5rem;
+
+    @include tablet {
+      padding: 1rem;
+    }
+  }
+
+  &__thread_username {
+    padding: 0 1rem;
+    cursor: pointer;
+
+    @include tablet {
+      padding: 0 1.5rem;
+    }
+  }
+
+  &__follow {
+    margin: 1rem 0rem;
+  }
+
+  &__follow_body {
+    // margin: 0.5rem 0;
+    padding: 1rem;
+  }
+
+  &__follow_user {
+    font-size: 1rem;
+    text-align: center;
+    font-family: "Nunito Sans";
+    font-weight: bold;
+    line-height: 1.3rem;  
+    padding: 1.5rem 1rem 0.5rem 1rem;
+    cursor: pointer;
+  }
+
+  &__follow_bio {
+    padding-top: 1rem;
+    text-align: center;
+  }
+
+  &__blog {
+    margin: 1rem 0;
+  }
+
+  &__blog_title {
+    padding: 1rem;
+    cursor: pointer;
+
+    @include tablet {
+      padding: 1.5rem;
+    }
+  }
+
+  &__blog_content {
+    padding: 1rem;
+
+    @include tablet {
+      padding-left: 1.5rem;
+    }
+  }
+
+  &__blog_created {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    justify-content: flex-end;
+
+    @include tablet {
+      padding: 1.5rem;
+    }
+  }
+
+}

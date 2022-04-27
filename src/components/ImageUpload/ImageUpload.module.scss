@@ -1,0 +1,13 @@
+.imageForm {
+
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 0rem 1rem;
+  max-width: 200px;
+
+  .imageForm__title {
+    padding-bottom: 0.5rem;
+    font-size: 0.9rem;
+  }
+}

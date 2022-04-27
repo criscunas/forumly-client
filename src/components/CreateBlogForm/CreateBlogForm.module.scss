@@ -1,0 +1,29 @@
+.blogCard {
+  
+  margin: 0.5rem 0;
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    max-width: 900px;
+    margin: 0 auto;
+    gap: 1.5rem;
+  }
+
+  &__form_input {
+    flex: 1;
+  }
+
+  &-collapse {
+    padding: 1rem;
+  }
+
+  &__header {
+    padding: 0.5rem;
+    font-size: 1rem;
+  }
+}
+
+.Collapsible__contentInner {
+  margin: 1rem;
+}
