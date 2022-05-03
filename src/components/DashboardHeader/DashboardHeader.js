@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
 import dashHeader from "./DashboardHeader.module.scss";
-import { useState, useEffect } from "react";
 import Link from "next/link";
 import CategoryIcon from "@mui/icons-material/Category";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
@@ -18,10 +17,8 @@ export const DashboardHeader = () => {
   return (
     <>
       {user?.isLoggedIn === true && (
-        <>
           <header className={dashHeader.dashnav}>
-            <nav className={dashHeader.dashnav__container}>
-              <h1 className={dashHeader.dashnav__header}> digi.</h1>
+              <h1 onClick = {() => router.push('/dashboard')} className={dashHeader.dashnav__header}> digi.</h1>
               <ul className={dashHeader.dashnav__list}>
                 <li>
                   <Link
@@ -66,17 +63,13 @@ export const DashboardHeader = () => {
                   <LogoutIcon htmlColor="#1976d2" />
                 </li>
               </ul>
-            </nav>
           </header>
-        </>
       )}
       {user?.isLoggedIn === false && (
-        <>
           <header className={dashHeader.dashnav}>
-            <nav className={dashHeader.dashnav__container}>
               <h1 
               onClick = {() => router.push('/')}
-              className={dashHeader.dashnav__header}> digi.</h1>
+              className={dashHeader.dashnav__header}> digi. </h1>
               <ul className={dashHeader.dashnav__list}>
                 <li>
                   <Link href="/general">
@@ -97,9 +90,7 @@ export const DashboardHeader = () => {
                   </Link>
                 </li>
               </ul>
-            </nav>
           </header>
-        </>
       )}
     </>
   );

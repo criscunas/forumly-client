@@ -4,10 +4,10 @@
 .feedcard {
   
   // margin: 1rem 0.5rem;
-  margin: 1rem 0;
+  margin: 1rem;
 
   @include tablet {
-    margin: 1.5rem 0;
+    margin: 2rem;
   }
 
   &__user {
@@ -38,9 +38,4 @@
     margin-bottom: 1rem;
   }
 
-  &__form {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
 }

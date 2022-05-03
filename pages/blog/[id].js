@@ -8,7 +8,7 @@ import {useEffect, useState} from 'react';
 
 export async function getStaticPaths() {
 
-  const res = await axios.get('http://localhost:7777/blog/all');
+  const res = await axios.get("http://137.184.241.88:3000/blog/all");
   const data = await res.data;
 
   const paths = data.map(posts => {
@@ -28,7 +28,7 @@ export async function getStaticPaths() {
 export async function getStaticProps(context) {
     const { params } = context;
 
-    const res = await fetch(`http://localhost:7777/blog/find/${params.id}`);
+    const res = await fetch(`http://137.184.241.88:3000/blog/find/${params.id}`);
     const blogs = await res.json();
 
     return {

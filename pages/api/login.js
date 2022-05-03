@@ -1,4 +1,3 @@
-import withSession from "../../lib/session";
 import axios from "axios";
 import { sessionOptions } from "../../lib/session";
 
@@ -10,10 +9,10 @@ export default withIronSessionApiRoute(
   
   const {username, hashed_password} = req.body;  
 
-  const data = await axios.post("http://localhost:7777/user/login", {
+  const data = await axios.post("http://137.184.241.88:3000/user/login", {
     username: username,
     hashed_password: hashed_password,
-  })
+  });
 
   const resp = await data.data;
 

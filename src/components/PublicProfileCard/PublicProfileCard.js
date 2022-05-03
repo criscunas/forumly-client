@@ -1,5 +1,5 @@
 import pubCardStyles from './PublicProfileCard.module.scss';
-import { Card, CardContent, CardHeader, Avatar, Button } from "@mui/material";
+import { Card, CardContent, CardHeader, Avatar, Button, CardActions } from "@mui/material";
 import {useState} from 'react';
 import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
 import PersonRemoveIcon from "@mui/icons-material/PersonRemove";
@@ -9,13 +9,10 @@ import { v4 as uuidv4 } from "uuid";
 import {useRouter} from 'next/router';
 
 
-
-
-
 export default function PublicProfileCard(props) {
 
-  const {user , posts, blogs} = props;
-
+  const {user , posts, blogs, followings, unfollowHandle, followHandle} = props;
+  
   const [blog, showBlogs] = useState(true);
   const [status,showStatus] = useState(false)
 
@@ -31,13 +28,70 @@ export default function PublicProfileCard(props) {
     showBlogs(false)
   }
 
+  const renderFollowing =  () => {
+
+    const filterFollowing = followings.following.filter(
+      (o1) => o1.username == user[0].username
+    );
+    
+    const filterFollowers = followings.followers.filter(
+      (o1) => o1.username == user[0].username
+    );
+
+    if (filterFollowing.length === 1 && filterFollowers.length === 1) {
+      return (
+        <div className= {pubCardStyles.public__button}>
+          <Button onClick = {unfollowHandle} variant = "contained"
+          size = "small" >
+            <PersonRemoveIcon />
+          </Button>
+          <p className = {pubCardStyles.public__button_text}> You follow each other ! </p>
+        </div>
+      );
+    }
+
+    if (filterFollowing.length === 1) {
+      return (
+        <div className= {pubCardStyles.public__button}>
+          <Button onClick = {unfollowHandle} variant = "contained" size = "small" >
+            <PersonRemoveIcon/>
+          </Button>
+          <p className = {pubCardStyles.public__button_text}> You follow {user[0].username} </p>
+        </div>
+      );
+    }
+    if (filterFollowers.length === 1) {
+      return (
+        <div className={pubCardStyles.public__button}>
+          <Button onClick={followHandle} variant ="contained" size = "small" >
+            <PersonAddAltIcon />
+          </Button>
+          <p className = {pubCardStyles.public__button_text}> {user[0].username} follows you. </p>
+        </div>
+      );    
+    }
+
+    else {
+      return (
+        <div className={pubCardStyles.public__button}>
+          <Button onClick={followHandle} variant = "contained" size = "small" >
+            <PersonAddAltIcon />
+          </Button>
+        </div>
+      );
+    }
+
+  }
+
+
   const renderStatus = () => {
     return (
       <>
-        {posts.map((post) => {
+        {posts.map((post, i) => {
           return (
             <>
               <Card
+                key = {i}
                 variant="outlined"
                 className={pubCardStyles.public__status}
                 sx={{
@@ -124,6 +178,11 @@ export default function PublicProfileCard(props) {
           <p className={pubCardStyles.public__bio}> {user[0].bio} </p>
           <p> Joined {user[0].created.slice(0, 10)} </p>
         </CardContent>
+        {!followings ? null :
+        <div className = {pubCardStyles.public__actions}>
+            {renderFollowing()}
+        </div>
+        }
       </Card>
 
       <Card

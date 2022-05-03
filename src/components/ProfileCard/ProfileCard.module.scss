@@ -29,10 +29,12 @@
   }
 
   &__bio_text {
-    padding: 1.5rem 0 0.5rem 0;
+    padding: 1.5rem 1rem 1.5rem 1rem;
     text-align: center;
     font-size: 0.9rem;
-    line-height: 1.2rem;
+    line-height: 1.5rem;
+    max-width: 550px;
+    font-weight: 400;
   }
 
   &__bio_followers {
@@ -43,10 +45,13 @@
   }
 
   &__forms {
-
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    
     @include tablet { 
-      display: flex;
-      align-items: baseline;
+      // display: flex;
+      // align-items: flex-end;
     }
     
     

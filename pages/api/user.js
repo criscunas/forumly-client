@@ -1,4 +1,3 @@
-import withSession from '../../lib/session';
 import { sessionOptions } from '../../lib/session';
 import { withIronSessionApiRoute } from "iron-session/next";
 

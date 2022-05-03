@@ -1,19 +1,12 @@
 import discoverStyles from '../styles/Discover.module.scss';
-import {Box, Grid, Paper, styled} from '@material-ui/core';
+import {Box, Grid} from '@material-ui/core';
 import {useRouter} from 'next/router';
-import Link from 'next/link';
 import {v4 as uuidv4} from 'uuid';
 
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-  padding: theme.spacing(1),
-  textAlign: "center",
-  color: theme.palette.text.secondary,
-}));
 
 export async function getStaticProps() {
   
-  const res = await fetch("http://localhost:7777/categories")
+  const res = await fetch("http://137.184.241.88:3000/categories");
   const categories = await res.json();
 
   return {
@@ -31,10 +24,10 @@ export default function Discover ({categories}) {
         <Grid container spacing = {2} rowspacing = {{xs : 2, sm :3}} columnspacing = {{xs : 1, sm: 3}} >
           {categories.map((cat) => {
             return (
-              <Grid item xs = {6} sm = {6} md = {4} lg = {2} key = {uuidv4()} >
-                <Item>
-                  <h2 className={discoverStyles.discover__categoryList_item}  onClick={()=> router.push(`/discover/${cat.id}`)} > {cat.title} </h2>                  
-                </Item>
+              <Grid item xs = {12} sm = {6} md = {4} lg = {2} key = {uuidv4()} >
+                <div className={discoverStyles.discover__categoryList_item} >
+                  <h2 className={discoverStyles.discover__categoryList_title}  onClick={()=> router.push(`/discover/${cat.id}`)} > {cat.title} </h2>                  
+                </div>
               </Grid>
             );
           })}

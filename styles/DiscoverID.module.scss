@@ -3,45 +3,84 @@
 
 .posts {
 
-  margin: 1rem;
-
+  max-width: 1000px;
+  margin: 0 auto;
   @include tablet {
-    margin: 2rem;
+    
   }
 
   &__body {
-    margin: 1rem auto;
+    margin: 1rem;
     border-radius: 3px;
-    max-width: 900px;
-  
+    
     @include tablet {
-      margin: 1.5rem auto;
-  
+      margin: 1.5rem 2rem;
     }
   }
 
   &__header {
     display: flex;
-    max-width: 900px;
-    padding: 1rem 0;
-    margin: 0 auto;
+    margin: 2.5rem 1rem 1rem 1rem;
     align-items: center;
     justify-content: space-between;
+    
+    @include tablet {
+      margin: 3.5rem 2rem 2rem 2rem;
+    }
+  }
+
+  &__subheader {
+    font-weight: 500;
+    margin: 1.5rem 1rem 2rem 1rem;
+    line-height: 1.8rem;
+
+    @include tablet {
+      margin: 1.5rem 2rem 2rem 2rem;
+    }
   }
 
   &__title {
     line-height: 1.5rem;
     font-size: 2rem;
     font-weight: 600;
+    
   }
 
   &__content {
-    padding: 1rem 1rem 2rem 1rem;
-
+    padding: 1rem;
 
     @include tablet {
-      padding: 1rem 1.5rem 1rem 1.5rem;   
-      
+      padding: 1.5rem;
+    }
+  }
+
+  &__content_title {
+    font-weight: bold;
+    font-size: 1.2rem;
+    padding: 0 0 1.5rem 0;
+    
+    @include tablet {
+      font-size: 1.5rem;
+    }
+  }
+
+  &__content_post { 
+    font-size: 0.9rem;
+    @include tablet {
+      font-size: 1.1rem;
+    }
+  }
+
+  &__content_comment {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    padding-left: 1rem;
+    font-size: 0.8rem;
+    display: flex;
+    gap: 0.5rem;
+
+    @include tablet {
+      padding-left: 1.5rem;
     }
   }
 
@@ -49,7 +88,7 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    padding-right: 0.5rem;
+    padding-right: 1rem;
 
     @include tablet {
       padding-right: 1rem;

@@ -1,22 +1,18 @@
-
 import createThreadStyles from './CreateThread.module.scss';
 import Backdrop from "@mui/material/Backdrop";
-import CloseIcon from "@mui/icons-material/Close";
-import { Formik, Form } from "formik";
+import { Form , useFormik} from "formik";
 import {
-  TextField,
-  InputAdornment,
   Box,
   Button,
-  Alert,
-  Snackbar,
   Fade,
   Modal,
   Fab,
+  TextField,
+  InputAdornment
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { useState } from "react";
-import axios from "axios";
+import * as Yup from 'yup';
 
 const style = {
   position: "absolute",
@@ -30,30 +26,34 @@ const style = {
   p: 1.5,
 };
 
-
 export default function CreateThread(props) {
   
   const {handler, refresh} = props;
 
   const [open, setOpen] = useState(false);
-  const [alert, setAlert] = useState(false);  
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const closeAlert = (reason) => {
-    if (reason === "clickaway") {
-      return;
+  const ThreadSchema = Yup.object({
+    thread_subject: Yup.string().required("Subject Required"),
+    initial_post: Yup.string().required("Post Required"),
+  });
+
+
+  const formik = useFormik({
+    validationSchema: ThreadSchema,
+    initialValues: {
+      thread_subject: "",
+      initial_post: "",
+    },
+    onSubmit: (values, { resetForm }) => {
+      handler(values);
+      resetForm();
     }
-    setAlert(false);
-  };
+  });
 
   return (
     <div className={createThreadStyles.createThread}>
-      <Snackbar open={alert} autoHideDuration={3000} onClose={closeAlert}>
-        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
-          Thread Created !
-        </Alert>
-      </Snackbar>
       <Fab
         color="primary"
         aria-label="add"
@@ -77,62 +77,61 @@ export default function CreateThread(props) {
       >
         <Fade in={open}>
           <Box sx={style} className={createThreadStyles.createThread__modal}>
-            <h1 className={createThreadStyles.createThread__header}> Start a discussion</h1>
-
-            <Formik
-              onSubmit={(values, { resetForm }) => {
-                handler(values);
-                refresh();
-                resetForm();
-              }}
-              initialValues={{
-                thread_subject: "",
-                initial_post: "",
-              }}
+            <h1 className={createThreadStyles.createThread__header}>
+              {" "}
+              Start a discussion
+            </h1>
+            <form
+              onSubmit={formik.handleSubmit}
+              className={createThreadStyles.createThread__body}
             >
-              {(props) => (
-                <Form
-                  onSubmit={props.handleSubmit}
-                  className={createThreadStyles.createThread__body}
-                >
-                  <TextField
-                    sx={{ display: "flex" }}
-                    onChange={props.handleChange}
-                    value={props.values.thread_subject}
-                    name="thread_subject"
-                    size="small"
-                    type="text"
-                    label="Subject"
-                    autoComplete="new"
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start"></InputAdornment>
-                      ),
-                    }}
-                  />
-                  <TextField
-                    sx={{ display: "flex" }}
-                    onChange={props.handleChange}
-                    value={props.values.initial_post}
-                    name="initial_post"
-                    size="medium"
-                    type="text"
-                    multiline
-                    rows={6}
-                    autoComplete="new"
-                    label="Post"
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start"></InputAdornment>
-                      ),
-                    }}
-                  />
-                  <Button onClick = {refresh}  size="small" type="submit" variant="contained">
-                    Submit
-                  </Button>
-                </Form>
-              )}
-            </Formik>
+              <TextField
+                sx={{ display: "flex" }}
+                name="thread_subject"
+                type="text"
+                label="Subject"
+                size='small'
+                value={formik.values.thread_subject}
+                onChange={formik.handleChange}
+                error={
+                  formik.touched.thread_subject &&
+                  Boolean(formik.errors.thread_subject)
+                }
+                helperText={
+                  formik.touched.thread_subject && formik.errors.thread_subject
+                }
+                InputProps={{
+                  startAdornment: <InputAdornment position="start" />,
+                }}
+              />
+              <TextField
+                sx={{ display: "flex" }}
+                label="Post"
+                name="initial_post"
+                type="text"
+                multiline
+                value={formik.values.initial_post}
+                onChange={formik.handleChange}
+                error={
+                  formik.touched.initial_post &&
+                  Boolean(formik.errors.initial_post)
+                }
+                helperText={
+                  formik.touched.initial_post && formik.errors.initial_post
+                }
+                InputProps={{
+                  startAdornment: <InputAdornment position="start" />,
+                }}
+              />
+              <Button
+                onClick={refresh}
+                size="medium"
+                type="submit"
+                variant="contained"
+              >
+                Submit
+              </Button>
+            </form>
           </Box>
         </Fade>
       </Modal>

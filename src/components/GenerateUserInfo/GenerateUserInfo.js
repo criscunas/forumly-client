@@ -103,20 +103,20 @@ export default function GenerateUserInfo(props) {
                       />
                     }
                     title={post.title}
-                    onClick = {()=> router.push(`/blog/${post.id}`)}
+                    sx={{ cursor: "pointer" }}
+                    onClick={() => router.push(`/blog/${post.id}`)}
                   />
                   <p className={genUserStyles.user__blog_content}>
                     {post.content}
                   </p>
                   <p className={genUserStyles.user__blog_created}>
                     <DeleteIcon
+                      style={{ cursor: "pointer" }}
                       onClick={() => {
                         deleteHandle(
-                          "http://localhost:7777/blog/delete",
-                          post.id
-                        );
-                        refresh(
-                          `http://localhost:7777/user/${user.user.username}/blogs`
+                          "http://137.184.241.88:3000/blog/delete",
+                          post.id,
+                          `http://137.184.241.88:3000/user/${user.user.username}/blogs`
                         );
                       }}
                     />
@@ -157,13 +157,12 @@ export default function GenerateUserInfo(props) {
                 </h1>
                 <p className={genUserStyles.user__personal_created}>
                   <DeleteIcon
+                  style = {{cursor: "pointer"}}
                     onClick={() => {
                       deleteHandle(
-                        "http://localhost:7777/personal/delete",
-                        posts.id
-                      );
-                      refresh(
-                        `http://localhost:7777/user/${user.user.username}/personals`
+                        "http://137.184.241.88:3000/personal/delete",
+                        posts.id,
+                        `http://137.184.241.88:3000/user/${user.user.username}/personals`
                       );
                     }}
                   />
@@ -198,19 +197,20 @@ export default function GenerateUserInfo(props) {
                       />
                     }
                     title={thread.thread_subject}
+                    sx={{ cursor: "pointer" }}
+                    onClick={() => router.push(`/thread/${thread.id}`)}
                   />
                   <h1 className={genUserStyles.user__thread_initial}>
                     {thread.initial_post}
                   </h1>
                   <p className={genUserStyles.user__thread_created}>
                     <DeleteIcon
+                      style={{ cursor: "pointer" }}
                       onClick={() => {
                         deleteHandle(
-                          "http://localhost:7777/thread/delete",
-                          thread.id
-                        );
-                        refresh(
-                          `http://localhost:7777/user/${user.user.username}/threads`
+                          "http://137.184.241.88:3000/thread/delete",
+                          thread.id,
+                          `http://137.184.241.88:3000/user/${user.user.username}/threads`
                         );
                       }}
                     />
@@ -253,13 +253,12 @@ export default function GenerateUserInfo(props) {
                   </h1>
                   <p className={genUserStyles.user__thread_created}>
                     <DeleteIcon
+                      style={{ cursor: "pointer" }}
                       onClick={() => {
                         deleteHandle(
-                          "http://localhost:7777/post/delete",
-                          post.id
-                        );
-                        refresh(
-                          `http://localhost:7777/user/${user.user.username}/posts`
+                          "http://137.184.241.88:3000/post/delete",
+                          post.id,
+                          `http://137.184.241.88:3000/user/${user.user.username}/posts`
                         );
                       }}
                     />
@@ -281,7 +280,7 @@ export default function GenerateUserInfo(props) {
           <Grid container spacing={2}>
             {userFollowers.map((follower) => {
               return (
-                <Grid key={uuidv4()} item xs={12} sm={6} md={6} lg={2}>
+                <Grid key={uuidv4()} item xs={12} sm={6} md={3}>
                   <li>
                     <Card
                       className={genUserStyles.user__follow_body}
@@ -321,7 +320,7 @@ export default function GenerateUserInfo(props) {
           <Grid container spacing={2}>
             {userFollowing.map((user) => {
               return (
-                <Grid key={uuidv4()} item xs={12} sm={6} md={2}>
+                <Grid key={uuidv4()} item xs={12} sm={6} md={3}>
                   <li>
                     <Card
                       className={genUserStyles.user__follow_body}
@@ -359,36 +358,56 @@ export default function GenerateUserInfo(props) {
         className={genUserStyles.user__options}
         style={{ boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)" }}
       >
-        <li onClick={displayBlogs} className={genUserStyles.user__options_list}>
-          Personal <AccountCircleIcon htmlColor="#1976d2" />
-        </li>
-        <li
-          onClick={displayPersonals}
-          className={genUserStyles.user__options_list}
-        >
-          Status <TextsmsIcon htmlColor="#1976d2" />
-        </li>
-        <li
-          onClick={displayThread}
-          className={genUserStyles.user__options_list}
-        >
-          Threads <ForumIcon htmlColor="#1976d2" />
-        </li>
-        <li onClick={displayPost} className={genUserStyles.user__options_list}>
-          Posts <NoteIcon htmlColor="#1976d2" />
-        </li>
-        <li
-          onClick={displayFollowers}
-          className={genUserStyles.user__options_list}
-        >
-          Followers <GroupIcon htmlColor="#1976d2" />
-        </li>
-        <li
-          onClick={displayFollowing}
-          className={genUserStyles.user__options_list}
-        >
-          Following <FollowTheSignsIcon htmlColor="#1976d2" />
-        </li>
+        <Grid container spacing={1}>
+          <Grid item xs={4} sm={2} onClick={displayBlogs}>
+            <p className={genUserStyles.user__options_list}>
+              Personal
+              <span>
+                <AccountCircleIcon htmlColor="#1976d2" />
+              </span>
+            </p>
+          </Grid>
+          <Grid item xs={4} sm={2} onClick={displayPersonals}>
+            <p className={genUserStyles.user__options_list}>
+              Status
+              <span>
+                <TextsmsIcon htmlColor="#1976d2" />
+              </span>
+            </p>
+          </Grid>
+          <Grid item xs={4} sm={2} onClick={displayThread}>
+            <p className={genUserStyles.user__options_list}>
+              Threads
+              <span>
+                <ForumIcon htmlColor="#1976d2" />
+              </span>
+            </p>
+          </Grid>
+          <Grid item xs={4} sm={2} onClick={displayPost}>
+            <p className={genUserStyles.user__options_list}>
+              Posts
+              <span>
+                <NoteIcon htmlColor="#1976d2" />
+              </span>
+            </p>
+          </Grid>
+          <Grid item xs={4} sm={2} onClick={displayFollowers}>
+            <p className={genUserStyles.user__options_list}>
+              Followers
+              <span>
+                <GroupIcon htmlColor="#1976d2" />
+              </span>
+            </p>
+          </Grid>
+          <Grid item xs={4} sm={2} onClick={displayFollowing}>
+            <p className={genUserStyles.user__options_list}>
+              Following
+              <span>
+                <FollowTheSignsIcon htmlColor="#1976d2" />
+              </span>
+            </p>
+          </Grid>
+        </Grid>
       </Card>
 
       {post ? renderPosts() : null}

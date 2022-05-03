@@ -1,6 +1,7 @@
 import {
   Box,
-  Container
+  Snackbar,
+  SnackbarContent
 } from "@material-ui/core";
 import ProfileCard from '../src/components/ProfileCard/ProfileCard';
 import { CreateStatusForm } from "../src/components/CreateStatusForm/CreateStatusForm";
@@ -11,7 +12,8 @@ import { sessionOptions } from "../lib/session";
 import {withIronSessionSsr} from 'iron-session/next';
 import fetcher from "../lib/fetcher";
 import useSWR, { useSWRConfig} from "swr";
-import useUser from "../lib/useUser";
+import { useState } from "react";
+import CheckIcon from '@mui/icons-material/Check';
 
 export const getServerSideProps = withIronSessionSsr(async function ({
   req,
@@ -42,15 +44,17 @@ sessionOptions);
 
 export default function Profile  ({auth, username}) {
 
-  const {data : user} = useSWR(`http://localhost:7777/user/profile/${username}`, fetcher)
+  const [open, setOpen] = useState(false);
 
-  const {data : personals} = useSWR(`http://localhost:7777/user/${username}/personals`, fetcher)
+  const {data : user} = useSWR(`http://137.184.241.88:3000/user/profile/${username}`, fetcher)
 
-  const {data : posts} =  useSWR(`http://localhost:7777/user/${username}/posts`, fetcher);
+  const {data : personals} = useSWR(`http://137.184.241.88:3000/user/${username}/personals`, fetcher)
 
-  const {data: threads} = useSWR(`http://localhost:7777/user/${username}/threads`, fetcher)
+  const {data : posts} =  useSWR(`http://137.184.241.88:3000/user/${username}/posts`, fetcher);
 
-  const {data: blogs} = useSWR(`http://localhost:7777/user/${username}/blogs`, fetcher)
+  const {data: threads} = useSWR(`http://137.184.241.88:3000/user/${username}/threads`, fetcher)
+
+  const {data: blogs} = useSWR(`http://137.184.241.88:3000/user/${username}/blogs`, fetcher)
 
   const { mutate } = useSWRConfig();
 
@@ -60,11 +64,14 @@ export default function Profile  ({auth, username}) {
 
   const sendImage = (img) => {
     axios
-      .post("http://localhost:7777/user/uploadImage", img, {
+      .post("http://137.184.241.88:3000/user/uploadImage", img, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${auth}`,
         },
+      })
+      .then(() => {
+        mutate(`http://137.184.241.88:3000/user/profile/${username}`)
       })
       .catch((err) => {
         console.log(err);
@@ -73,18 +80,22 @@ export default function Profile  ({auth, username}) {
 
   const createBlogPost = (values) => {
     axios
-      .post("http://localhost:7777/blog/new", values, {
+      .post("http://137.184.241.88:3000/blog/new", values, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${auth}`,
         },
+      })
+      .then(() => {
+        mutate(`http://137.184.241.88:3000/user/${username}/blogs`);
+        setOpen(true)
       })
       .catch((err) => {
         console.log(err);
       });
   }
   
-  const deleteHandle = async (url, id) => {
+  const deleteHandle = async (url, id, mutateUrl) => {
 
     await axios
       .delete(url, {
@@ -96,6 +107,10 @@ export default function Profile  ({auth, username}) {
           id: id,
         },
       })
+      .then(() => {
+        setOpen(true)
+        mutate(mutateUrl)
+      })
       .catch(err => {
         console.log(err)
       })
@@ -104,11 +119,15 @@ export default function Profile  ({auth, username}) {
   const postStatus = (values) => {
     
     axios
-      .post("http://localhost:7777/personal/post", values, {
+      .post("http://137.184.241.88:3000/personal/post", values, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${auth}`,
         },
+      })
+      .then(() => {
+        setOpen(true)
+        mutate(`http://137.184.241.88:3000/user/${username}/personals`)
       })
       .catch((err) => {
         console.log(err);
@@ -118,11 +137,15 @@ export default function Profile  ({auth, username}) {
   const postBio = (values) => {
 
     axios
-    .post("http://localhost:7777/user/bio", values, {
+    .post("http://137.184.241.88:3000/user/bio", values, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${auth}`,
       },
+    })
+    .then(() => {
+      setOpen(true)
+      mutate(`http://137.184.241.88:3000/user/profile/${username}`)
     })
     .catch(err => {
       console.log(err)
@@ -132,42 +155,66 @@ export default function Profile  ({auth, username}) {
 
   const isLoading = user && posts && threads && blogs;
 
+   const handleClose = (event, reason) => {
+     if (reason === "clickaway") {
+      setOpen(false);
+     }
+   };
+
+  const CrudAlert = () => {
+    return (
+      <Box>
+        <Snackbar
+          open={open}
+          autoHideDuration={5000}
+          onClose={handleClose}
+          anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+        >
+          <SnackbarContent 
+          style = {{backgroundColor: "green"}}
+          message = {
+            <p style = {{fontSize: "1rem",display:"flex", justifyContent: "space-between", alignItems:"center", gap:"0.5rem"}} > Success !<span> <CheckIcon/></span></p>
+          } />
+        </Snackbar>
+      </Box>
+    );
+}
+
+
   return (
     <>
       {!isLoading ? (
-        
-          <Box className={profileStyles.profile}>
-            <ProfileCard username={username} />
-          </Box>
-       
+        <Box className={profileStyles.profile}>
+          <ProfileCard username={username} />
+        </Box>
       ) : (
-       
-          <Box className={profileStyles.profile}>
-            <ProfileCard
-              userInfo={user}
-              bioHandle={postBio}
-              username={username}
-              refresh={refresh}
-              imgHandle={sendImage}
-            />
-            <CreateStatusForm
-              handler={postStatus}
-              refresh={refresh}
-              username={username}
-            />
-            <GenerateUserInfo
-              personals={personals}
-              threads={threads}
-              posts={posts}
-              blogs={blogs}
-              userFollowing={user.following}
-              userFollowers={user.followers}
-              deleteHandle={deleteHandle}
-              refresh={refresh}
-              user={user}
-              createBlog={createBlogPost}
-            />
-          </Box>
+        <Box className={profileStyles.profile}>
+          <ProfileCard
+            userInfo={user}
+            bioHandle={postBio}
+            username={username}
+            refresh={refresh}
+            imgHandle={sendImage}
+          />
+          <CreateStatusForm
+            handler={postStatus}
+            refresh={refresh}
+            username={username}
+          />
+          {CrudAlert()}
+          <GenerateUserInfo
+            personals={personals}
+            threads={threads}
+            posts={posts}
+            blogs={blogs}
+            userFollowing={user.following}
+            userFollowers={user.followers}
+            deleteHandle={deleteHandle}
+            refresh={refresh}
+            user={user}
+            createBlog={createBlogPost}
+          />
+        </Box>
       )}
     </>
   );

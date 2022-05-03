@@ -1,6 +1,6 @@
 import profileCardStyles from "./ProfileCard.module.scss";
 import Avatar from "@mui/material/Avatar";
-import { TextField, InputAdornment, Alert, Snackbar, Button, Card } from "@mui/material";
+import { Card } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import {useState} from 'react';
 import EditProfileForms from "../EditProfileForms/EditProfileForms";
@@ -42,7 +42,7 @@ export default function ProfileCard(props) {
         />
           <h2 className={profileCardStyles.profilecard__name}> {username} </h2>
           <h2 className={profileCardStyles.profilecard__bio_text}> {userInfo.user.bio} </h2>
-          <p> Member since {userInfo.user.created.slice(0,10)} </p>
+          <p style = {{fontWeight: "bold"}} > Member since {userInfo.user.created.slice(0,7)} </p>
           <div className = {profileCardStyles.profilecard__forms}>
           {form ? <EditProfileForms handle = {bioHandle} username = {username} refresh = {refresh} /> : null}
           {form ? <ImageUpload handler = {imgHandle} refresh = {refresh} username = {username} /> : null}

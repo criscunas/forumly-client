@@ -3,50 +3,54 @@
 
 
 .login {
-  
-  
+  height: 100vh;
+  background-image: linear-gradient(to bottom, rgba(157, 154, 154, 0.7) 0%, rgba(230, 220, 220, 0.3) 100%),
+  url('../public/images/homebg.jpg');
+  background-position: center;
+  background-size: cover;
 
-  &__header {
-    padding: 1rem;
+
+  &__container {
+    padding: 2rem 1rem;
+    
+  }
+
+  &__form_header {
+    padding-bottom: 2rem;
     text-align: center;
     color: #0798ec;
     font-size: 1.5rem;
     font-weight: bold;
 
     @include tablet {
-      padding: 2rem ;
+      padding-bottom: 3rem;
+      font-size: 1.8rem;
     }
   }
-  &__body {
-    display: flex;
-    margin: 0 auto;
-    background-color: whitesmoke;
-    border-radius: 5px;
-    padding: 2rem;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
-    rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
-    gap: 1rem;
-    max-width: 300px;
-    // text-align: center;
-    flex-direction: column;
 
+  &__form {
+    padding: 3rem 1rem;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+    rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;  
+    text-align: center;
+    max-width: 650px;
+    margin: 0 auto;
   }
 
-  &__body__input{
-    padding: 0.3rem;
-    border-radius: 3px;
-    border-color: transparent;
+  &__form_body {
     display: flex;
-    margin-top: 0.5rem;
-    // border-color: none;
-    width: 100%;    
-    // margin: 0 auto;
-    
+    gap: 1.5rem;
+    flex-direction: column;
   }
 
   label {
-    font-size: 1.1rem;
+    font-size: 1.3rem;
     @include p-text;
-    line-height: 1.7rem;
+  }
+
+  input {
+    margin-top: 1rem;
   }
 }

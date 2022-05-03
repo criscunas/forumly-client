@@ -24,12 +24,11 @@ export const getServerSideProps = withIronSessionSsr(async function ({
     };
   }
 
-  const feed = await axios.get("http://localhost:7777/user/feed", {
-      headers: {
-        Authorization: `Bearer ${user.auth}`,
-      },
-    }
-  );
+  const feed = await axios.get("http://137.184.241.88:3000/user/feed", {
+    headers: {
+      Authorization: `Bearer ${user.auth}`,
+    },
+  });
 
   const feedData = await feed.data
 

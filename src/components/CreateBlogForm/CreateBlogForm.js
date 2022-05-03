@@ -1,21 +1,21 @@
-import { Formik, Form } from "formik";
+import { useFormik} from "formik";
 import {
   Card,
-  TextField,
-  InputAdornment,
   Button,
   Collapse,
-  Snackbar,
-  Alert,
+  TextField
 } from "@mui/material";
 import CreateBlogStyles from "./CreateBlogForm.module.scss";
 import { useState } from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import IconButton from "@mui/material/IconButton";
+import * as Yup from 'yup';
 
-export default function CreatePostForm(props) {
+export default function CreateBlogForm(props) {
+  
   const [open, setOpen] = useState(false);
-  const [alert, setAlert] = useState(false);
+  
+  const { username, handler, refresh } = props;
 
   const [expanded, setExpanded] = useState(false);
 
@@ -30,15 +30,26 @@ export default function CreatePostForm(props) {
     setOpen(false);
   };
 
-  const {username , handler, refresh } = props;
+
+  const BlogSchema = Yup.object({
+    title: Yup.string().required("Title Required"),
+    content: Yup.string().required("Content Required"),
+  });
+
+  const formik = useFormik({
+    validationSchema: BlogSchema,
+    initialValues: {
+      title: "",
+      content: "",
+    },
+    onSubmit: (values, { resetForm }) => {
+      handler(values);
+      resetForm();
+    },
+  });
 
   return (
     <>
-      <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
-          Posted Successfully !
-        </Alert>
-      </Snackbar>
       <Card className={CreateBlogStyles.blogCard}>
         <IconButton
           expand={expanded}
@@ -50,68 +61,45 @@ export default function CreatePostForm(props) {
           <p className={CreateBlogStyles.blogCard__header}> New Blog Post </p>
         </IconButton>
         <Collapse in={expanded} timeout="auto">
-          <div>
-            <Formik
-              onSubmit={(values, { resetForm }) => {
-                handler(values);
-                refresh(`http://localhost:7777/user/${username}/blogs`)
-                resetForm();
+          <form
+            onSubmit={formik.handleSubmit}
+            className={CreateBlogStyles.blogCard__form}
+          >
+            <TextField
+              name="title"
+              label="Title"
+              type="text"
+              size="small"
+              value={formik.values.title}
+              onChange={formik.handleChange}
+              FormHelperTextProps={{ focused: true }}
+              error={formik.touched.title && Boolean(formik.errors.title)}
+              helperText={formik.touched.title && formik.errors.title}
+            />
+            <TextField
+              name="content"
+              type="text"
+              label="Content"
+              multiline
+              value={formik.values.content}
+              onChange={formik.handleChange}
+              error={formik.touched.content && Boolean(formik.errors.content)}
+              helperText={formik.touched.content && formik.errors.content}
+            />
+            <Button
+              style={{
+                margin: "0.5rem 0 0.5rem 0",
+                maxWidth: "100px",
+                backgroundColor: "#60A5FA",
               }}
-              initialValues={{
-                title: "",
-                content: "",
-              }}
+              size="small"
+              type="submit"
+              variant="contained"
+              onClick = {refresh(`http://137.184.241.88:3000/user/${username}/blogs`)}
             >
-              {(props) => (
-                <div>
-                  <Form
-                    style={{ padding: "1rem" }}
-                    onSubmit={props.handleSubmit}
-                    className={CreateBlogStyles.blogCard__form}
-                  >
-                    <TextField
-                      className={CreateBlogStyles.blogCard__form_input}
-                      onChange={props.handleChange}
-                      value={props.values.title}
-                      name="title"
-                      size="small"
-                      type="text"
-                      label="Post"
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start"></InputAdornment>
-                        ),
-                      }}
-                    />
-                    <TextField
-                      className={CreateBlogStyles.blogCard__form_input}
-                      onChange={props.handleChange}
-                      value={props.values.content}
-                      name="content"
-                      size="medium"
-                      type="text"
-                      multiline
-                      rows={5}
-                      label="Post"
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start"></InputAdornment>
-                        ),
-                      }}
-                    />
-                    <Button
-                      style={{ margin: "1rem 0 0.5rem 0", maxWidth: "100px" }}
-                      size="small"
-                      type="submit"
-                      variant="contained"
-                    >
-                      Submit
-                    </Button>
-                  </Form>
-                </div>
-              )}
-            </Formik>
-          </div>
+              Submit
+            </Button>
+          </form>
         </Collapse>
       </Card>
     </>

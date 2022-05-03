@@ -12,7 +12,6 @@ import {useState, useEffect} from 'react';
 import useUser from "../../lib/useUser";
 
 
-
 export const getServerSideProps = withSessionSsr(
   async function getServerSideProps({ req }) {
     const user = req.session.user;
@@ -39,10 +38,10 @@ export default function ThreadPage ({user}) {
   const { id } = router.query;
 
   const { mutate } = useSWRConfig();
-  const {data, error} = useSWR(`http://localhost:7777/thread/${id}`, fetcher)
+  const {data, error} = useSWR(`http://137.184.241.88:3000/thread/${id}`, fetcher)
 
-  const refresh = () => {
-    mutate(`http://localhost:7777/thread/${id}`)
+  const refresh = (url) => {
+    mutate(url)
   }
 
   const isLoading = data;
@@ -53,24 +52,24 @@ export default function ThreadPage ({user}) {
       thread_id: id
     }
     axios
-      .post("http://localhost:7777/post/create", obj, {
+      .post("http://137.184.241.88:3000/post/create", obj, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${user.auth}`,
         },
       })
-      .then(()=> {
-        console.log('works')
+      .then(() => {
+        mutate(`http://137.184.241.88:3000/thread/${id}`);
       })
-      .catch(err => {
-        console.log(err)
-      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
 
   const deletePost = (id) => {
     axios
-      .delete("http://localhost:7777/post/delete", {
+      .delete("http://137.184.241.88:3000/post/delete", {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${user.auth}`,
@@ -80,7 +79,7 @@ export default function ThreadPage ({user}) {
         },
       })
       .then(() => {
-        console.log('works')
+        mutate(`http://137.184.241.88:3000/thread/${id}`);
       })
       .catch((error) => {
         console.log(error);
@@ -91,26 +90,28 @@ export default function ThreadPage ({user}) {
   if(user.isLoggedIn) {
     return (
       <>
-      {!isLoading ? (
-        <p className={ThreadPageStyles.mainThread__loading}>
-          {" "}
-          <CircularProgress />{" "}
-        </p>
-      ) : (
-        <Container className={ThreadPageStyles.mainThread}>
-          <Box className={ThreadPageStyles.mainThread__content}>
-            <MainThreadContent
-              main={data}
-              username={user.username}
-              deleteHandle={deletePost}
-              refresh={refresh}
-            />
-            <CreatePostForm handler={createPost} refresh={refresh} />
-          </Box>
-        </Container>
-      )}
-    </>
-  )}
+        {!isLoading ? (
+          <p className={ThreadPageStyles.mainThread__loading}>
+            {" "}
+            <CircularProgress />{" "}
+          </p>
+        ) : (
+          <Container className={ThreadPageStyles.mainThread}>
+            <Box className={ThreadPageStyles.mainThread__content}>
+              <MainThreadContent
+                main={data}
+                username={user.username}
+                deleteHandle={deletePost}
+                refresh={refresh}
+              />
+              <div>
+                <CreatePostForm handler={createPost} />
+              </div>
+            </Box>
+          </Container>
+        )}
+      </>
+    );}
 
 
   if(!user.isLoggedIn) {

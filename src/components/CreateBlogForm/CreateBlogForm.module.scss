@@ -7,11 +7,8 @@
     flex-direction: column;
     max-width: 900px;
     margin: 0 auto;
-    gap: 1.5rem;
-  }
-
-  &__form_input {
-    flex: 1;
+    padding: 1rem;
+    gap: 1rem;
   }
 
   &-collapse {

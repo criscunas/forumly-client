@@ -12,14 +12,17 @@ import createPostStyles from "./CreatePostForm.module.scss";
 import { useState } from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import IconButton from "@mui/material/IconButton";
+import * as Yup from 'yup';
+
+
 
 export default function CreatePostForm(props) {
   
-  const {handler, refresh} = props;
+  const {handler} = props;
 
   const [open, setOpen] = useState(false);
-  const [alert, setAlert] = useState(false);
   const [expanded, setExpanded] = useState(false);
+
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -32,14 +35,12 @@ export default function CreatePostForm(props) {
     setOpen(false);
   };
 
+  const PostSchema = Yup.object({
+    content: Yup.string().required('Post required')
+  })
 
   return (
     <>
-      <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
-          Posted Successfully !
-        </Alert>
-      </Snackbar>
       <Card className={createPostStyles.postCard}>
         <IconButton
           expand={expanded}
@@ -53,10 +54,10 @@ export default function CreatePostForm(props) {
         <Collapse in={expanded} timeout="auto">
           <div>
             <Formik
+              validationSchema={PostSchema}
               onSubmit={(values, { resetForm }) => {
-                handler(values);
+                handler(values)
                 resetForm();
-                refresh();
               }}
               initialValues={{
                 content: "",
@@ -79,6 +80,10 @@ export default function CreatePostForm(props) {
                       multiline
                       rows={4}
                       label="Post"
+                      error={
+                        props.touched.content && Boolean(props.errors.content)
+                      }
+                      helperText={props.touched.content && props.errors.content}
                       InputProps={{
                         startAdornment: (
                           <InputAdornment position="start"></InputAdornment>

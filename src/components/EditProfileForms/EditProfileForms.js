@@ -1,69 +1,59 @@
-import { Formik, Form } from "formik";
-import { useState } from "react";
+import { useFormik} from "formik";
 import editProfStyles from "./EditProfileForms.module.scss";
 import {
-  TextField,
   InputAdornment,
-  Button,
-  Alert,
-  Snackbar,
+  Button, 
+  TextField
 } from "@mui/material";
+import * as Yup from 'yup';
 
 
 export default function EditProfileForms(props) {
 
   const {handle, username, refresh } = props;
 
-  const alertNotif = () => {
-    setAlert(true);
-  };
+  const BioSchema = Yup.object({
+    bio: Yup.string().required("Bio Required"),
+  });
 
+
+  const formik = useFormik({
+    validationSchema : BioSchema,
+    initialValues: {
+      bio: "",
+    },
+    onSubmit : (values, { resetForm }) => {
+      handle(values);
+      refresh(`http://137.184.241.88:3000/user/profile/${username}`);
+      resetForm();
+    }
+  });
 
   return (
     <div className={editProfStyles.edit}>
-      <Formik
-        onSubmit={(values, { resetForm }) => {
-          handle(values);
-          refresh(`http://localhost:7777/user/profile/${username}`)
-          resetForm();
-        }}
-        initialValues={{
-          bio: "",
-        }}
-      >
-        {(props) => (
-          <div className={editProfStyles.edit__form}>
-            <Form onSubmit={props.handleSubmit} className={editProfStyles.edit__form_body}>
-              <TextField
-                onChange={props.handleChange}
-                value={props.values.bio}
-                name="bio"
-                type="text"
-                size="small"
-                label="Biography"
-                multiline
-                rows={5}
-                autoComplete="new"
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start"></InputAdornment>
-                  ),
-                }}
-              />
-              <Button
-                className={editProfStyles.edit__form_button}
-                type="submit"
-                variant="contained"
-                onClick = {() => {
-                  refresh(`http://localhost:7777/user/profile/${username}`)
-                }}
-              >
-                Submit
-              </Button>
-            </Form>
-          </div>
-        )}
-      </Formik>
+      <form onSubmit={formik.handleSubmit}>
+        <div className={editProfStyles.edit__form}>
+          <TextField
+            name="bio"
+            type="text"
+            placeholder="Edit Bio"
+            multiline
+            size="small"
+            value={formik.values.bio}
+            onChange={formik.handleChange}
+            error={formik.touched.bio && Boolean(formik.errors.bio)}
+            helperText={formik.touched.bio && formik.errors.bio}
+          />
+          <Button
+            className={editProfStyles.edit__form_button}
+            type="submit"
+            htmlColor="#60A5FA"
+            variant="contained"
+          >
+            Submit
+          </Button>
+        </div>
+      </form>
     </div>
   );
 }

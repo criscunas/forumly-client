@@ -22,7 +22,7 @@ export default function ImageUpload(props) {
       .then((response) => {
         const img = { img_path: response.data.secure_url };
         handler(img);
-        refresh(`http://localhost:7777/user/profile/${username}`);
+        refresh(`http://137.184.241.88:3000/user/profile/${username}`);
         setImageSelected("");
       });
   };
@@ -38,7 +38,6 @@ export default function ImageUpload(props) {
         onChange={(event) => {
           setImageSelected(event.target.files[0]);
         }}
-        
       />
 
         <Button variant="contained" onClick={UploadImage}>

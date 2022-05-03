@@ -3,69 +3,66 @@
 
 .home {
   height: 100vh;
-  background-image: url('../public/images/homebg.jpg');
+  background-image: linear-gradient(to bottom, rgba(157, 154, 154, 0.7) 0%, rgba(230, 220, 220, 0.3) 100%),
+  url('../public/images/homebg.jpg');
   background-position: center;
   background-size: cover;
   position: relative;
 
-  &__main {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    right: 0;
-    margin: auto;
-    transform: translateY(-50%);
-    
-    @include tablet {
-      display: flex;
-      justify-content: space-evenly;
-    }
-    
-  }
 
-  &__welcome {
-    margin-top: 2rem;
-    
+
+  &__hero {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    text-align: center;
-    margin-bottom: 2rem;
+    align-items: center;
+    padding: 4rem 1rem;
   }
 
-  &__welcome__header {
+  &__hero_header {
     font-size: 4rem;
-    color: #0798ec;
+    padding-bottom: 3rem;
+    
     font-weight: 500;
-    margin-bottom: 1.5rem;
+    
   }
 
-  &__welcome__subhead {
-    color: #0798ec;
+  &__hero_subhead {
+    
     font-weight: 600;
-    font-size: 1.2rem;
-    padding: 1.5rem 1rem 0 1rem;
+    font-size: 1.4rem;
+  }
+
+  &__hero_footer {
+    font-weight: 600;
+    font-size: 1rem;
+    margin-top: 1.5rem;
   }
   
-  &__create {
+
+
+
+  
+  &__form {
     margin: 0 1rem;
-    padding: 1.5rem 0;
+    padding: 2rem 1rem;
     border-radius: 3px;
     background-color: white;
     box-shadow: 0 3px 10px rgb(0 0 0 / 0.5);
-        
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
     @include tablet {
-      flex-basis: 75%;
-      max-width: 500px;
+      margin: 0 auto;
+      max-width: 600px;
     }
   }
 
-  &__create__header {
+  &__form_header {
     text-align: center;
-    padding: 1rem 0rem;
-    color: #0798ec;
+    padding-bottom: 1rem;
+    color: #031424;
     font-size: 1.5rem;
-    margin-bottom: 1rem;
     font-weight: bold;
   }
 
@@ -84,13 +81,6 @@
     
   }
 
-  &__create__input {
-    display: flex;
-    margin-top: 0.5rem;
-    flex-direction: column;
-    width: 100%;  
-    line-height: 2rem;  
- 
-  }
+
 
 }

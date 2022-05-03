@@ -1,35 +1,27 @@
 import loginStyles from "../styles/Login.module.scss";
-import { Formik, Form } from "formik";
-import {useRouter} from 'next/router';
-
-import useUser from '../lib/useUser';
-import fetchJson from '../lib/fetchJson';
+import { Formik, Form, useFormik } from "formik";
+import { useRouter } from "next/router";
+import useUser from "../lib/useUser";
+import fetchJson from "../lib/fetchJson";
 import { useEffect } from "react";
 import * as Yup from "yup";
-import {
-  Button,
-  Box
-} from "@material-ui/core";
-import { TextField } from "../src/components/TextField";
+import { Button, Box, TextField } from "@material-ui/core";
 
 const LogInSchema = Yup.object({
-  username: Yup.string().required('Username Required'),
+  username: Yup.string().required("Username Required"),
   password: Yup.string().required("Password Required"),
 });
 
-export default function LoginPage () {
-  
-  
-  const {mutateUser} = useUser({
-    redirectTo: "/dashboard" ,
-    redirectIfFound: true ,
+export default function LoginPage() {
+  const { mutateUser } = useUser({
+    redirectTo: "/dashboard",
+    redirectIfFound: true,
   });
 
   async function logIn(values) {
-    
     const body = {
       username: values.username,
-      hashed_password: values.password ,
+      hashed_password: values.password,
     };
 
     try {
@@ -53,43 +45,63 @@ export default function LoginPage () {
     }
   }, [mutateUser]);
 
+  const LogInSchema = Yup.object({
+    username: Yup.string().required("Username Required"),
+    password: Yup.string().required("Password Required"),
+  });
+
+  const formik = useFormik({
+    validationSchema: LogInSchema,
+    initialValues: {
+      username: "",
+      password: "",
+    },
+    onSubmit: (values, { resetForm }) => {
+      logIn(values);
+      resetForm();
+    },
+  });
 
   return (
-    <Box>
-      <Formik
-      validationSchema={LogInSchema}
-        onSubmit={async (values, { resetForm }) => {
-          logIn(values);
-          resetForm();
-        }}
-        initialValues={{
-          username: "",
-          password: "",
-        }}
-      >
-        {() => (
-          <div className={loginStyles.login}>
-            <h1 className={loginStyles.login__header}> Welcome Back</h1>
-            <Form className={loginStyles.login__body}>
-              <TextField
-                className={loginStyles.login__body__input}
-                label="Username"
-                name="username"
-                type="text"
-                />
-              <TextField
-                className={loginStyles.login__body__input}
-                label="Password"
-                name="password"
-                type="password"
-                />
-              <Button type="submit" size = "small" variant="contained" style = {{backgroundColor : "#0798ec", color : "white"}}>
-                Submit
-              </Button>
-            </Form>
+    <Box className={loginStyles.login}>
+      <div className= {loginStyles.login__container} >
+        <form
+          onSubmit={formik.handleSubmit}
+          className={loginStyles.login__form}
+        >
+          <h1 className={loginStyles.login__form_header}> Welcome Back</h1>
+          <div className={loginStyles.login__form_body}>
+            <TextField
+              className={loginStyles.login__form_input}
+              label="Username"
+              name="username"
+              type="text"
+              value={formik.values.username}
+              onChange={formik.handleChange}
+              error={formik.touched.username && Boolean(formik.errors.username)}
+              helperText={formik.touched.username && formik.errors.username}
+            />
+            <TextField
+              className={loginStyles.login__form_input}
+              label="Password"
+              name="password"
+              type="password"
+              value={formik.values.password}
+              onChange={formik.handleChange}
+              error={formik.touched.password && Boolean(formik.errors.password)}
+              helperText={formik.touched.password && formik.errors.password}
+            />
+            <Button
+              type="submit"
+              size="medium"
+              variant="contained"
+              style={{ backgroundColor: "#0798ec", color: "white" }}
+            >
+              Submit
+            </Button>
           </div>
-        )}
-      </Formik>
+        </form>
+      </div>
     </Box>
   );
-} 
+}
