@@ -20,7 +20,6 @@
     "mysql2": "^2.3.3",
     "next": "12.1.5",
     "next-auth": "^4.3.3",
-    "next-iron-session": "^4.2.0",
     "react": "18.0.0",
     "react-dom": "18.0.0",
     "sass": "^1.50.0",
