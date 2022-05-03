@@ -22,9 +22,8 @@ export default function GenerateThreads(props) {
       <ul>
         {threads.map((data) => {
           return (
-            <li>
+            <li key={uuidv4()}>
               <Card
-                key={uuidv4()}
                 className={threadStyles.feedcard}
                 variant="outlined"
                 sx={{ boxShadow: "0 3px 10px rgb(0 0 0 / 0.2)" }}
@@ -34,8 +33,8 @@ export default function GenerateThreads(props) {
                     router.push(`/user/${data.username}`);
                   }}
                   title={data.username}
-                  titleTypographyProps={{variant: "h6"}}
-                  subheader = {data.created.slice(0,10)}
+                  titleTypographyProps={{ variant: "h6" }}
+                  subheader={data.created.slice(0, 10)}
                   style={{ cursor: "pointer" }}
                   avatar={
                     <Avatar

@@ -25,7 +25,7 @@ export default function Layout ({children}) {
 
   useEffect(() => {
     checkForUser();
-  }, [signedIn]);
+  });
 
   return (
     <div>
