@@ -91,7 +91,7 @@ export default function PublicProfileCard(props) {
           return (
             <>
               <Card
-                key = {i}
+                key={i}
                 variant="outlined"
                 className={pubCardStyles.public__status}
                 sx={{
@@ -100,6 +100,7 @@ export default function PublicProfileCard(props) {
               >
                 <CardHeader
                   title={user[0].username}
+                  titleTypographyProps={{ variant: "h6" }}
                   avatar={
                     <Avatar
                       alt="user-img"
@@ -141,11 +142,18 @@ export default function PublicProfileCard(props) {
                         sx={{ width: 46, height: 46 }}
                       />
                     }
-                    title={post.title}
-                    onClick={() => router.push(`/blog/${post.id}`)}
+                    title={user[0].username}
+                    titleTypographyProps={{ variant: "h6" }}
                   />
-                  <p className={pubCardStyles.public__blog_content}>
-                    {post.content}
+
+                  <h1 className={pubCardStyles.public__blog_content_title}>
+                    {post.title}
+                  </h1>
+                  <p
+                    onClick={() => router.push(`/blog/${post.id}`)}
+                    className={pubCardStyles.public__blog_content}
+                  >
+                    {post.content.slice(0, 350)}...
                   </p>
                   <p className={pubCardStyles.public__blog_created}>
                     {post.created.slice(0, 10)}
