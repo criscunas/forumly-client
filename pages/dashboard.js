@@ -2,7 +2,12 @@ import GenerateNewsFeed from '../src/components/GenerateNewsFeed/GenerateNewsFee
 import dashboardStyles from '../styles/Dashboard.module.scss';
 import {Container, Box} from '@material-ui/core';
 
+
+
 export async function getStaticProps() {
+
+  const url = process.env.URL;
+  
   const res = await fetch("http://137.184.241.88:3000/newsfeed");
   const data = await res.json();
 

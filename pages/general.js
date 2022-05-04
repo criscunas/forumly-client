@@ -14,9 +14,11 @@ export const getServerSideProps = withIronSessionSsr(async function ({
   req,
   res,
 }) {
-  const user = req.session.user;
 
-  const data = await fetcher("http://137.184.241.88:3000/thread/all");
+  const user = req.session.user;
+  const url = process.env.URL;
+
+  const data = await fetcher(`${url}/thread/all`);
 
   if (user === undefined) {
     return {
@@ -38,9 +40,10 @@ sessionOptions);
 export default function General({ fallbackData, auth }) {
   
   const [open,setOpen] = useState(false)
+  const url = process.env.URL;
 
   const { mutate } = useSWRConfig();
-  const { data } = useSwr("http://137.184.241.88:3000/thread/all", fetcher, {
+  const { data } = useSwr(`${url}/thread/all`, fetcher, {
     fallbackData,
   });
 
@@ -98,12 +101,12 @@ export default function General({ fallbackData, auth }) {
     };
 
     axios
-      .post("http://137.184.241.88:3000/thread/create", values, {
+      .post(`${url}/thread/create`, values, {
         headers: headers,
       })
       .then(() => {
         setOpen(true)
-        mutate("http://137.184.241.88:3000/thread/all");
+        mutate(`${url}/thread/all`)
       })
       .catch((err) => {
         console.log(err);

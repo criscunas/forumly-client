@@ -36,12 +36,13 @@ export default function ThreadPage ({user}) {
   
   const router = useRouter();
   const { id } = router.query;
+  const url = process.env.URL;
 
   const { mutate } = useSWRConfig();
-  const {data, error} = useSWR(`http://137.184.241.88:3000/thread/${id}`, fetcher)
+  const {data, error} = useSWR(`${url}/thread/${id}`, fetcher)
 
-  const refresh = (url) => {
-    mutate(url)
+  const refresh = (link) => {
+    mutate(link)
   }
 
   const isLoading = data;
@@ -52,14 +53,14 @@ export default function ThreadPage ({user}) {
       thread_id: id
     }
     axios
-      .post("http://137.184.241.88:3000/post/create", obj, {
+      .post(`${url}/post/create`, obj, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${user.auth}`,
         },
       })
       .then(() => {
-        mutate(`http://137.184.241.88:3000/thread/${id}`);
+        mutate(`${url}/thread/${id}`);
       })
       .catch((err) => {
         console.log(err);
@@ -69,7 +70,7 @@ export default function ThreadPage ({user}) {
 
   const deletePost = (id) => {
     axios
-      .delete("http://137.184.241.88:3000/post/delete", {
+      .delete(`${url}/post/delete`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${user.auth}`,
@@ -79,7 +80,7 @@ export default function ThreadPage ({user}) {
         },
       })
       .then(() => {
-        mutate(`http://137.184.241.88:3000/thread/${id}`);
+        mutate(`${url}/thread/${id}`);
       })
       .catch((error) => {
         console.log(error);

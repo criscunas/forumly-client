@@ -23,6 +23,8 @@ export default function GenerateUserInfo(props) {
 
   const router = useRouter();
 
+  const url = process.env.URL;
+
   const [thread, showThread] = useState(false);
   const [post, showPost] = useState(false);
   const [follower, showFollower] = useState(false);
@@ -114,9 +116,9 @@ export default function GenerateUserInfo(props) {
                       style={{ cursor: "pointer" }}
                       onClick={() => {
                         deleteHandle(
-                          "http://137.184.241.88:3000/blog/delete",
+                          `${url}/blog/delete`,
                           post.id,
-                          `http://137.184.241.88:3000/user/${user.user.username}/blogs`
+                          `${url}/user/${user.user.username}/blogs`
                         );
                       }}
                     />
@@ -160,9 +162,9 @@ export default function GenerateUserInfo(props) {
                   style = {{cursor: "pointer"}}
                     onClick={() => {
                       deleteHandle(
-                        "http://137.184.241.88:3000/personal/delete",
+                        `${url}/personal/delete`,
                         posts.id,
-                        `http://137.184.241.88:3000/user/${user.user.username}/personals`
+                        `${url}/user/${user.user.username}/personals`
                       );
                     }}
                   />
@@ -208,9 +210,9 @@ export default function GenerateUserInfo(props) {
                       style={{ cursor: "pointer" }}
                       onClick={() => {
                         deleteHandle(
-                          "http://137.184.241.88:3000/thread/delete",
+                          `${url}/thread/delete`,
                           thread.id,
-                          `http://137.184.241.88:3000/user/${user.user.username}/threads`
+                          `${url}/user/${user.user.username}/threads`
                         );
                       }}
                     />
@@ -256,9 +258,9 @@ export default function GenerateUserInfo(props) {
                       style={{ cursor: "pointer" }}
                       onClick={() => {
                         deleteHandle(
-                          "http://137.184.241.88:3000/post/delete",
+                          `${url}/post/delete`,
                           post.id,
-                          `http://137.184.241.88:3000/user/${user.user.username}/posts`
+                          `${url}/user/${user.user.username}/posts`
                         );
                       }}
                     />

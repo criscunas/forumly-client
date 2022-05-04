@@ -1,5 +1,5 @@
 import pubProfileStyles from "../../styles/PublicProfile.module.scss";
-import { Box, Container, Paper, Button, TextField } from "@material-ui/core";
+import { Box, Container} from "@material-ui/core";
 import PublicProfileCard from "../../src/components/PublicProfileCard/PublicProfileCard";
 import axios from "axios";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -41,15 +41,17 @@ export const getServerSideProps = withIronSessionSsr(async function ({
 sessionOptions);
 
 export default function PublicProfile({ user }) {
+  
   const router = useRouter();
   const { username } = router.query;
+  const link = process.env.URL;
 
   const { data: profile } = useSWR(
-    `http://137.184.241.88:3000/user/public/${username}`,
+    `${link}/user/public/${username}`,
     fetcher
   );
   const { data: relations } = useSWR(
-    ["http://137.184.241.88:3000/follow/get", user.auth],
+    [`${link}/follow/get`, user.auth],
     fetchFollow
   );
 
@@ -60,7 +62,7 @@ export default function PublicProfile({ user }) {
   const followUser = () => {
     axios
       .post(
-        "http://137.184.241.88:3000/follow",
+        `${link}/follow`,
         { id: profile.user[0].user_id },
         {
           headers: {
@@ -69,8 +71,7 @@ export default function PublicProfile({ user }) {
         }
       )
       .then(() => {
-        console.log("followed");
-        mutate(["http://137.184.241.88:3000/follow/get", user.auth]);
+        mutate([`${link}/follow/get`, user.auth]);
       })
       .catch((error) => {
         console.log(error);
@@ -79,7 +80,7 @@ export default function PublicProfile({ user }) {
 
   const unfollowUser = () => {
     axios
-      .delete("http://137.184.241.88:3000/follow/unfollow", {
+      .delete(`${link}/follow/unfollow`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${user.auth}`,
@@ -89,7 +90,7 @@ export default function PublicProfile({ user }) {
         },
       })
       .then(() => {
-        mutate(["http://137.184.241.88:3000/follow/get", user.auth]);
+        mutate([`${link}/follow/get`, user.auth]);
       })
       .catch((err) => {
         console.log(err);

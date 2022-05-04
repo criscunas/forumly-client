@@ -45,10 +45,12 @@ export default function DiscoverIDPage({ user }) {
   const [open,setOpen] = useState(false)
   const router = useRouter();
   const { id } = router.query;
+  const url = process.env.URL;
+
 
   const { mutate } = useSWRConfig();
   const { data } = useSWR(
-    `http://137.184.241.88:3000/categories/${id}`,
+    `${url}/categories/${id}`,
     fetcher
   );
   const isLoading = data;
@@ -102,7 +104,7 @@ export default function DiscoverIDPage({ user }) {
     };
 
     axios
-      .post("http://137.184.241.88:3000/categories/createPost", obj, {
+      .post(`${url}/categories/createPost`, obj, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${user.auth}`,
@@ -110,7 +112,7 @@ export default function DiscoverIDPage({ user }) {
       })
       .then(() => {
         setOpen(true);
-        mutate(`http://137.184.241.88:3000/categories/${id}`);
+        mutate(`${url}/categories/${id}`);
       })
       .catch((error) => {
         console.log(error);
@@ -119,7 +121,7 @@ export default function DiscoverIDPage({ user }) {
 
   const deletePost = (post_id) => {
     axios
-      .delete("http://137.184.241.88:3000/categories/deletePost", {
+      .delete(`${url}/categories/deletePost`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${user.auth}`,
@@ -130,7 +132,7 @@ export default function DiscoverIDPage({ user }) {
       })
       .then(() => {
         setOpen(true)
-        mutate(`http://137.184.241.88:3000/categories/${id}`);
+        mutate(`${url}/categories/${id}`);
         
       })
       .catch((error) => {

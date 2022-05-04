@@ -7,10 +7,6 @@ import { useEffect } from "react";
 import * as Yup from "yup";
 import { Button, Box, TextField } from "@material-ui/core";
 
-const LogInSchema = Yup.object({
-  username: Yup.string().required("Username Required"),
-  password: Yup.string().required("Password Required"),
-});
 
 export default function LoginPage() {
   const { mutateUser } = useUser({

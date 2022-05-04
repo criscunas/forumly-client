@@ -45,16 +45,17 @@ sessionOptions);
 export default function Profile  ({auth, username}) {
 
   const [open, setOpen] = useState(false);
+  const url = process.env.URL;
 
-  const {data : user} = useSWR(`http://137.184.241.88:3000/user/profile/${username}`, fetcher)
+  const {data : user} = useSWR(`${url}/user/profile/${username}`, fetcher)
 
-  const {data : personals} = useSWR(`http://137.184.241.88:3000/user/${username}/personals`, fetcher)
+  const {data : personals} = useSWR(`${url}/user/${username}/personals`, fetcher)
 
-  const {data : posts} =  useSWR(`http://137.184.241.88:3000/user/${username}/posts`, fetcher);
+  const {data : posts} =  useSWR(`${url}/user/${username}/posts`, fetcher);
 
-  const {data: threads} = useSWR(`http://137.184.241.88:3000/user/${username}/threads`, fetcher)
+  const {data: threads} = useSWR(`${url}/user/${username}/threads`, fetcher)
 
-  const {data: blogs} = useSWR(`http://137.184.241.88:3000/user/${username}/blogs`, fetcher)
+  const {data: blogs} = useSWR(`${url}/user/${username}/blogs`, fetcher)
 
   const { mutate } = useSWRConfig();
 
@@ -64,14 +65,14 @@ export default function Profile  ({auth, username}) {
 
   const sendImage = (img) => {
     axios
-      .post("http://137.184.241.88:3000/user/uploadImage", img, {
+      .post(`${url}/user/uploadImage`, img, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${auth}`,
         },
       })
       .then(() => {
-        mutate(`http://137.184.241.88:3000/user/profile/${username}`)
+        mutate(`${url}/user/profile/${username}`)
       })
       .catch((err) => {
         console.log(err);
@@ -80,14 +81,14 @@ export default function Profile  ({auth, username}) {
 
   const createBlogPost = (values) => {
     axios
-      .post("http://137.184.241.88:3000/blog/new", values, {
+      .post(`${url}/blog/new`, values, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${auth}`,
         },
       })
       .then(() => {
-        mutate(`http://137.184.241.88:3000/user/${username}/blogs`);
+        mutate(`${url}/user/${username}/blogs`);
         setOpen(true)
       })
       .catch((err) => {
@@ -119,7 +120,7 @@ export default function Profile  ({auth, username}) {
   const postStatus = (values) => {
     
     axios
-      .post("http://137.184.241.88:3000/personal/post", values, {
+      .post(`${url}/personal/post`, values, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${auth}`,
@@ -127,7 +128,7 @@ export default function Profile  ({auth, username}) {
       })
       .then(() => {
         setOpen(true)
-        mutate(`http://137.184.241.88:3000/user/${username}/personals`)
+        mutate(`${url}/user/${username}/personals`)
       })
       .catch((err) => {
         console.log(err);
@@ -137,7 +138,7 @@ export default function Profile  ({auth, username}) {
   const postBio = (values) => {
 
     axios
-    .post("http://137.184.241.88:3000/user/bio", values, {
+    .post(`${url}/user/bio`, values, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${auth}`,
@@ -145,7 +146,7 @@ export default function Profile  ({auth, username}) {
     })
     .then(() => {
       setOpen(true)
-      mutate(`http://137.184.241.88:3000/user/profile/${username}`)
+      mutate(`${url}/user/profile/${username}`)
     })
     .catch(err => {
       console.log(err)

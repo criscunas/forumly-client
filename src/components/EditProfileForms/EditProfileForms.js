@@ -1,7 +1,6 @@
 import { useFormik} from "formik";
 import editProfStyles from "./EditProfileForms.module.scss";
 import {
-  InputAdornment,
   Button, 
   TextField
 } from "@mui/material";
@@ -11,6 +10,7 @@ import * as Yup from 'yup';
 export default function EditProfileForms(props) {
 
   const {handle, username, refresh } = props;
+  const url = process.env.URL;
 
   const BioSchema = Yup.object({
     bio: Yup.string().required("Bio Required"),
@@ -24,7 +24,7 @@ export default function EditProfileForms(props) {
     },
     onSubmit : (values, { resetForm }) => {
       handle(values);
-      refresh(`http://137.184.241.88:3000/user/profile/${username}`);
+      refresh(`${url}/user/profile/${username}`);
       resetForm();
     }
   });

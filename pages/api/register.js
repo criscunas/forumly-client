@@ -3,12 +3,18 @@ import { withIronSessionApiRoute } from "iron-session/next";
 import { sessionOptions } from "../../lib/session";
 
 
+
 export default withIronSessionApiRoute(
+
   async function registerRoute(req, res) {
   
   const {username, email, hashed_password} = req.body;  
 
-  const data = await axios.post("http://137.184.241.88:3000/user/signup", {
+  const url = process.env.URL;
+
+  console.log(url)
+
+  const data = await axios.post(`${url}/user/signup`, {
     username: username,
     hashed_password: hashed_password,
     email: email,
@@ -24,3 +30,4 @@ export default withIronSessionApiRoute(
 
   },
 sessionOptions);
+

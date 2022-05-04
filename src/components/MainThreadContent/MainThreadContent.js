@@ -4,8 +4,6 @@ import { useRouter } from 'next/router';
 import { useState } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { v4 as uuidv4 } from "uuid";
-
-
 import {
   CardContent,
   CardHeader,

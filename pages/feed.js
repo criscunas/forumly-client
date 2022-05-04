@@ -24,7 +24,9 @@ export const getServerSideProps = withIronSessionSsr(async function ({
     };
   }
 
-  const feed = await axios.get("http://137.184.241.88:3000/user/feed", {
+  const url = process.env.URL;
+
+  const feed = await axios.get(`${url}/user/feed`, {
     headers: {
       Authorization: `Bearer ${user.auth}`,
     },

@@ -10,6 +10,8 @@ export default function ImageUpload(props) {
   const { handler, username, refresh } = props;
   const [status, setStatus] = useState("");
   const [imageSelected, setImageSelected] = useState(null);
+  const url = process.env.URL;
+  const cloudUrl = process.env.CLOUD;
 
 
   const UploadImage = () => {
@@ -18,11 +20,11 @@ export default function ImageUpload(props) {
     formData.append("upload_preset", "qbey2sfk");
 
     axios
-      .post("https://api.cloudinary.com/v1_1/djvcow1p8/image/upload", formData)
+      .post(`${cloudUrl}/image/upload`, formData)
       .then((response) => {
         const img = { img_path: response.data.secure_url };
         handler(img);
-        refresh(`http://137.184.241.88:3000/user/profile/${username}`);
+        refresh(`${url}/user/profile/${username}`);
         setImageSelected("");
       });
   };

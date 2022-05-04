@@ -10,6 +10,7 @@ import * as Yup from 'yup';
 export const CreateStatusForm = (props) => {
 
   const {handler,username,refresh} = props;
+  const url = process.env.URL;
 
   const StatusSchema = Yup.object({
     personal_post: Yup.string().required("Status Required"),
@@ -23,7 +24,7 @@ export const CreateStatusForm = (props) => {
     },
     onSubmit: (values, { resetForm }) => {
       handler(values)      
-      refresh(`http://137.184.241.88:3000/user/${username}/personals`);
+      refresh(`${url}/user/${username}/personals`);
       resetForm();
     },
   });
