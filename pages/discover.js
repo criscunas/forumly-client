@@ -6,9 +6,7 @@ import {v4 as uuidv4} from 'uuid';
 
 export async function getStaticProps() {
   
-  const url = process.env.URL;
-
-  const res = await fetch(`${url}/categories`)
+  const res = await fetch(`${process.env.URL}/categories`)
   const categories = await res.json();
 
   return {
