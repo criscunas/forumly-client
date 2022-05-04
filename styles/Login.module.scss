@@ -4,15 +4,16 @@
 
 .login {
   height: 100vh;
-  background-image: linear-gradient(to bottom, rgba(157, 154, 154, 0.7) 0%, rgba(230, 220, 220, 0.3) 100%),
-  url('../public/images/homebg.jpg');
   background-position: center;
   background-size: cover;
 
 
   &__container {
-    padding: 2rem 1rem;
-    
+    margin: 2rem 1rem;
+
+    @include tablet {
+      margin: 3rem 1.5rem;
+    }
   }
 
   &__form_header {
@@ -23,7 +24,7 @@
     font-weight: bold;
 
     @include tablet {
-      padding-bottom: 3rem;
+      // padding-bottom: 3rem;
       font-size: 1.8rem;
     }
   }
@@ -35,22 +36,24 @@
     box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
     rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;  
     text-align: center;
-    max-width: 650px;
+    max-width: 500px;
     margin: 0 auto;
   }
 
   &__form_body {
     display: flex;
-    gap: 1.5rem;
+    gap: 2rem;
     flex-direction: column;
   }
 
   label {
     font-size: 1.3rem;
+    color: black;
     @include p-text;
   }
 
   input {
     margin-top: 1rem;
+    
   }
 }
