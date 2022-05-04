@@ -9,7 +9,7 @@ import {useEffect, useState} from 'react';
 export async function getServerSideProps(context) {
     const { params } = context;
 
-    const res = await fetch(`http://dgisvr.xyz/blog/find/${params.id}`);
+    const res = await fetch(`https://dgisvr.xyz/blog/find/${params.id}`);
     const blogs = await res.json();
 
     return {
