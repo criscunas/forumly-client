@@ -4,7 +4,9 @@ import {useFormik} from 'formik';
 import {useRouter} from 'next/router';
 import useUser from "../lib/useUser";
 import fetchJson from "../lib/fetchJson";
+import Image from 'next/image';
 import * as Yup from "yup";
+import Typewriter from "typewriter-effect";
 
 export const Home = () => {
 
@@ -70,9 +72,27 @@ export const Home = () => {
           <p className={homeStyles.home__hero_subhead}>
             Frame your social space.
           </p>
-          <p className={homeStyles.home__hero_footer}>
-            Join our growing community & get connected today.
-          </p>
+        </div>
+
+        <div className={homeStyles.home__welcome}>
+          <div className={homeStyles.home__welcome_msg}>
+            <Typewriter
+              options={{
+                strings: [
+                  "Welcome to digi :)",
+                  "digi is a platform that allows you to connect with other developers and tech enthusiasts. ",
+                  "Host your blog, discuss the latest tech, follow other users & many more exciting features to come. Join our growing community today !",
+                ],
+                autoStart: true,
+                loop: true,
+                deleteSpeed: 8,
+                pauseFor: "4000ms",
+              }}
+            />
+          </div>
+          <div className={homeStyles.home__welcome_bot}>
+            <Image src="/images/landingBot.jpg" height="250px" width="200px" />
+          </div>
         </div>
         <form onSubmit={formik.handleSubmit} className={homeStyles.home__form}>
           <h1 className={homeStyles.home__form_header}>Lets Get You Started</h1>
@@ -126,13 +146,13 @@ export const Home = () => {
               formik.touched.confirmPassword && formik.errors.confirmPassword
             }
             InputProps={{
-              required : false,
+              required: false,
               startAdornment: <InputAdornment position="start" />,
             }}
           />
           <Button
             type="submit"
-            size="small"
+            size="medium"
             variant="contained"
             style={{
               backgroundColor: "#112d4e",
