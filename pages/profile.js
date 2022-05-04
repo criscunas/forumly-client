@@ -45,17 +45,31 @@ sessionOptions);
 export default function Profile  ({auth, username}) {
 
   const [open, setOpen] = useState(false);
-  const url = process.env.URL;
 
-  const {data : user} = useSWR(`${url}/user/profile/${username}`, fetcher)
+  const { data: user } = useSWR(
+    `http://dgisvr.xyz/user/profile/${username}`,
+    fetcher
+  );
 
-  const {data : personals} = useSWR(`${url}/user/${username}/personals`, fetcher)
+  const { data: personals } = useSWR(
+    `http://dgisvr.xyz/user/${username}/personals`,
+    fetcher
+  );
 
-  const {data : posts} =  useSWR(`${url}/user/${username}/posts`, fetcher);
+  const { data: posts } = useSWR(
+    `http://dgisvr.xyz/user/${username}/posts`,
+    fetcher
+  );
 
-  const {data: threads} = useSWR(`${url}/user/${username}/threads`, fetcher)
+  const { data: threads } = useSWR(
+    `http://dgisvr.xyz/user/${username}/threads`,
+    fetcher
+  );
 
-  const {data: blogs} = useSWR(`${url}/user/${username}/blogs`, fetcher)
+  const { data: blogs } = useSWR(
+    `http://dgisvr.xyz/user/${username}/blogs`,
+    fetcher
+  );
 
   const { mutate } = useSWRConfig();
 
@@ -65,14 +79,14 @@ export default function Profile  ({auth, username}) {
 
   const sendImage = (img) => {
     axios
-      .post(`${url}/user/uploadImage`, img, {
+      .post("http://dgisvr.xyz/user/uploadImage", img, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${auth}`,
         },
       })
       .then(() => {
-        mutate(`${url}/user/profile/${username}`)
+        mutate(`http://dgisvr.xyz/user/profile/${username}`);
       })
       .catch((err) => {
         console.log(err);
@@ -81,15 +95,15 @@ export default function Profile  ({auth, username}) {
 
   const createBlogPost = (values) => {
     axios
-      .post(`${url}/blog/new`, values, {
+      .post("http://dgisvr.xyz/blog/new", values, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${auth}`,
         },
       })
       .then(() => {
-        mutate(`${url}/user/${username}/blogs`);
-        setOpen(true)
+        mutate(`http://dgisvr.xyz/user/${username}/blogs`);
+        setOpen(true);
       })
       .catch((err) => {
         console.log(err);
@@ -120,15 +134,15 @@ export default function Profile  ({auth, username}) {
   const postStatus = (values) => {
     
     axios
-      .post(`${url}/personal/post`, values, {
+      .post("http://dgisvr.xyz/personal/post", values, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${auth}`,
         },
       })
       .then(() => {
-        setOpen(true)
-        mutate(`${url}/user/${username}/personals`)
+        setOpen(true);
+        mutate(`http://dgisvr.xyz/user/${username}/personals`);
       })
       .catch((err) => {
         console.log(err);
@@ -138,7 +152,7 @@ export default function Profile  ({auth, username}) {
   const postBio = (values) => {
 
     axios
-    .post(`${url}/user/bio`, values, {
+    .post("http://dgisvr.xyz/user/bio", values, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${auth}`,
@@ -146,7 +160,7 @@ export default function Profile  ({auth, username}) {
     })
     .then(() => {
       setOpen(true)
-      mutate(`${url}/user/profile/${username}`)
+      mutate(`http://dgisvr.xyz/user/profile/${username}`);
     })
     .catch(err => {
       console.log(err)

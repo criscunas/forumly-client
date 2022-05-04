@@ -5,8 +5,6 @@ import {
   InputAdornment,
   Button,
   Collapse,
-  Snackbar,
-  Alert,
 } from "@mui/material";
 import createPostStyles from "./CreatePostForm.module.scss";
 import { useState } from "react";

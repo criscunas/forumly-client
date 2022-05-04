@@ -10,8 +10,7 @@ import * as Yup from 'yup';
 export default function EditProfileForms(props) {
 
   const {handle, username, refresh } = props;
-  const url = process.env.URL;
-
+  
   const BioSchema = Yup.object({
     bio: Yup.string().required("Bio Required"),
   });
@@ -24,7 +23,7 @@ export default function EditProfileForms(props) {
     },
     onSubmit : (values, { resetForm }) => {
       handle(values);
-      refresh(`${url}/user/profile/${username}`);
+      refresh(`http://dgisvr.xyz/user/profile/${username}`);
       resetForm();
     }
   });

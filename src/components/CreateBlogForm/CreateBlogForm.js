@@ -95,7 +95,7 @@ export default function CreateBlogForm(props) {
               size="small"
               type="submit"
               variant="contained"
-              onClick = {refresh(`http://137.184.241.88:3000/user/${username}/blogs`)}
+              onClick={refresh(`http://dgisvr.xyz/user/${username}/blogs`)}
             >
               Submit
             </Button>

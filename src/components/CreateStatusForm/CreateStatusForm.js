@@ -1,4 +1,4 @@
-import { Formik, useFormik, Form } from "formik";
+import {useFormik} from "formik";
 import {
   Button,
   TextField
@@ -10,7 +10,6 @@ import * as Yup from 'yup';
 export const CreateStatusForm = (props) => {
 
   const {handler,username,refresh} = props;
-  const url = process.env.URL;
 
   const StatusSchema = Yup.object({
     personal_post: Yup.string().required("Status Required"),
@@ -24,7 +23,7 @@ export const CreateStatusForm = (props) => {
     },
     onSubmit: (values, { resetForm }) => {
       handler(values)      
-      refresh(`${url}/user/${username}/personals`);
+      refresh(`http://dgisvr.xyz/user/${username}/personals`);
       resetForm();
     },
   });

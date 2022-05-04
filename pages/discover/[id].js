@@ -45,14 +45,9 @@ export default function DiscoverIDPage({ user }) {
   const [open,setOpen] = useState(false)
   const router = useRouter();
   const { id } = router.query;
-  const url = process.env.URL;
-
 
   const { mutate } = useSWRConfig();
-  const { data } = useSWR(
-    `${url}/categories/${id}`,
-    fetcher
-  );
+  const { data } = useSWR(`http://dgisvr.xyz/categories/${id}`, fetcher);
   const isLoading = data;
 
   const handleClose = (event, reason) => {
@@ -104,7 +99,7 @@ export default function DiscoverIDPage({ user }) {
     };
 
     axios
-      .post(`${url}/categories/createPost`, obj, {
+      .post("http://dgisvr.xyz/categories/createPost", obj, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${user.auth}`,
@@ -112,7 +107,7 @@ export default function DiscoverIDPage({ user }) {
       })
       .then(() => {
         setOpen(true);
-        mutate(`${url}/categories/${id}`);
+        mutate(`http://dgisvr.xyz/categories/${id}`);
       })
       .catch((error) => {
         console.log(error);
@@ -121,7 +116,7 @@ export default function DiscoverIDPage({ user }) {
 
   const deletePost = (post_id) => {
     axios
-      .delete(`${url}/categories/deletePost`, {
+      .delete("http://dgisvr.xyz/categories/deletePost", {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${user.auth}`,
@@ -131,9 +126,8 @@ export default function DiscoverIDPage({ user }) {
         },
       })
       .then(() => {
-        setOpen(true)
-        mutate(`${url}/categories/${id}`);
-        
+        setOpen(true);
+        mutate(`http://dgisvr.xyz/categories/${id}`);
       })
       .catch((error) => {
         console.log(error);

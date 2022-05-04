@@ -1,5 +1,4 @@
 import { Box, Container} from "@material-ui/core";
-import {useRouter} from 'next/router';
 import GenerateFollowFeed from '../src/components/GenerateFollowFeed/GenerateFollowFeed';
 import axios from "axios";
 import userFeedStyles from '../styles/UserFeed.module.scss';
@@ -24,9 +23,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({
     };
   }
 
-  const url = process.env.URL;
-
-  const feed = await axios.get(`${url}/user/feed`, {
+  const feed = await axios.get("http://dgisvr.xyz/user/feed", {
     headers: {
       Authorization: `Bearer ${user.auth}`,
     },

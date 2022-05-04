@@ -10,9 +10,7 @@ export default function ImageUpload(props) {
   const { handler, username, refresh } = props;
   const [status, setStatus] = useState("");
   const [imageSelected, setImageSelected] = useState(null);
-  const url = process.env.URL;
-  const cloudUrl = process.env.CLOUD;
-
+  
 
   const UploadImage = () => {
     const formData = new FormData();
@@ -20,11 +18,11 @@ export default function ImageUpload(props) {
     formData.append("upload_preset", "qbey2sfk");
 
     axios
-      .post(`${cloudUrl}/image/upload`, formData)
+      .post("https://api.cloudinary.com/v1_1/djvcow1p8/image/upload", formData)
       .then((response) => {
         const img = { img_path: response.data.secure_url };
         handler(img);
-        refresh(`${url}/user/profile/${username}`);
+        refresh(`http://dgisvr.xyz/user/profile/${username}`);
         setImageSelected("");
       });
   };

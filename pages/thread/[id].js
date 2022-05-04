@@ -36,10 +36,9 @@ export default function ThreadPage ({user}) {
   
   const router = useRouter();
   const { id } = router.query;
-  const url = process.env.URL;
-
+  
   const { mutate } = useSWRConfig();
-  const {data, error} = useSWR(`${url}/thread/${id}`, fetcher)
+  const { data, error } = useSWR(`http://dgisvr.xyz/thread/${id}`, fetcher);
 
   const refresh = (link) => {
     mutate(link)
@@ -53,14 +52,14 @@ export default function ThreadPage ({user}) {
       thread_id: id
     }
     axios
-      .post(`${url}/post/create`, obj, {
+      .post("http://dgisvr.xyz/post/create", obj, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${user.auth}`,
         },
       })
       .then(() => {
-        mutate(`${url}/thread/${id}`);
+        mutate(`http://dgisvr.xyz/thread/${id}`);
       })
       .catch((err) => {
         console.log(err);
@@ -70,7 +69,7 @@ export default function ThreadPage ({user}) {
 
   const deletePost = (id) => {
     axios
-      .delete(`${url}/post/delete`, {
+      .delete("http://dgisvr.xyz/post/delete", {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${user.auth}`,
@@ -80,7 +79,7 @@ export default function ThreadPage ({user}) {
         },
       })
       .then(() => {
-        mutate(`${url}/thread/${id}`);
+        mutate(`http://dgisvr.xyz/thread/${id}`);
       })
       .catch((error) => {
         console.log(error);
@@ -113,7 +112,6 @@ export default function ThreadPage ({user}) {
         )}
       </>
     );}
-
 
   if(!user.isLoggedIn) {
     return (

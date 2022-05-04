@@ -23,8 +23,6 @@ export default function GenerateUserInfo(props) {
 
   const router = useRouter();
 
-  const url = process.env.URL;
-
   const [thread, showThread] = useState(false);
   const [post, showPost] = useState(false);
   const [follower, showFollower] = useState(false);
@@ -116,9 +114,9 @@ export default function GenerateUserInfo(props) {
                       style={{ cursor: "pointer" }}
                       onClick={() => {
                         deleteHandle(
-                          `${url}/blog/delete`,
+                          "http://dgisvr.xyz/blog/delete",
                           post.id,
-                          `${url}/user/${user.user.username}/blogs`
+                          `http://dgisvr.xyz/user/${user.user.username}/blogs`
                         );
                       }}
                     />
@@ -162,9 +160,9 @@ export default function GenerateUserInfo(props) {
                   style = {{cursor: "pointer"}}
                     onClick={() => {
                       deleteHandle(
-                        `${url}/personal/delete`,
+                        "http://dgisvr.xyz/personal/delete",
                         posts.id,
-                        `${url}/user/${user.user.username}/personals`
+                        `http://dgisvr.xyz/user/${user.user.username}/personals`
                       );
                     }}
                   />
@@ -210,9 +208,9 @@ export default function GenerateUserInfo(props) {
                       style={{ cursor: "pointer" }}
                       onClick={() => {
                         deleteHandle(
-                          `${url}/thread/delete`,
+                          "http://dgisvr.xyz/thread/delete",
                           thread.id,
-                          `${url}/user/${user.user.username}/threads`
+                          `http://dgisvr.xyz/user/${user.user.username}/threads`
                         );
                       }}
                     />
@@ -258,9 +256,9 @@ export default function GenerateUserInfo(props) {
                       style={{ cursor: "pointer" }}
                       onClick={() => {
                         deleteHandle(
-                          `${url}/post/delete`,
+                          "http://dgisvr.xyz/post/delete",
                           post.id,
-                          `${url}/user/${user.user.username}/posts`
+                          `http://dgisvr.xyz/user/${user.user.username}/posts`
                         );
                       }}
                     />
