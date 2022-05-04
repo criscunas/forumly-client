@@ -26,7 +26,7 @@ export const DashboardHeader = () => {
                     href="/profile"
                     passHref
                   >
-                    <AccountCircleIcon htmlColor="#1976d2" />
+                    <AccountCircleIcon/>
                   </Link>
                 </li>
                 <li>
@@ -35,7 +35,7 @@ export const DashboardHeader = () => {
                     href="/general"
                     passHref
                   >
-                    <TravelExploreIcon htmlColor="#1976d2" />
+                    <TravelExploreIcon/>
                   </Link>
                 </li>
                 <li>
@@ -44,12 +44,12 @@ export const DashboardHeader = () => {
                     href="/discover"
                     passHref
                   >
-                    <CategoryIcon htmlColor="#1976d2" />
+                    <CategoryIcon/>
                   </Link>
                 </li>
                 <li>
                   <Link className={dashHeader.dashnav__list_item} href="/feed" passHref>
-                    <DynamicFeedIcon htmlColor="#1976d2" />
+                    <DynamicFeedIcon/>
                   </Link>
                 </li>
                 <li
@@ -63,7 +63,7 @@ export const DashboardHeader = () => {
                     router.push("/");
                   }}
                 >
-                  <LogoutIcon htmlColor="#1976d2" passHref/>
+                  <LogoutIcon/>
                 </li>
               </ul>
           </header>
@@ -76,7 +76,7 @@ export const DashboardHeader = () => {
               <ul className={dashHeader.dashnav__list}>
                 <li>
                   <Link href="/general" passHref>
-                    <TravelExploreIcon htmlColor="#1976d2" />
+                    <TravelExploreIcon/>
                   </Link>
                 </li>
                 <li>
@@ -85,12 +85,12 @@ export const DashboardHeader = () => {
                     href="/discover"
                     passHref
                   >
-                    <CategoryIcon htmlColor="#1976d2" />
+                    <CategoryIcon/>
                   </Link>
                 </li>
                 <li>
                   <Link passHref className={dashHeader.dashnav__list_item} href="/login">
-                    <LoginIcon htmlColor="#1976d2" />
+                    <LoginIcon/>
                   </Link>
                 </li>
               </ul>
