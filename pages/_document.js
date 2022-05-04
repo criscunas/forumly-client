@@ -12,7 +12,7 @@ export default class MyDocument extends Document {
       rel="stylesheet"></link>
       <link rel="preconnect" href="https://fonts.googleapis.com"></link>
       <link href="https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,400;0,500;1,500&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet"></link>
-
+      <link href="https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,400;0,500;1,500&family=Passion+One&display=swap" rel="stylesheet"></link>
         </Head>
         <body>
           <Main />

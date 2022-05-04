@@ -2,13 +2,13 @@
 @use '../../../styles/mixins.scss'as *;
 
 .dashnav {
-  background-color: #60A5FA;
+  background-color: #007ee5;
   padding: 1rem 0;
 
   @include tablet {
     display: flex;
     justify-content: space-between;
-    background-color: #60A5FA;
+    // background-color: #60A5FA;
     padding: 2rem;
   }
 
@@ -16,7 +16,7 @@
       @include tablet {
         display: flex;
         justify-content: space-between;
-        background-color: #60A5FA;
+        // background-color: #60A5FA;
         padding: 2rem;
       }
   }
