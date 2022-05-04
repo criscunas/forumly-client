@@ -9,24 +9,42 @@
   }
 
   &__header {
-    padding: 1rem;
+    padding: 0rem 0 1rem 0;
     font-weight: 600;
     font-size: 1.5rem;
+    
+    @include tablet {
+      padding: 1rem 0 1.5rem 0;
+      font-size: 2rem;
+    }
   }
 
   &__card {
     max-width: 900px;
     margin: 0 auto;
+    // padding: 0 1rem;
+
+    @include tablet {
+      padding: 1rem 1.5rem;
+    }
   }
 
+  
+
   &__created {
-    padding: 0.5rem 1rem;
+    padding-bottom: 1.5rem;
+    
+    @include tablet {
+      padding-bottom: 2rem;
+    }
   }
 
   &__post {
     font-size: 1rem;
-    padding: 1rem 1rem;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
     line-height: 1.4rem;
+
+    @include tablet {
+      font-size: 1.2rem;
+    }
   }
 }
