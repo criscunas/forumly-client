@@ -24,21 +24,30 @@
 
   &__personal_card {
     margin: 1rem 0rem;
+    // padding: 0 1rem;
 
+    @include tablet {
+      margin: 1.5rem 0;
+      padding: 0 1rem;
+    }
   }
 
   &__personal_post {
-    padding-left: 1rem;
-    padding-top: 1rem;
-    font-size: 1rem;
-    
+    padding: 1rem;
+    font-size: 0.9rem;
+    line-height: 1.5rem;
+    // font-weight: 400;
+    font-family: "Asap",
+    sans-serif;
+
     @include tablet {
-      padding-left: 1.5rem;
+      padding: 1.2rem 1rem 1rem 1rem;
+    font-size: 1rem;
     }
 
   }
   &__personal_created {
-    font-size: 11px;
+    font-size: 0.9rem;
     padding: 1rem;
     display: flex;
     align-items: center;
@@ -57,10 +66,7 @@
     align-items: center;
     flex-direction: column;
     padding: 0.5rem 0;
-    
-    
-    
-    
+    font-weight: 500;
     gap: 0.3rem;
     cursor: pointer; 
   }
@@ -77,39 +83,40 @@
 
   &__thread_card {
     margin: 1rem 0rem;
-
+    
     @include tablet {
       margin: 1.5rem 0;
+      padding: 0 1rem;
     }
   }
 
-  &__thread_title {
-    padding: 1rem 1rem 0.5rem 1rem;
-    font-size: 1.3rem;
-    font-weight: bold;
-    cursor: pointer;
-
-    @include tablet {
-      padding: 1.5rem 1.5rem 0.5rem 1.5rem;
-    }
-  }
 
   &__thread_initial {
     padding: 1rem;
-    font-size: 1rem;
+    font-size: 0.9rem;
+    line-height: 1.5rem;
+    font-weight: 400;
+    font-family: "Asap",
+    sans-serif;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
 
     @include tablet {
-      padding: 1.5rem 1.5rem 1rem 1.5rem;
+      padding: 1.2rem 1rem 1rem 1rem;
+      font-size: 1rem;
     }
 
   }
 
-  &__thread_created {
+  &__thread_delete {
     text-align: right;
-    padding: 0.5rem;
-
+    padding: 0 1rem 0.5rem 1rem;
+    
     @include tablet {
-      padding: 1rem;
+      padding: 0 1rem 1rem 1rem;
     }
   }
 
@@ -126,25 +133,36 @@
     margin: 1rem 0rem;
   }
 
-  &__follow_body {
-    padding: 1rem;
+  &__follow_card {
+    // display: inline-flex;
+    // border: 1px solid red;
+    // padding: 1rem;
+    padding: 0.5rem 0;
+    // gap: 1rem;
+    
+    // justify-content: center;
+    // gap: 0.5rem;
+
   }
 
-  &__follow_user {
+  &__follow_img {
+    
+  }
+
+  &__follow_name {
     font-size: 1rem;
-    text-align: center;
-    font-family: "Nunito Sans";
     font-weight: bold;
-    line-height: 1.3rem;  
-    padding: 1.5rem 1rem 0.5rem 1rem;
     cursor: pointer;
+  }
+
+  &__follow_text {
+    // border: 1px solid red;
   }
 
   &__follow_bio {
     padding-top: 0.5rem;
-    text-align: center;
     line-height: 1.3rem;
-    
+    font-size: 0.9rem;
   }
 
   &__blog {
@@ -162,9 +180,15 @@
 
   &__blog_content {
     padding: 1rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    &:hover {
+      text-decoration: underline;
+    }
 
     @include tablet {
       padding-left: 1.5rem;
+      font-size: 1rem;
     }
   }
 

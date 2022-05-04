@@ -11,11 +11,11 @@ import { useState } from "react";
 import GroupIcon from "@mui/icons-material/Group";
 import FollowTheSignsIcon from "@mui/icons-material/FollowTheSigns";
 import DeleteIcon from "@mui/icons-material/Delete";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ForumIcon from "@mui/icons-material/Forum";
 import NoteIcon from "@mui/icons-material/Note";
 import TextsmsIcon from "@mui/icons-material/Textsms";
 import CreateBlogForm from '../CreateBlogForm/CreateBlogForm';
+import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 
 export default function GenerateUserInfo(props) {
 
@@ -99,14 +99,18 @@ export default function GenerateUserInfo(props) {
                       <Avatar
                         alt="user-img"
                         src={user.user.img_path}
-                        sx={{ width: 46, height: 46 }}
+                        sx={{ width: 60, height: 60 }}
                       />
                     }
                     title={post.title}
+                    titleTypographyProps={{ variant: "subtitle1" }}
+                    subheader={post.created.slice(0, 10)}
                     sx={{ cursor: "pointer" }}
-                    onClick={() => router.push(`/blog/${post.id}`)}
                   />
-                  <p className={genUserStyles.user__blog_content}>
+                  <p
+                    onClick={() => router.push(`/blog/${post.id}`)}
+                    className={genUserStyles.user__blog_content}
+                  >
                     {post.content}
                   </p>
                   <p className={genUserStyles.user__blog_created}>
@@ -120,7 +124,6 @@ export default function GenerateUserInfo(props) {
                         );
                       }}
                     />
-                    {post.created.slice(0, 10)}{" "}
                   </p>
                 </Card>
               </li>
@@ -147,17 +150,19 @@ export default function GenerateUserInfo(props) {
                     <Avatar
                       alt="user-img"
                       src={user.user.img_path}
-                      sx={{ width: 46, height: 46 }}
+                      sx={{ width: 60, height: 60 }}
                     />
                   }
                   title={user.user.username}
+                  titleTypographyProps = {{variant: "subtitle1"}}
+                  subheader={posts.created.slice(0, 10)}
                 />
-                <h1 className={genUserStyles.user__personal_post}>
+                <p className={genUserStyles.user__personal_post}>
                   {posts.personal_post}
-                </h1>
+                </p>
                 <p className={genUserStyles.user__personal_created}>
                   <DeleteIcon
-                  style = {{cursor: "pointer"}}
+                    style={{ cursor: "pointer" }}
                     onClick={() => {
                       deleteHandle(
                         "https://dgisvr.xyz/personal/delete",
@@ -166,7 +171,6 @@ export default function GenerateUserInfo(props) {
                       );
                     }}
                   />
-                  {posts.created.slice(0, 10)}
                 </p>
               </Card>
             </li>
@@ -193,17 +197,20 @@ export default function GenerateUserInfo(props) {
                       <Avatar
                         alt="user-img"
                         src={user.user.img_path}
-                        sx={{ width: 46, height: 46 }}
+                        sx={{ width: 60, height: 60 }}
                       />
                     }
                     title={thread.thread_subject}
-                    sx={{ cursor: "pointer" }}
-                    onClick={() => router.push(`/thread/${thread.id}`)}
+                    titleTypographyProps={{ variant: "subtitle1" }}
+                    subheader={thread.created.slice(0, 10)}
                   />
-                  <h1 className={genUserStyles.user__thread_initial}>
+                  <p className={genUserStyles.user__thread_initial}>
                     {thread.initial_post}
-                  </h1>
-                  <p className={genUserStyles.user__thread_created}>
+                  </p>
+                  <p
+                    onClick={() => router.push(`/thread/${thread.id}`)}
+                    className={genUserStyles.user__thread_delete}
+                  >
                     <DeleteIcon
                       style={{ cursor: "pointer" }}
                       onClick={() => {
@@ -214,7 +221,6 @@ export default function GenerateUserInfo(props) {
                         );
                       }}
                     />
-                    {thread.created.slice(0, 10)}
                   </p>
                 </Card>
               </li>
@@ -235,23 +241,26 @@ export default function GenerateUserInfo(props) {
                 <Card
                   className={genUserStyles.user__thread_card}
                   variant="outlined"
-                  title="hello"
                 >
                   <CardHeader
                     avatar={
                       <Avatar
                         alt="user-img"
-                        src={post.img_path}
-                        sx={{ width: 46, height: 46 }}
+                        src={user.user.img_path}
+                        sx={{ width: 60, height: 60 }}
                       />
                     }
                     title={post.thread_subject}
-                    subheader={post.username}
+                    titleTypographyProps={{ variant: "subtitle1" }}
+                    subheader={post.created.slice(0, 10)}
                   />
-                  <h1 className={genUserStyles.user__thread_initial}>
+                  <p
+                    onClick={() => router.push(`/thread/${post.thread_id}`)}
+                    className={genUserStyles.user__thread_initial}
+                  >
                     {post.content}
-                  </h1>
-                  <p className={genUserStyles.user__thread_created}>
+                  </p>
+                  <p className={genUserStyles.user__thread_delete}>
                     <DeleteIcon
                       style={{ cursor: "pointer" }}
                       onClick={() => {
@@ -262,7 +271,6 @@ export default function GenerateUserInfo(props) {
                         );
                       }}
                     />
-                    {post.created.slice(0, 10)}
                   </p>
                 </Card>
               </li>
@@ -277,31 +285,31 @@ export default function GenerateUserInfo(props) {
     return (
       <div className={genUserStyles.user__follow}>
         <ul>
-          <Grid container spacing={2}>
+          <Grid container spacing={1}>
             {userFollowers.map((follower) => {
               return (
-                <Grid key={uuidv4()} item xs={12} sm={6} md={3}>
+                <Grid item xs={12} sm={6} md={4} key={uuidv4()}>
                   <li>
                     <Card
-                      className={genUserStyles.user__follow_body}
+                      className={genUserStyles.user__follow_card}
                       variant="outlined"
                     >
-                      <Avatar
-                        alt="user-img"
-                        sx={{ width: 56, height: 56, margin: "0 auto" }}
+                      <CardHeader
+                        avatar={
+                          <Avatar
+                            alt="user-img"
+                            src={follower.img_path}
+                            sx={{ width: 60, height: 60 }}
+                          />
+                        }
+                        title={follower.username}
+                        sx={{ cursor: "pointer" }}
+                        titleTypographyProps={{ variant: "h6" }}
+                        subheader={follower.bio}
+                        onClick={() =>
+                          router.push(`/user/${follower.username}`)
+                        }
                       />
-                      <h1
-                        onClick={() => {
-                          router.push(`/user/${follower.username}`);
-                        }}
-                        className={genUserStyles.user__follow_user}
-                      >
-                        {follower.username}
-                      </h1>
-                      <p className={genUserStyles.user__follow_bio}>
-                        {" "}
-                        {follower.bio}{" "}
-                      </p>
                     </Card>
                   </li>
                 </Grid>
@@ -320,26 +328,26 @@ export default function GenerateUserInfo(props) {
           <Grid container spacing={2}>
             {userFollowing.map((user) => {
               return (
-                <Grid key={uuidv4()} item xs={12} sm={6} md={3}>
+                <Grid item xs={12} sm={6} md={4} key={uuidv4()}>
                   <li>
                     <Card
-                      className={genUserStyles.user__follow_body}
+                      className={genUserStyles.user__follow_card}
                       variant="outlined"
                     >
-                      <Avatar
-                        alt="user-img"
-                        src={user.img_path}
-                        sx={{ width: 56, height: 56, margin: "0 auto" }}
+                      <CardHeader
+                        avatar={
+                          <Avatar
+                            alt="user-img"
+                            src={follower.img_path}
+                            sx={{ width: 60, height: 60 }}
+                          />
+                        }
+                        sx={{ cursor: "pointer" }}
+                        title={user.username}
+                        titleTypographyProps={{ variant: "h6" }}
+                        subheader={user.bio}
+                        onClick={() => router.push(`/user/${user.username}`)}
                       />
-                      <h1
-                        onClick={() => {
-                          router.push(`/user/${user.username}`);
-                        }}
-                        className={genUserStyles.user__follow_user}
-                      >
-                        {user.username}
-                      </h1>
-                      <p className ={genUserStyles.user__follow_bio}> {user.bio} </p>
                     </Card>
                   </li>
                 </Grid>
@@ -361,9 +369,9 @@ export default function GenerateUserInfo(props) {
         <Grid container spacing={1}>
           <Grid item xs={4} sm={2} onClick={displayBlogs}>
             <p className={genUserStyles.user__options_list}>
-              Personal
+              Blogs
               <span>
-                <AccountCircleIcon htmlColor="#1976d2" />
+                <LibraryBooksIcon htmlColor="#1976d2" />
               </span>
             </p>
           </Grid>

@@ -17,11 +17,16 @@
   &__header {
     padding: 1rem 0 0.5rem 1rem;
     font-size: 1.2rem;
+    font-weight: 600;
   }
 
   &__post {
     font-size: 0.9rem;
     line-height: 1.4rem;
+
+    @include tablet {
+      font-size: 1rem;
+    }
   }
 
   &__post_time {

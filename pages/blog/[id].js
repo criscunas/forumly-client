@@ -60,12 +60,12 @@ export default function BlogPage ({blogs}) {
                   />
                 }
                 title={blogs.user[0].username}
+                titleTypographyProps = {{variant: "h6"}}
                 onClick={() => router.push(`/user/${blogs.user[0].username}`)}
               />
               <CardContent>
                 <h1 className={BlogStyles.blog__header}>
-                  {" "}
-                  {blogs.post[0].title}{" "}
+                  {blogs.post[0].title}
                 </h1>
                 <p className={BlogStyles.blog__created}>
                   {" "}
