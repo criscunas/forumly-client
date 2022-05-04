@@ -47,27 +47,27 @@ export default function Profile  ({auth, username}) {
   const [open, setOpen] = useState(false);
 
   const { data: user } = useSWR(
-    `http://dgisvr.xyz/user/profile/${username}`,
+    `https://dgisvr.xyz/user/profile/${username}`,
     fetcher
   );
 
   const { data: personals } = useSWR(
-    `http://dgisvr.xyz/user/${username}/personals`,
+    `https://dgisvr.xyz/user/${username}/personals`,
     fetcher
   );
 
   const { data: posts } = useSWR(
-    `http://dgisvr.xyz/user/${username}/posts`,
+    `https://dgisvr.xyz/user/${username}/posts`,
     fetcher
   );
 
   const { data: threads } = useSWR(
-    `http://dgisvr.xyz/user/${username}/threads`,
+    `https://dgisvr.xyz/user/${username}/threads`,
     fetcher
   );
 
   const { data: blogs } = useSWR(
-    `http://dgisvr.xyz/user/${username}/blogs`,
+    `https://dgisvr.xyz/user/${username}/blogs`,
     fetcher
   );
 
@@ -79,14 +79,14 @@ export default function Profile  ({auth, username}) {
 
   const sendImage = (img) => {
     axios
-      .post("http://dgisvr.xyz/user/uploadImage", img, {
+      .post("https://dgisvr.xyz/user/uploadImage", img, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${auth}`,
         },
       })
       .then(() => {
-        mutate(`http://dgisvr.xyz/user/profile/${username}`);
+        mutate(`https://dgisvr.xyz/user/profile/${username}`);
       })
       .catch((err) => {
         console.log(err);
@@ -95,14 +95,14 @@ export default function Profile  ({auth, username}) {
 
   const createBlogPost = (values) => {
     axios
-      .post("http://dgisvr.xyz/blog/new", values, {
+      .post("https://dgisvr.xyz/blog/new", values, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${auth}`,
         },
       })
       .then(() => {
-        mutate(`http://dgisvr.xyz/user/${username}/blogs`);
+        mutate(`https://dgisvr.xyz/user/${username}/blogs`);
         setOpen(true);
       })
       .catch((err) => {
@@ -134,7 +134,7 @@ export default function Profile  ({auth, username}) {
   const postStatus = (values) => {
     
     axios
-      .post("http://dgisvr.xyz/personal/post", values, {
+      .post("https://dgisvr.xyz/personal/post", values, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${auth}`,
@@ -142,7 +142,7 @@ export default function Profile  ({auth, username}) {
       })
       .then(() => {
         setOpen(true);
-        mutate(`http://dgisvr.xyz/user/${username}/personals`);
+        mutate(`https://dgisvr.xyz/user/${username}/personals`);
       })
       .catch((err) => {
         console.log(err);
@@ -152,7 +152,7 @@ export default function Profile  ({auth, username}) {
   const postBio = (values) => {
 
     axios
-    .post("http://dgisvr.xyz/user/bio", values, {
+    .post("https://dgisvr.xyz/user/bio", values, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${auth}`,
@@ -160,7 +160,7 @@ export default function Profile  ({auth, username}) {
     })
     .then(() => {
       setOpen(true)
-      mutate(`http://dgisvr.xyz/user/profile/${username}`);
+      mutate(`https://dgisvr.xyz/user/profile/${username}`);
     })
     .catch(err => {
       console.log(err)

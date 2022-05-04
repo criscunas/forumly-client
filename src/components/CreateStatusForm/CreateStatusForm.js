@@ -23,7 +23,7 @@ export const CreateStatusForm = (props) => {
     },
     onSubmit: (values, { resetForm }) => {
       handler(values)      
-      refresh(`http://dgisvr.xyz/user/${username}/personals`);
+      refresh(`https://dgisvr.xyz/user/${username}/personals`);
       resetForm();
     },
   });

@@ -6,7 +6,7 @@ import {Container, Box} from '@material-ui/core';
 
 export async function getStaticProps() {
   
-  const res = await fetch("http://dgisvr.xyz/newsfeed");
+  const res = await fetch("https://dgisvr.xyz/newsfeed");
   const data = await res.json();
 
   return {

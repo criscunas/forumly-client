@@ -17,7 +17,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({
 
   const user = req.session.user;
   
-  const data = await fetcher("http://dgisvr.xyz/thread/all");
+  const data = await fetcher("https://dgisvr.xyz/thread/all");
 
   if (user === undefined) {
     return {
@@ -41,7 +41,7 @@ export default function General({ fallbackData, auth }) {
   const [open,setOpen] = useState(false)
 
   const { mutate } = useSWRConfig();
-  const { data } = useSwr("http://dgisvr.xyz/thread/all", fetcher, {
+  const { data } = useSwr("https://dgisvr.xyz/thread/all", fetcher, {
     fallbackData,
   });
 
@@ -89,7 +89,7 @@ export default function General({ fallbackData, auth }) {
   };
 
   const refresh = () => {
-    mutate("http://dgisvr.xyz/thread/all");
+    mutate("https://dgisvr.xyz/thread/all");
   };
 
   const createThread = (values) => {
@@ -99,12 +99,12 @@ export default function General({ fallbackData, auth }) {
     };
 
     axios
-      .post("http://dgisvr.xyz/thread/create", values, {
+      .post("https://dgisvr.xyz/thread/create", values, {
         headers: headers,
       })
       .then(() => {
         setOpen(true)
-        mutate("http://dgisvr.xyz/thread/all")
+        mutate("https://dgisvr.xyz/thread/all")
       })
       .catch((err) => {
         console.log(err);

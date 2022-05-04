@@ -23,7 +23,7 @@ export default function EditProfileForms(props) {
     },
     onSubmit : (values, { resetForm }) => {
       handle(values);
-      refresh(`http://dgisvr.xyz/user/profile/${username}`);
+      refresh(`https://dgisvr.xyz/user/profile/${username}`);
       resetForm();
     }
   });

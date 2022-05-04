@@ -1,8 +1,7 @@
 import { useState } from "react";
-
 import imageStyles from "./ImageUpload.module.scss";
 import axios from "axios";
-import { Button, Input , TextField } from "@mui/material";
+import { Button, Input} from "@mui/material";
 
 
 export default function ImageUpload(props) {
@@ -22,7 +21,7 @@ export default function ImageUpload(props) {
       .then((response) => {
         const img = { img_path: response.data.secure_url };
         handler(img);
-        refresh(`http://dgisvr.xyz/user/profile/${username}`);
+        refresh(`https://dgisvr.xyz/user/profile/${username}`);
         setImageSelected("");
       });
   };

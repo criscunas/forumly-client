@@ -95,7 +95,7 @@ export default function CreateBlogForm(props) {
               size="small"
               type="submit"
               variant="contained"
-              onClick={refresh(`http://dgisvr.xyz/user/${username}/blogs`)}
+              onClick={refresh(`https://dgisvr.xyz/user/${username}/blogs`)}
             >
               Submit
             </Button>

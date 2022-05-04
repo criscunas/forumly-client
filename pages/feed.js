@@ -23,7 +23,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({
     };
   }
 
-  const feed = await axios.get("http://dgisvr.xyz/user/feed", {
+  const feed = await axios.get("https://dgisvr.xyz/user/feed", {
     headers: {
       Authorization: `Bearer ${user.auth}`,
     },

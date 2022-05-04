@@ -114,9 +114,9 @@ export default function GenerateUserInfo(props) {
                       style={{ cursor: "pointer" }}
                       onClick={() => {
                         deleteHandle(
-                          "http://dgisvr.xyz/blog/delete",
+                          "https://dgisvr.xyz/blog/delete",
                           post.id,
-                          `http://dgisvr.xyz/user/${user.user.username}/blogs`
+                          `https://dgisvr.xyz/user/${user.user.username}/blogs`
                         );
                       }}
                     />
@@ -160,9 +160,9 @@ export default function GenerateUserInfo(props) {
                   style = {{cursor: "pointer"}}
                     onClick={() => {
                       deleteHandle(
-                        "http://dgisvr.xyz/personal/delete",
+                        "https://dgisvr.xyz/personal/delete",
                         posts.id,
-                        `http://dgisvr.xyz/user/${user.user.username}/personals`
+                        `https://dgisvr.xyz/user/${user.user.username}/personals`
                       );
                     }}
                   />
@@ -208,9 +208,9 @@ export default function GenerateUserInfo(props) {
                       style={{ cursor: "pointer" }}
                       onClick={() => {
                         deleteHandle(
-                          "http://dgisvr.xyz/thread/delete",
+                          "https://dgisvr.xyz/thread/delete",
                           thread.id,
-                          `http://dgisvr.xyz/user/${user.user.username}/threads`
+                          `https://dgisvr.xyz/user/${user.user.username}/threads`
                         );
                       }}
                     />
@@ -256,9 +256,9 @@ export default function GenerateUserInfo(props) {
                       style={{ cursor: "pointer" }}
                       onClick={() => {
                         deleteHandle(
-                          "http://dgisvr.xyz/post/delete",
+                          "https://dgisvr.xyz/post/delete",
                           post.id,
-                          `http://dgisvr.xyz/user/${user.user.username}/posts`
+                          `https://dgisvr.xyz/user/${user.user.username}/posts`
                         );
                       }}
                     />

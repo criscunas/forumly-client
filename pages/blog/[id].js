@@ -8,7 +8,7 @@ import {useEffect, useState} from 'react';
 
 export async function getStaticPaths() {
 
-  const res = await axios.get("http://dgisvr.xyz/blog/all");
+  const res = await axios.get("https://dgisvr.xyz/blog/all");
   const data = await res.data;
 
   const paths = data.map(posts => {
@@ -28,7 +28,7 @@ export async function getStaticPaths() {
 export async function getStaticProps(context) {
     const { params } = context;
 
-    const res = await fetch(`http://dgisvr.xyz/blog/find/${params.id}`);
+    const res = await fetch(`https://dgisvr.xyz/blog/find/${params.id}`);
     const blogs = await res.json();
 
     return {
