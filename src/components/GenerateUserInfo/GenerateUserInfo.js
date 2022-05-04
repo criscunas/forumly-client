@@ -288,8 +288,8 @@ export default function GenerateUserInfo(props) {
           <Grid container spacing={1}>
             {userFollowers.map((follower) => {
               return (
-                <Grid item xs={12} sm={6} md={4}>
-                  <li key={uuidv4()}>
+                <Grid item xs={12} sm={6} md={4} key={uuidv4()}>
+                  <li>
                     <Card
                       className={genUserStyles.user__follow_card}
                       variant="outlined"
@@ -303,10 +303,12 @@ export default function GenerateUserInfo(props) {
                           />
                         }
                         title={follower.username}
-                        sx = {{cursor : "pointer"}}
+                        sx={{ cursor: "pointer" }}
                         titleTypographyProps={{ variant: "h6" }}
                         subheader={follower.bio}
-                        onClick={() => router.push(`/user/${follower.username}`)}
+                        onClick={() =>
+                          router.push(`/user/${follower.username}`)
+                        }
                       />
                     </Card>
                   </li>
@@ -326,8 +328,8 @@ export default function GenerateUserInfo(props) {
           <Grid container spacing={2}>
             {userFollowing.map((user) => {
               return (
-                <Grid item xs={12} sm={6} md={4}>
-                  <li key={uuidv4()}>
+                <Grid item xs={12} sm={6} md={4} key={uuidv4()}>
+                  <li>
                     <Card
                       className={genUserStyles.user__follow_card}
                       variant="outlined"

@@ -24,6 +24,7 @@ export const DashboardHeader = () => {
                   <Link
                     className={dashHeader.dashnav__list_item}
                     href="/profile"
+                    passHref
                   >
                     <AccountCircleIcon htmlColor="#1976d2" />
                   </Link>
@@ -32,7 +33,7 @@ export const DashboardHeader = () => {
                   <Link
                     className={dashHeader.dashnav__list_item}
                     href="/general"
-                    
+                    passHref
                   >
                     <TravelExploreIcon htmlColor="#1976d2" />
                   </Link>
@@ -41,12 +42,13 @@ export const DashboardHeader = () => {
                   <Link
                     className={dashHeader.dashnav__list_item}
                     href="/discover"
+                    passHref
                   >
                     <CategoryIcon htmlColor="#1976d2" />
                   </Link>
                 </li>
                 <li>
-                  <Link className={dashHeader.dashnav__list_item} href="/feed" >
+                  <Link className={dashHeader.dashnav__list_item} href="/feed" passHref>
                     <DynamicFeedIcon htmlColor="#1976d2" />
                   </Link>
                 </li>
@@ -61,7 +63,7 @@ export const DashboardHeader = () => {
                     router.push("/");
                   }}
                 >
-                  <LogoutIcon htmlColor="#1976d2" />
+                  <LogoutIcon htmlColor="#1976d2" passHref/>
                 </li>
               </ul>
           </header>
@@ -73,7 +75,7 @@ export const DashboardHeader = () => {
               className={dashHeader.dashnav__header}> digi. </h1>
               <ul className={dashHeader.dashnav__list}>
                 <li>
-                  <Link href="/general" >
+                  <Link href="/general" passHref>
                     <TravelExploreIcon htmlColor="#1976d2" />
                   </Link>
                 </li>
@@ -81,13 +83,13 @@ export const DashboardHeader = () => {
                   <Link
                     className={dashHeader.dashnav__list_item}
                     href="/discover"
-                    
+                    passHref
                   >
                     <CategoryIcon htmlColor="#1976d2" />
                   </Link>
                 </li>
                 <li>
-                  <Link  className={dashHeader.dashnav__list_item} href="/login">
+                  <Link passHref className={dashHeader.dashnav__list_item} href="/login">
                     <LoginIcon htmlColor="#1976d2" />
                   </Link>
                 </li>
