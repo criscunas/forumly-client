@@ -1,0 +1,19 @@
+@use '../../../styles/variables.scss'as *;
+@use '../../../styles/mixins.scss'as *;
+
+.bottomNav {
+
+  
+  &__menu {
+    background-color: $light-gray;
+    padding: 0.5rem 0;
+  }
+
+  &__menu_link {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    text-align: center;
+    align-items: center;
+  }
+}

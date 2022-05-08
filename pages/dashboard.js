@@ -18,7 +18,7 @@ export default function Dashboard({ data }) {
   return (
     <Container maxWidth="xl" disableGutters>
       <Box className={dashboardStyles.dashboard}>
-        <GenerateNewsFeed feed={data.articles} />
+        
       </Box>
     </Container>
   );

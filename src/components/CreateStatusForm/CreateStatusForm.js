@@ -42,16 +42,20 @@ export const CreateStatusForm = (props) => {
           label="Status"
           value={formik.values.personal_post}
           onChange={formik.handleChange}
-          error={formik.touched.personal_post && Boolean(formik.errors.personal_post)}
-          helperText={formik.touched.personal_post && formik.errors.personal_post}
+          error={
+            formik.touched.personal_post && Boolean(formik.errors.personal_post)
+          }
+          helperText={
+            formik.touched.personal_post && formik.errors.personal_post
+          }
         />
         <Button
           size="medium"
           type="submit"
           variant="contained"
-          sx={{ backgroundColor: "#60A5FA" }}
+          sx={{ backgroundColor: "#007ee5" }}
         >
-          Submit
+          Post
         </Button>
       </form>
     </div>

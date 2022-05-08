@@ -1,48 +1,43 @@
 import genUserStyles from "./GenerateUserInfo.module.scss";
-import {
-  Grid,
-  Avatar,
-  Card,
-  CardHeader
-} from "@mui/material";
+import { Grid, Avatar, Card, CardHeader } from "@mui/material";
 import { v4 as uuidv4 } from "uuid";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import GroupIcon from "@mui/icons-material/Group";
-import FollowTheSignsIcon from "@mui/icons-material/FollowTheSigns";
-import DeleteIcon from "@mui/icons-material/Delete";
-import ForumIcon from "@mui/icons-material/Forum";
-import NoteIcon from "@mui/icons-material/Note";
-import TextsmsIcon from "@mui/icons-material/Textsms";
-import CreateBlogForm from '../CreateBlogForm/CreateBlogForm';
-import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
+import CreateBlogForm from "../CreateBlogForm/CreateBlogForm";
+import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 
 export default function GenerateUserInfo(props) {
-
-  const { user, personals, threads, posts , blogs, userFollowing, userFollowers, deleteHandle, refresh, createBlog} = props
+  const {
+    user,
+    personals,
+    threads,
+    posts,
+    blogs,
+    userFollowing,
+    userFollowers,
+    deleteHandle,
+    refresh,
+    createBlog,
+  } = props;
 
   const router = useRouter();
 
-  const [thread, showThread] = useState(false);
-  const [post, showPost] = useState(false);
+  const [userThread, showUserThread] = useState(false);
+  const [userPost, showUserPost] = useState(true);
   const [follower, showFollower] = useState(false);
+  const [postOptions, showPostOptions] = useState(false)
   const [following, showFollowing] = useState(false);
   const [status, showStatus] = useState(false);
-  const [blog, showBlogs] = useState(true)
-  
+  const [blog, showBlogs] = useState(true);
 
   const displayPost = () => {
-    showPost(true);
-    showThread(false);
-    showFollower(false);
-    showFollowing(false);
+    showPostOptions(true);
     showStatus(false);
     showBlogs(false);
   };
 
   const displayThread = () => {
-    showThread(true);
-    showPost(false);
+    showPostOptions(false);
     showFollower(false);
     showStatus(false);
     showFollowing(false);
@@ -52,17 +47,17 @@ export default function GenerateUserInfo(props) {
   const displayFollowers = () => {
     showStatus(false);
     showFollower(true);
-    showPost(false);
+    showPostOptions(false);
     showFollowing(false);
-    showThread(false);
+    
     showBlogs(false);
   };
 
   const displayFollowing = () => {
     showFollowing(true);
     showFollower(false);
-    showPost(false);
-    showThread(false);
+    showPostOptions(false);
+    
     showStatus(false);
     showBlogs(false);
   };
@@ -70,8 +65,7 @@ export default function GenerateUserInfo(props) {
   const displayPersonals = () => {
     showFollowing(false);
     showFollower(false);
-    showPost(false);
-    showThread(false);
+    showPostOptions(false);
     showStatus(true);
     showBlogs(false);
   };
@@ -79,204 +73,227 @@ export default function GenerateUserInfo(props) {
   const displayBlogs = () => {
     showFollowing(false);
     showFollower(false);
-    showPost(false);
-    showThread(false);
+    showPostOptions(false);
     showStatus(false);
     showBlogs(true);
   };
-  
+
   const renderBlogs = () => {
     return (
       <div>
-      <CreateBlogForm username = {user.user.username} handler = {createBlog} refresh = {refresh} />
-        <ul>
-          {blogs.map((post) => {
+        {blogs.map((post) => {
+          return (
+            <Card
+              variant="outlined"
+              key={uuidv4()}
+              className={genUserStyles.user__blog}
+            >
+              <CardHeader
+                avatar={
+                  <Avatar
+                    alt="user-img"
+                    src={user.user.img_path}
+                    sx={{ width: 55, height: 55 }}
+                  />
+                }
+                title={post.title}
+                titleTypographyProps={{
+                  variant: "subtitle1"
+                }}
+                subheader={post.created.slice(0, 10)}
+                sx={{ cursor: "pointer" }}
+                onClick={() => router.push(`/blog/${id}`)}
+              />
+              <p className={genUserStyles.user__blog_preview}>
+                {post.content.slice(0,100)}...
+              </p>
+              <p className={genUserStyles.user__delete}>
+                <DeleteOutlinedIcon
+                  color = "error"
+                  fontSize = "small"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => {
+                    deleteHandle(
+                      "https://dgisvr.xyz/blog/delete",
+                      post.id,
+                      `https://dgisvr.xyz/user/${user.user.username}/blogs`
+                    );
+                  }}
+                />
+              </p>
+            </Card>
+          );
+        })}
+      </div>
+    );
+  };
+
+  const renderPersonals = () => {
+    return (
+      <div>
+          {personals.map((posts) => {
             return (
-              <li key={uuidv4()} style={{ listStyleType: "none" }}>
-                <Card variant="outlined" className={genUserStyles.user__blog}>
+                <Card
+                  key={uuidv4()}
+                  className={genUserStyles.user__status}
+                  variant="outlined"
+                >
                   <CardHeader
                     avatar={
                       <Avatar
                         alt="user-img"
                         src={user.user.img_path}
-                        sx={{ width: 60, height: 60 }}
+                        sx={{ width: 55, height: 55 }}
                       />
                     }
-                    title={post.title}
+                    title={user.user.username}
                     titleTypographyProps={{ variant: "subtitle1" }}
-                    subheader={post.created.slice(0, 10)}
-                    sx={{ cursor: "pointer" }}
+                    subheader={posts.created.slice(0, 10)}
                   />
-                  <p
-                    onClick={() => router.push(`/blog/${post.id}`)}
-                    className={genUserStyles.user__blog_content}
-                  >
-                    {post.content.slice(0,275)} ...
+                  <p className={genUserStyles.user__status_post}>
+                    {posts.personal_post}
                   </p>
-                  <p className={genUserStyles.user__blog_created}>
-                    <DeleteIcon
+                  <p className={genUserStyles.user__delete}>
+                    <DeleteOutlinedIcon
+                      color="error"
+                      fontSize="small"
                       style={{ cursor: "pointer" }}
                       onClick={() => {
                         deleteHandle(
-                          "https://dgisvr.xyz/blog/delete",
-                          post.id,
-                          `https://dgisvr.xyz/user/${user.user.username}/blogs`
+                          "https://dgisvr.xyz/personal/delete",
+                          posts.id,
+                          `https://dgisvr.xyz/user/${user.user.username}/personals`
                         );
                       }}
                     />
                   </p>
                 </Card>
-              </li>
             );
           })}
-        </ul>
-      </div> 
-    )
-  }
+      </div>
+    );
+  };
 
-  const renderPersonals = () => {
+  const renderThreads = () => {
     return (
       <div>
-        <ul>
-        {personals.map((posts) => {
-          return (
-            <li key={uuidv4()} style={{ listStyleType: "none" }}>
+          {threads.map((thread) => {
+            return (
               <Card
-                className={genUserStyles.user__personal_card}
+                className={genUserStyles.user__threads}
                 variant="outlined"
+                key={uuidv4()}
               >
                 <CardHeader
                   avatar={
                     <Avatar
                       alt="user-img"
                       src={user.user.img_path}
-                      sx={{ width: 60, height: 60 }}
+                      sx={{ width: 55, height: 55 }}
                     />
                   }
-                  title={user.user.username}
-                  titleTypographyProps = {{variant: "subtitle1"}}
-                  subheader={posts.created.slice(0, 10)}
+                  title={thread.thread_subject}
+                  titleTypographyProps={{ variant: "subtitle1" }}
+                  subheader={thread.created.slice(0, 10)}
                 />
-                <p className={genUserStyles.user__personal_post}>
-                  {posts.personal_post}
+                <p className={genUserStyles.user__threads_post}>
+                  {thread.initial_post}
                 </p>
-                <p className={genUserStyles.user__personal_created}>
-                  <DeleteIcon
+                <p
+                  onClick={() => router.push(`/thread/${thread.id}`)}
+                  className={genUserStyles.user__delete}
+                >
+                  <DeleteOutlinedIcon
+                    fontSize="small"
+                    color = "error"
                     style={{ cursor: "pointer" }}
                     onClick={() => {
                       deleteHandle(
-                        "https://dgisvr.xyz/personal/delete",
-                        posts.id,
-                        `https://dgisvr.xyz/user/${user.user.username}/personals`
+                        "https://dgisvr.xyz/thread/delete",
+                        thread.id,
+                        `https://dgisvr.xyz/user/${user.user.username}/threads`
                       );
                     }}
                   />
                 </p>
               </Card>
-            </li>
-          );}
-        )}
-      </ul>
-    </div>
-    )    
-  };
-
-  const renderThreads = () => {
-    return (
-      <div className={genUserStyles.user__thread}>
-        <ul>
-          {threads.map((thread) => {
-            return (
-              <li key={uuidv4()}>
-                <Card
-                  className={genUserStyles.user__thread_card}
-                  variant="outlined"
-                >
-                  <CardHeader
-                    avatar={
-                      <Avatar
-                        alt="user-img"
-                        src={user.user.img_path}
-                        sx={{ width: 60, height: 60 }}
-                      />
-                    }
-                    title={thread.thread_subject}
-                    titleTypographyProps={{ variant: "subtitle1" }}
-                    subheader={thread.created.slice(0, 10)}
-                  />
-                  <p className={genUserStyles.user__thread_initial}>
-                    {thread.initial_post}
-                  </p>
-                  <p
-                    onClick={() => router.push(`/thread/${thread.id}`)}
-                    className={genUserStyles.user__thread_delete}
-                  >
-                    <DeleteIcon
-                      style={{ cursor: "pointer" }}
-                      onClick={() => {
-                        deleteHandle(
-                          "https://dgisvr.xyz/thread/delete",
-                          thread.id,
-                          `https://dgisvr.xyz/user/${user.user.username}/threads`
-                        );
-                      }}
-                    />
-                  </p>
-                </Card>
-              </li>
             );
           })}
-        </ul>
       </div>
     );
   };
 
   const renderPosts = () => {
     return (
-      <div className={genUserStyles.user__thread}>
-        <ul>
-          {posts.map((post) => {
-            return (
-              <li key={uuidv4()}>
-                <Card
-                  className={genUserStyles.user__thread_card}
-                  variant="outlined"
-                >
-                  <CardHeader
-                    avatar={
-                      <Avatar
-                        alt="user-img"
-                        src={user.user.img_path}
-                        sx={{ width: 60, height: 60 }}
-                      />
-                    }
-                    title={post.thread_subject}
-                    titleTypographyProps={{ variant: "subtitle1" }}
-                    subheader={post.created.slice(0, 10)}
+      <div>
+        {posts.map((post) => {
+          return (
+            <Card
+              className={genUserStyles.user__threads}
+              variant="outlined"
+              key={uuidv4()}
+            >
+              <CardHeader
+                avatar={
+                  <Avatar
+                    alt="user-img"
+                    src={user.user.img_path}
+                    sx={{ width: 55, height: 55 }}
                   />
-                  <p
-                    onClick={() => router.push(`/thread/${post.thread_id}`)}
-                    className={genUserStyles.user__thread_initial}
-                  >
-                    {post.content}
-                  </p>
-                  <p className={genUserStyles.user__thread_delete}>
-                    <DeleteIcon
-                      style={{ cursor: "pointer" }}
-                      onClick={() => {
-                        deleteHandle(
-                          "https://dgisvr.xyz/post/delete",
-                          post.id,
-                          `https://dgisvr.xyz/user/${user.user.username}/posts`
-                        );
-                      }}
-                    />
-                  </p>
-                </Card>
-              </li>
-            );
-          })}
-        </ul>
+                }
+                title={post.thread_subject}
+                titleTypographyProps={{ variant: "subtitle1" }}
+                subheader={post.created.slice(0, 10)}
+              />
+              <p
+                onClick={() => router.push(`/thread/${post.thread_id}`)}
+                className={genUserStyles.user__threads_post}
+              >
+                {post.content}
+              </p>
+              <p className={genUserStyles.user__delete}>
+                <DeleteOutlinedIcon
+                  color="error"
+                  fontSize="small"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => {
+                    deleteHandle(
+                      "https://dgisvr.xyz/post/delete",
+                      post.id,
+                      `https://dgisvr.xyz/user/${user.user.username}/posts`
+                    );
+                  }}
+                />
+              </p>
+            </Card>
+          );
+        })}
+      </div>
+    );
+  };
+
+  const renderPostOptions = () => {
+    return (
+      <div className={genUserStyles.user__posts}>
+        <Grid container className={genUserStyles.user__posts_options}>
+          <Grid item xs={6} style={{ borderRight: "1px solid black" }}>
+            <p onClick = {() => {
+              showUserPost(true)
+              showUserThread(false)
+            }} > User Posts</p>
+          </Grid>
+          <Grid item xs={6}>
+            <p onClick = {() => {
+              showUserPost(false)
+              showUserThread(true)
+            }} > User Threads</p>
+          </Grid>
+        </Grid>
+
+        <div className = {genUserStyles.user__posts_body}>
+          {userPost ? renderPosts() : null}
+          {userThread ? renderThreads() :null}
+        </div> 
       </div>
     );
   };
@@ -361,69 +378,29 @@ export default function GenerateUserInfo(props) {
 
   return (
     <>
-      <Card
-        variant="outlined"
-        className={genUserStyles.user__options}
-        style={{ boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)" }}
-      >
-        <Grid container spacing={1}>
-          <Grid item xs={4} sm={2} onClick={displayBlogs}>
-            <p className={genUserStyles.user__options_list}>
-              Blogs
-              <span>
-                <LibraryBooksIcon htmlColor="#1976d2" />
-              </span>
-            </p>
+      <div className={genUserStyles.user__options}>
+        <Grid
+          container
+          spacing={1}
+          className={genUserStyles.user__options_grid}
+        >
+          <Grid item xs={4} onClick={displayBlogs}>
+            <p className={genUserStyles.user__options_list}>Blog</p>
           </Grid>
-          <Grid item xs={4} sm={2} onClick={displayPersonals}>
-            <p className={genUserStyles.user__options_list}>
-              Status
-              <span>
-                <TextsmsIcon htmlColor="#1976d2" />
-              </span>
-            </p>
+          <Grid item xs={4} onClick={displayPersonals}>
+            <p className={genUserStyles.user__options_list}>Status</p>
           </Grid>
-          <Grid item xs={4} sm={2} onClick={displayThread}>
-            <p className={genUserStyles.user__options_list}>
-              Threads
-              <span>
-                <ForumIcon htmlColor="#1976d2" />
-              </span>
-            </p>
-          </Grid>
-          <Grid item xs={4} sm={2} onClick={displayPost}>
-            <p className={genUserStyles.user__options_list}>
-              Posts
-              <span>
-                <NoteIcon htmlColor="#1976d2" />
-              </span>
-            </p>
-          </Grid>
-          <Grid item xs={4} sm={2} onClick={displayFollowers}>
-            <p className={genUserStyles.user__options_list}>
-              Followers
-              <span>
-                <GroupIcon htmlColor="#1976d2" />
-              </span>
-            </p>
-          </Grid>
-          <Grid item xs={4} sm={2} onClick={displayFollowing}>
-            <p className={genUserStyles.user__options_list}>
-              Following
-              <span>
-                <FollowTheSignsIcon htmlColor="#1976d2" />
-              </span>
-            </p>
+          <Grid item xs={4} onClick={displayPost}>
+            <p className={genUserStyles.user__options_list}>Posts</p>
           </Grid>
         </Grid>
-      </Card>
+      </div>
 
-      {post ? renderPosts() : null}
-      {thread ? renderThreads() : null}
-      {status ? renderPersonals() : null}
-      {blog ? renderBlogs() : null}
-      {follower ? renderFollowers() : null}
-      {following ? renderFollowing() : null}
+      <div className={genUserStyles.user__content}>
+        {postOptions ? renderPostOptions() : null}
+        {status ? renderPersonals() : null}
+        {blog ? renderBlogs() : null}
+      </div>
     </>
   );
 }
