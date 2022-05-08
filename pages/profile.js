@@ -211,11 +211,7 @@ export default function Profile  ({auth, username}) {
             refresh={refresh}
             imgHandle={sendImage}
           />
-          <CreateStatusForm
-            handler={postStatus}
-            refresh={refresh}
-            username={username}
-          />
+
           {CrudAlert()}
           <GenerateUserInfo
             personals={personals}
@@ -229,6 +225,7 @@ export default function Profile  ({auth, username}) {
             user={user}
             createBlog={createBlogPost}
           />
+          
         </Box>
       )}
     </>

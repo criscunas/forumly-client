@@ -2,7 +2,7 @@
 @use './variables.scss' as *;
 
 .profile {
-  margin: 1rem;
+  
   max-width: 900px;
 
   @include tablet {

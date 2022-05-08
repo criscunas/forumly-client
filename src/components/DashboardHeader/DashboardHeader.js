@@ -9,73 +9,102 @@ import DynamicFeedIcon from "@mui/icons-material/DynamicFeed";
 import fetchJson from "../../../lib/fetchJson";
 import useUser from "../../../lib/useUser";
 import LoginIcon from "@mui/icons-material/Login";
+import MenuIcon from "@mui/icons-material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import { useState } from "react";
+import { Grid, Avatar, Card, CardHeader, Fade, Button , Menu , Divider, IconButton, InputBase, Paper} from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
 
-export const DashboardHeader = () => {
+export default function DashboardHeader() {
   const { user, mutateUser } = useUser();
   const router = useRouter();
+
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
 
   return (
     <>
       {user?.isLoggedIn === true && (
-        <header className={dashHeader.dashnav}>
-          <h1
-            onClick={() => router.push("/dashboard")}
-            className={dashHeader.dashnav__header}
-          >
-            {" "}
-            digi.
-          </h1>
-          <ul className={dashHeader.dashnav__list}>
-            <li>
-              <Link
-                className={dashHeader.dashnav__list_item}
-                href="/profile"
-                passHref
-              >
-                <AccountCircleIcon style={{ color: "white" }} />
-              </Link>
-            </li>
-            <li>
-              <Link
-                className={dashHeader.dashnav__list_item}
-                href="/general"
-                passHref
-              >
-                <TravelExploreIcon style={{ color: "white" }} />
-              </Link>
-            </li>
-            <li>
-              <Link
-                className={dashHeader.dashnav__list_item}
-                href="/discover"
-                passHref
-              >
-                <CategoryIcon style={{ color: "white" }} />
-              </Link>
-            </li>
-            <li>
-              <Link
-                className={dashHeader.dashnav__list_item}
-                href="/feed"
-                passHref
-              >
-                <DynamicFeedIcon style={{ color: "white" }} />
-              </Link>
-            </li>
-            <li
-              className="dashnav__list-item"
-              onClick={async (e) => {
-                e.preventDefault();
-                mutateUser(
-                  await fetchJson("/api/logout", { method: "POST" }),
-                  false
-                );
-                router.push("/");
+        <header className={dashHeader.header}>
+          <div className={dashHeader.header__container}>
+            <h1
+              onClick={() => router.push("/dashboard")}
+              className={dashHeader.header__title}
+            >
+              digi.
+            </h1>
+
+            <Paper
+              component="form"
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                width: 200,
+                padding: "0 0.5rem",
               }}
             >
-              <LogoutIcon style={{ color: "white" }} />
-            </li>
-          </ul>
+              <InputBase
+                placeholder="Search"
+                inputProps={{ "aria-label": "search" }}
+              />
+              <IconButton type="submit" aria-label="search">
+                <SearchIcon />
+              </IconButton>
+            </Paper>
+
+            <Button
+              id="fade-button"
+              style={{ display: "none" }}
+              aria-controls={open ? "fade-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+              onClick={handleClick}
+            >
+              <MenuIcon htmlColor="white" />
+            </Button>
+            <Menu
+              className={dashHeader.header__menu}
+              id="fade-menu"
+              MenuListProps={{
+                "aria-labelledby": "fade-button",
+              }}
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              TransitionComponent={Fade}
+            >
+              <div className={dashHeader.header__menu_list}>
+                <MenuItem onClick={handleClose}>
+                  <Link href="/profile">
+                    <a>Profile</a>
+                  </Link>
+                </MenuItem>
+                <MenuItem onClick={handleClose}>
+                  <Link href="/">
+                    <a>Dashboard</a>
+                  </Link>
+                </MenuItem>
+                <MenuItem onClick={handleClose}>
+                  <Link href="/feed">
+                    <a>Feed</a>
+                  </Link>
+                </MenuItem>
+                <MenuItem onClick={handleClose}>
+                  <Link href="/discover">
+                    <a>Discuss</a>
+                  </Link>
+                </MenuItem>
+              </div>
+            </Menu>
+          </div>
         </header>
       )}
       {user?.isLoggedIn === false && (
@@ -118,5 +147,5 @@ export const DashboardHeader = () => {
   );
 };
 
-export default DashboardHeader;
+
 

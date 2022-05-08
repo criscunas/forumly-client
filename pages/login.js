@@ -89,7 +89,6 @@ export default function LoginPage() {
             />
             <Button
               type="submit"
-              disabled
               size="medium"
               variant="contained"
               style={{ backgroundColor: "#0798ec", color: "white" }}
