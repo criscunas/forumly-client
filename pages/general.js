@@ -103,8 +103,8 @@ export default function General({ fallbackData, auth }) {
         headers: headers,
       })
       .then(() => {
-        setOpen(true)
-        mutate("https://dgisvr.xyz/thread/all")
+        setOpen(true);
+        mutate("https://dgisvr.xyz/thread/all");
       })
       .catch((err) => {
         console.log(err);
@@ -118,6 +118,8 @@ export default function General({ fallbackData, auth }) {
           <Box className={generalStyles.general}>
             <div className={generalStyles.general__header}>
               <h1 className={generalStyles.general__title}>General</h1>
+
+              <p>Must be a member to post. </p>
             </div>
             
             <GenerateThreads threads={data} auth={false} />

@@ -52,12 +52,14 @@
     border-radius: 3px;
     background-color: white;
     box-shadow: 0 3px 10px rgb(0 0 0 / 0.5);
-    display: flex;
+    display: none;
     flex-direction: column;
     gap: 1.5rem;
+    border: 1px solid red;
 
     @include tablet {
       margin: 0 auto 2rem auto;
+
       max-width: 600px;
     }
   }

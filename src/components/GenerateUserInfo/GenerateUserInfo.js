@@ -111,7 +111,7 @@ export default function GenerateUserInfo(props) {
                     onClick={() => router.push(`/blog/${post.id}`)}
                     className={genUserStyles.user__blog_content}
                   >
-                    {post.content}
+                    {post.content.slice(0,275)} ...
                   </p>
                   <p className={genUserStyles.user__blog_created}>
                     <DeleteIcon
