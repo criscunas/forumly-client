@@ -1,7 +1,7 @@
-import generalStyles from "../styles/General.module.scss";
+import discussStyles from "../styles/Discuss.module.scss";
 import CreateThread from "../src/components/CreateThread/CreateThread";
 import GenerateThreads from "../src/components/GenerateThreads/GenerateThreads";
-import { Container, Box, Snackbar, SnackbarContent} from "@material-ui/core";
+import { Container, Box, Snackbar, SnackbarContent, Paper, TableRow, TableHead, TableContainer, TableCell, TableBody, Table} from "@material-ui/core";
 import axios from "axios";
 import useSwr, { useSWRConfig } from "swr";
 import fetcher from "../lib/fetcher";
@@ -9,6 +9,7 @@ import { sessionOptions } from "../lib/session";
 import { withIronSessionSsr } from "iron-session/next";
 import { useState } from "react";
 import CheckIcon from "@mui/icons-material/Check";
+
 
 export const getServerSideProps = withIronSessionSsr(async function ({
   req,
@@ -36,7 +37,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({
 },
 sessionOptions);
 
-export default function General({ fallbackData, auth }) {
+export default function Discuss({ fallbackData, auth }) {
   
   const [open,setOpen] = useState(false)
 
@@ -115,9 +116,9 @@ export default function General({ fallbackData, auth }) {
     <>
       {!auth ? (
         <Container maxWidth="xl" disableGutters>
-          <Box className={generalStyles.general}>
-            <div className={generalStyles.general__header}>
-              <h1 className={generalStyles.general__title}>General</h1>
+          <Box className={discussStyles.general}>
+            <div className={discussStyles.general__header}>
+              <h1 className={discussStyles.general__title}>General</h1>
 
               <p>Must be a member to post. </p>
             </div>
@@ -127,15 +128,9 @@ export default function General({ fallbackData, auth }) {
         </Container>
       ) : (
         <Container maxWidth="xl" disableGutters>
-          <Box className={generalStyles.general}>
-            <div className={generalStyles.general__header}>
-              <h1 className={generalStyles.general__title}>General</h1>
-              <CreateThread handler={createThread} refresh={refresh} />
-            </div>
-            {CrudAlert()}
-            <GenerateThreads
-              threads={data}
-            />
+          <Box className={discussStyles.general}>
+            <CreateThread handler = {createThread} refresh = {refresh}/>
+            <GenerateThreads threads = {data} />
           </Box>
         </Container>
       )}

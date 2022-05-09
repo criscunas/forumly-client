@@ -2,14 +2,15 @@
 @use './variables.scss'as *;
 
 .publicProfile {
-  margin: 1rem;
+  // padding: 1rem;
+  background-color: $black;
   
   @include tablet {
-    margin: 2rem;
+    // margin: 2rem;
   }
 
   @include breakpoint {
-    margin: 2.5rem;
+    // margin: 2.5rem;
   }
 
   &__loading {

@@ -37,6 +37,7 @@
 
   &__threads {
     position: relative;
+    margin: 1.5rem 0 1rem 0;
   }
   
   &__thread_card {
@@ -104,6 +105,24 @@
 
   &__follow {
     margin: 1rem 0rem;
+  }
+
+  &__follow_header {
+    @include section-header;
+    padding: 0.5rem 0 1.5rem 0;
+  }
+
+  &__follow_box {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  &__follow_user {
+    @include body-text;
+    font-size: 0.9rem;
+
   }
 
   &__follow_card {

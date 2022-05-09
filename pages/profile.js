@@ -4,7 +4,6 @@ import {
   SnackbarContent
 } from "@material-ui/core";
 import ProfileCard from '../src/components/ProfileCard/ProfileCard';
-import { CreateStatusForm } from "../src/components/CreateStatusForm/CreateStatusForm";
 import GenerateUserInfo from "../src/components/GenerateUserInfo/GenerateUserInfo";
 import axios from 'axios';
 import profileStyles from '../styles/Profile.module.scss';
@@ -14,6 +13,7 @@ import fetcher from "../lib/fetcher";
 import useSWR, { useSWRConfig} from "swr";
 import { useState } from "react";
 import CheckIcon from '@mui/icons-material/Check';
+
 
 export const getServerSideProps = withIronSessionSsr(async function ({
   req,
@@ -45,6 +45,8 @@ sessionOptions);
 export default function Profile  ({auth, username}) {
 
   const [open, setOpen] = useState(false);
+  const [followers, showFollowers] = useState(false)
+  const [following, showFollowing] = useState(false)
 
   const { data: user } = useSWR(
     `https://dgisvr.xyz/user/profile/${username}`,

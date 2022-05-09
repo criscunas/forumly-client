@@ -1,9 +1,8 @@
 @use '../styles/mixins.scss'as *;
 @use '../styles/variables.scss'as *;
 
-.userFeed {
-  margin: 0 1rem;
-  
+.feed {
+  padding: 1rem;
 
   @include tablet {
     margin: 0 2rem;
@@ -11,6 +10,50 @@
 
   @include breakpoint {
     margin: 0 2.5rem;
+  }
+
+
+  &__news {
+  height: 30vh;
+  margin: 0 1rem;
+  border-bottom: 2px solid $black;
+  }
+
+  &__article_header {
+    @include section-header;
+    padding-left: 1rem;
+  }
+
+  &__article {
+    
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+
+  &__article_title {
+    color: black;
+    text-decoration: none;
+    @include sub-header;
+    text-align: center;
+    padding: 0 1rem;
+  }
+
+  &__article_src {
+    text-align: right;
+    padding: 0.5rem 0;
+  }
+
+  &__followers_section {
+    @include section-header;
+    padding: 1rem 1rem 0.5rem 1rem;
+  }
+
+  &__followers {
+    
   }
 
   &__empty {
@@ -24,3 +67,4 @@
     max-width: 900px;
   }
 }
+

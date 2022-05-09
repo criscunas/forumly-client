@@ -3,109 +3,102 @@
 
 .public {
 
-  margin: 1rem 0;
+  // margin: 1rem 0;
 
-
-  &__main {
+  &__card {
+    background-color: #28282B;
     display: flex;
+    padding: 2rem 1rem;
     align-items: center;
-    flex-direction: column;
-    padding-top: 1rem;
+    gap: 0.8rem;
   }
 
-  &__name {
-    padding-top: 1.5rem;
-    font-weight: 600;
-    font-size: 1.2rem;
+  &__username {
+    @include section-header; 
   }
 
   &__bio {
-    padding-bottom:1rem ;
+    display: flex; 
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-left: 1rem;
+  }
+
+  &__status {
+    
+    margin: 0 1rem 1rem 1rem;
+    
   }
 
   &__button {
-    padding-top: 1rem;
+    margin-top: 0.3rem;
   }
 
   &__content {
     text-align: center;
   }
 
-  &__status {
-    margin: 1rem 0 ;  
-  }
 
   &__status_text {
-    margin-top: 0.5rem;
     line-height: 1.5rem;
-
+    @include body-text;
+    
     @include tablet {
       margin-left: 0.5rem;
     }
-    
   }
 
-  &__status_time {
-    text-align: right;
+
+  &__status_content {
+    padding: 0.5rem 1rem 0 1rem;
   }
+
 
   &__options {
-    margin: 1rem 0;
-    display: flex;
-    flex-wrap: wrap;
+    text-align: center;
+    padding: 1.5rem 0 1.5rem 0;
+    background-color: white;
+    border-top-right-radius: 4em;
+
   }
 
-  &__options_list {
-    display: flex;
-    flex: 1;
+  &__options_text {
+    @include sub-header;
   }
 
-  &__options_list_item {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    flex: 1;
-    justify-content: center;
-    padding: 1rem 0;
-    cursor: pointer;
-  }
 
-  &__blog {
-    margin: 1rem 0;
+  &__blog { 
+    margin: 0 1rem 1rem 1rem;
   }
 
   &__blog_content {
-    padding: 1rem;
-    line-height: 1.5rem;
+    padding: 0.5rem 1rem 0.5rem 1rem;
 
     &:hover {
       text-decoration: underline;
     }
 
     @include tablet {
-      padding: 1.5rem;
+      
     }
   }
 
-  &__blog_content_title {
-    padding: 1rem 1rem 0.5rem 1rem;
-    font-weight: bold;
-    font-size: 1.2rem;
+  &__blog_title {
+    
+    padding: 0rem 0 0.5rem 0rem;
+
+    @include sub-header;
+    // padding: 0.5rem 1rem 1rem 0rem;
+
 
     @include tablet {
-      padding: 1.5rem 1.5rem 0.5rem 1.5rem;
+
     }
 
   }
 
-
-  &__blog_created {
-    text-align: right;
-    padding: 1rem;
-
-    @include tablet {
-      padding: 1.5rem;
-    }
+  &__blog_descr {
+    margin-bottom: 0.5rem;
   }
 
   &__loading {
@@ -123,17 +116,6 @@
   &__actions {
     display: flex;
     flex-direction: column;
-  }
-
-
-  &__button {
-    text-align: center;
-    margin-bottom: 1rem;
-  }
-
-  &__button_text {
-    margin-top: 0.5rem;
-    font-size: 0.8rem;
   }
 
 }

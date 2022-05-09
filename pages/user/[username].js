@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import fetcher from "../../lib/fetcher";
 import useSWR, { useSWRConfig } from "swr";
 import { sessionOptions } from "../../lib/session";
+import { useEffect } from "react";
 
 const fetchFollow = (url, token) =>
   axios
@@ -21,8 +22,12 @@ const fetchFollow = (url, token) =>
 export const getServerSideProps = withIronSessionSsr(async function ({
   req,
   res,
-}) {
+  params
+}, ) {
+  
   const user = req.session.user;
+  const username = params.username;
+  console.log(username)
 
   if (user === undefined) {
     return {
@@ -31,6 +36,13 @@ export const getServerSideProps = withIronSessionSsr(async function ({
       },
     };
   }
+
+  if (user.username === params.username) {
+    res.setHeader("location", "/profile");
+    res.statusCode = 302;
+    res.end();
+  }
+
 
   return {
     props: {
@@ -45,6 +57,7 @@ export default function PublicProfile({ user }) {
   const router = useRouter();
   const { username } = router.query;
 
+  
 
   const { data: profile } = useSWR(
     `https://dgisvr.xyz/user/public/${username}`,

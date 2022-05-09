@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import CreateBlogForm from "../CreateBlogForm/CreateBlogForm";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
+import profileCardStyles from "../ProfileCard/ProfileCard.module.scss";
 
 export default function GenerateUserInfo(props) {
   const {
@@ -49,7 +50,6 @@ export default function GenerateUserInfo(props) {
     showFollower(true);
     showPostOptions(false);
     showFollowing(false);
-    
     showBlogs(false);
   };
 
@@ -57,7 +57,6 @@ export default function GenerateUserInfo(props) {
     showFollowing(true);
     showFollower(false);
     showPostOptions(false);
-    
     showStatus(false);
     showBlogs(false);
   };
@@ -192,6 +191,7 @@ export default function GenerateUserInfo(props) {
                       sx={{ width: 55, height: 55 }}
                     />
                   }
+                  onClick={() => router.push(`/thread/${thread.id}`)}
                   title={thread.thread_subject}
                   titleTypographyProps={{ variant: "subtitle1" }}
                   subheader={thread.created.slice(0, 10)}
@@ -199,13 +199,10 @@ export default function GenerateUserInfo(props) {
                 <p className={genUserStyles.user__threads_post}>
                   {thread.initial_post}
                 </p>
-                <p
-                  onClick={() => router.push(`/thread/${thread.id}`)}
-                  className={genUserStyles.user__delete}
-                >
+                <p className={genUserStyles.user__delete}>
                   <DeleteOutlinedIcon
                     fontSize="small"
-                    color = "error"
+                    color="error"
                     style={{ cursor: "pointer" }}
                     onClick={() => {
                       deleteHandle(
@@ -301,39 +298,26 @@ export default function GenerateUserInfo(props) {
   const renderFollowers = () => {
     return (
       <div className={genUserStyles.user__follow}>
-        <ul>
-          <Grid container spacing={1}>
-            {userFollowers.map((follower) => {
-              return (
-                <Grid item xs={12} sm={6} md={4} key={uuidv4()}>
-                  <li>
-                    <Card
-                      className={genUserStyles.user__follow_card}
-                      variant="outlined"
-                    >
-                      <CardHeader
-                        avatar={
-                          <Avatar
-                            alt="user-img"
-                            src={follower.img_path}
-                            sx={{ width: 60, height: 60 }}
-                          />
-                        }
-                        title={follower.username}
-                        sx={{ cursor: "pointer" }}
-                        titleTypographyProps={{ variant: "h6" }}
-                        subheader={follower.bio}
-                        onClick={() =>
-                          router.push(`/user/${follower.username}`)
-                        }
-                      />
-                    </Card>
-                  </li>
-                </Grid>
-              );
-            })}
-          </Grid>
-        </ul>
+        <h1 className={genUserStyles.user__follow_header}> Followers </h1>
+        <Grid container spacing={1}>
+          {userFollowers.map((follower) => {
+            return (
+              <Grid item xs={3} sm={4}key={uuidv4()}>
+                <div className={genUserStyles.user__follow_box}>
+                  <Avatar
+                    alt="user-img"
+                    src={follower.img_path}
+                    sx={{ width: 45, height: 45, cursor: "pointer" }}
+                    onClick={() => router.push(`/user/${follower.username}`)}
+                  />
+                  <p className={genUserStyles.user__follow_user}>
+                    {follower.username}
+                  </p>
+                </div>
+              </Grid>
+            );
+          })}
+        </Grid>
       </div>
     );
   };
@@ -341,43 +325,68 @@ export default function GenerateUserInfo(props) {
   const renderFollowing = () => {
     return (
       <div className={genUserStyles.user__follow}>
-        <ul>
-          <Grid container spacing={2}>
-            {userFollowing.map((user) => {
-              return (
-                <Grid item xs={12} sm={6} md={4} key={uuidv4()}>
-                  <li>
-                    <Card
-                      className={genUserStyles.user__follow_card}
-                      variant="outlined"
-                    >
-                      <CardHeader
-                        avatar={
-                          <Avatar
-                            alt="user-img"
-                            src={follower.img_path}
-                            sx={{ width: 60, height: 60 }}
-                          />
-                        }
-                        sx={{ cursor: "pointer" }}
-                        title={user.username}
-                        titleTypographyProps={{ variant: "h6" }}
-                        subheader={user.bio}
-                        onClick={() => router.push(`/user/${user.username}`)}
-                      />
-                    </Card>
-                  </li>
-                </Grid>
-              );
-            })}
-          </Grid>
-        </ul>
+        <h1 className={genUserStyles.user__follow_header}> Following </h1>
+        <Grid container spacing={1}>
+          {userFollowing.map((user) => {
+            return (
+              <Grid item xs={3} sm={4} key={uuidv4()}>
+                <div className={genUserStyles.user__follow_box}>
+                  <Avatar
+                    alt="user-img"
+                    src={user.img_path}
+                    sx={{ width: 45, height: 45, cursor: "pointer" }}
+                    onClick={() => router.push(`/user/${follower.username}`)}
+                  />
+                  <p className={genUserStyles.user__follow_user}>
+                    {user.username}
+                  </p>
+                </div>
+              </Grid>
+            );
+          })}
+        </Grid>
       </div>
     );
   };
 
   return (
     <>
+      <Grid container className={profileCardStyles.profilecard__followers}>
+        <Grid item xs={4} sx={{ borderRight: "1px solid white" }}>
+          <div className={profileCardStyles.profilecard__followers_length}>
+            <p className={profileCardStyles.profilecard__followers_num}>
+              {userFollowers.length}
+            </p>
+            <p
+              onClick={displayFollowers}
+              className={profileCardStyles.profilecard__followers_text}
+            >
+              Followers
+            </p>
+          </div>
+        </Grid>
+        <Grid item xs={4} sx={{ borderRight: "1px solid white" }}>
+          <div className={profileCardStyles.profilecard__followers_length}>
+            <p
+              onClick={displayFollowing}
+              className={profileCardStyles.profilecard__followers_num}
+            >
+              {userFollowing.length}
+            </p>
+            <p className={profileCardStyles.profilecard__followers_text}>
+              Following
+            </p>
+          </div>
+        </Grid>
+        <Grid item xs={4}>
+          <div className={profileCardStyles.profilecard__followers_length}>
+            <p className={profileCardStyles.profilecard__followers_num}>0</p>
+            <p className={profileCardStyles.profilecard__followers_text}>
+              Posts
+            </p>
+          </div>
+        </Grid>
+      </Grid>
       <div className={genUserStyles.user__options}>
         <Grid
           container
@@ -400,6 +409,8 @@ export default function GenerateUserInfo(props) {
         {postOptions ? renderPostOptions() : null}
         {status ? renderPersonals() : null}
         {blog ? renderBlogs() : null}
+        {follower ? renderFollowers() : null}
+        {following ? renderFollowing() : null}
       </div>
     </>
   );

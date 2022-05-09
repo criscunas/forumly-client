@@ -5,8 +5,8 @@
 
   
   &__menu {
-    background-color: $light-gray;
-    padding: 0.5rem 0;
+    background-color: white;
+    padding-bottom: 1rem;
   }
 
   &__menu_link {
@@ -15,5 +15,10 @@
     gap: 0.3rem;
     text-align: center;
     align-items: center;
+  }
+
+  &__menu_post {
+    color: $medium-blue;
+    text-align: center;    
   }
 }

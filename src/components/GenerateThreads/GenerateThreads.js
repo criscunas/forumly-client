@@ -5,60 +5,73 @@ import {
   CardHeader,
   Avatar,
 } from "@mui/material";
-import { useRouter } from "next/router";
 import { v4 as uuidv4 } from "uuid";
+import {
+  TableRow,
+  TableHead,
+  TableContainer,
+  TableCell,
+  TableBody,
+  Table,
+  Paper
+} from "@material-ui/core";
+import {useRouter} from 'next/router';
 
 
 
-export default function GenerateThreads(props) {
+export default function GenerateThreads({ threads }) {
+
+  const Router = useRouter()
   
-  
-  const { threads} = props;
-
-  const router = useRouter();
-
   return (
-    <>
-      <ul>
-        {threads.map((data) => {
-          return (
-            <li key={uuidv4()}>
-              <Card
-                className={threadStyles.feedcard}
-                variant="outlined"
-                sx={{ boxShadow: "0 3px 10px rgb(0 0 0 / 0.2)" }}
-              >
-                <CardHeader
+    <div className={threadStyles.threads}>
+      <h1 className={threadStyles.threads__section}> Latest </h1>
+      <TableContainer>
+        <Table aria-label="thread-table" size="medium">
+          <TableHead>
+            <TableRow>
+              <TableCell>
+                <p className={threadStyles.threads__header}>User</p>
+              </TableCell>
+              <TableCell align="right">
+                <p className={threadStyles.threads__header}>Title</p>
+              </TableCell>
+              <TableCell align="right">
+                <p className={threadStyles.threads__header}>Category</p>
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {threads.map((row) => (
+              <TableRow style={{ border: "2px solid #d6d4d4" }} key={uuidv4()}>
+                <TableCell
+                  scope="row"
                   onClick={() => {
-                    router.push(`/user/${data.username}`);
+                    Router.push(`/user/${row.username}`);
                   }}
-                  title={data.username}
-                  titleTypographyProps={{ variant: "h6" }}
-                  subheader={data.created.slice(0, 10)}
-                  style={{ cursor: "pointer" }}
-                  avatar={
-                    <Avatar
-                      alt="user-img"
-                      src={data.img_path}
-                      sx={{ width: 55, height: 55 }}
-                    />
-                  }
-                />
-                <h1
-                  onClick={() => router.push(`thread/${data.id}`)}
-                  className={threadStyles.feedcard__header}
-                  style={{ cursor: "pointer" }}
+                  className={threadStyles.threads__text}
                 >
-                  {data.thread_subject}
-                </h1>
-                <CardContent className={threadStyles.feedcard__post}>
-                  {data.initial_post}
-                </CardContent>
-              </Card>
-            </li>
-          );
-        })}
-      </ul>
-    </>
+                  {row.username}
+                </TableCell>
+                <TableCell
+                  align="right"
+                  onClick={() => {
+                    Router.push(`/thread/${row.id}`);
+                  }}
+                  className={threadStyles.threads__text}
+                >
+                  {row.thread_subject}
+                </TableCell>
+                <TableCell align="right" className={threadStyles.threads__text}>
+                  Category
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </div>
   );
-}
+} 
+
+
