@@ -6,27 +6,27 @@ import {v4 as uuidv4} from 'uuid';
 export default function GenerateFollowFeed (props) {
 
   const {feed} = props;
-  const router = useRouter();
+  const Router = useRouter();
   
   return (
     <>
-      <ul>
         {feed.map((posts) => {
           return (
             <Card
               key={uuidv4()}
               variant="outlined"
-              className={genFeedStyles.feed}
+              className={genFeedStyles.userfeed}
               sx={{
                 boxShadow: "0 3px 10px rgb(0 0 0 / 0.2)",
               }}
             >
               <CardHeader
                 onClick={() => {
-                  router.push(`/user/${posts.username}`);
+                  Router.push(`/user/${posts.username}`);
                 }}
-                subheader={posts.username}
-                sx = {{cursor: "pointer"}}
+                title={posts.username}
+                subheader={posts.created.slice(11,19)}
+                sx={{ cursor: "pointer"}}
                 avatar={
                   <Avatar
                     alt="user-img"
@@ -36,17 +36,13 @@ export default function GenerateFollowFeed (props) {
                 }
               />
               <CardContent>
-                <p className={genFeedStyles.feed__content}>
+                <p className={genFeedStyles.userfeed__content}>
                   {posts.personal_post}
-                </p>
-                <p className={genFeedStyles.feed__timestamp}>
-                  {posts.created.slice(11, 19)}
                 </p>
               </CardContent>
             </Card>
           );
         })}
-      </ul>
     </>
   );
 } 

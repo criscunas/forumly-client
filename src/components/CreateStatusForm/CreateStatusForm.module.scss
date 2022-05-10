@@ -1,17 +1,36 @@
+@use '../../../styles/variables.scss'as *;
+@use '../../../styles/mixins.scss'as *;
+
+
 .status {
-  // border: 1px solid red;
-  margin: 1rem 0;
-  display: flex;
-  justify-content: center;
-  &__form {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+
+  &__icon {
+    
+    color: #007ee5;
+
+    @include beforeTablet {
+      color: white;
+    }
     
   }
 
+  &__form_header{
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.5rem;
+    padding: 0.5rem 0 1rem 0;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    // padding: 1rem 0;
+
+  }
+
   &__input {
-    
+    margin-bottom: 1.5rem;
     
   }
 

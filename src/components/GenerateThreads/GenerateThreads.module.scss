@@ -1,46 +1,39 @@
 @use '../../../styles/variables.scss'as *;
 @use '../../../styles/mixins.scss'as *;
 
-.feedcard {
-  
-  // margin: 1rem 0.5rem;
-  margin: 1rem;
+
+.threads {
+  padding:  0 1rem 0.5rem 1rem;
+
 
   @include tablet {
-    margin: 2rem;
+    padding: 2rem;
   }
 
-  &__user {
+  &__section {
+    @include section-header;
+    color: $dark-blue;
+    margin-bottom: 1rem;
 
-  }
-
-  &__header {
-    padding: 1rem 0 0.5rem 1rem;
-    font-size: 1.2rem;
-    font-weight: 600;
-  }
-
-  &__post {
-    font-size: 0.9rem;
-    line-height: 1.4rem;
-
-    @include tablet {
-      font-size: 1rem;
+    @include tablet { 
+      margin-bottom: 1.5rem;
     }
   }
 
-  &__post_time {
-    padding: 1.5rem 0 0 0;
-    justify-content: flex-end;
-    display: flex;
-    align-items: center;
-
+  &__header {
+    font-weight: 500;
+    @include sub-header;
+    
   }
 
-  &__icons {
-    display: flex;
-    justify-content: space-evenly;
-    margin-bottom: 1rem;
+  &__text {
+    @include body-text;
+    
   }
 
+  &__container {
+    width: 100%;
+    
+  }
 }
+

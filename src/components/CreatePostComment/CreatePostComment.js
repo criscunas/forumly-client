@@ -6,14 +6,14 @@ import {
   Button,
   Collapse,
 } from "@mui/material";
-import createPostStyles from "./CreatePostForm.module.scss";
+import createPostCommentStyles from "./CreatePostComment.module.scss";
 import { useState } from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import IconButton from "@mui/material/IconButton";
 import * as Yup from "yup";
 
 export default function CreatePostForm(props) {
-  const { handler } = props;
+  const { handler} = props;
 
   const [open, setOpen] = useState(false);
   const [expanded, setExpanded] = useState(false);
@@ -30,12 +30,12 @@ export default function CreatePostForm(props) {
   };
 
   const PostSchema = Yup.object({
-    content: Yup.string().required("Post required"),
+    comment_body: Yup.string().required("Comment required"),
   });
 
   return (
     <>
-      <Card className={createPostStyles.postCard}>
+      <Card className={createPostCommentStyles.postCard}>
         <IconButton
           expand={expanded}
           onClick={handleExpandClick}
@@ -43,7 +43,7 @@ export default function CreatePostForm(props) {
           aria-label="show more"
         >
           <ExpandMoreIcon />
-          <p className={createPostStyles.postCard__title}> Create new post </p>
+          <p className={createPostCommentStyles.postCard__title}> Comment </p>
         </IconButton>
         <Collapse in={expanded} timeout="auto">
           <div>
@@ -54,29 +54,29 @@ export default function CreatePostForm(props) {
                 resetForm();
               }}
               initialValues={{
-                content: "",
+                comment_body: "",
               }}
             >
               {(props) => (
                 <div>
                   <Form
                     style={{ padding: "1rem" }}
-                    className={createPostStyles.postCard__form}
+                    onSubmit={props.handleSubmit}
+                    className={createPostCommentStyles.postCard__form}
                   >
                     <TextField
-                      className={createPostStyles.postCard__form_input}
+                      className={createPostCommentStyles.postCard__form_input}
                       onChange={props.handleChange}
-                      value={props.values.content}
-                      name="content"
+                      value={props.values.comment_body}
+                      name="comment_body"
                       size="medium"
                       type="text"
                       multiline
-                      rows={4}
-                      label="Post"
+                      label="Comment"
                       error={
-                        props.touched.content && Boolean(props.errors.content)
+                        props.touched.comment_body && Boolean(props.errors.comment_body)
                       }
-                      helperText={props.touched.content && props.errors.content}
+                      helperText={props.touched.comment_body && props.errors.comment_body}
                       InputProps={{
                         startAdornment: (
                           <InputAdornment position="start"></InputAdornment>

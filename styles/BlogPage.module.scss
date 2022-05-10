@@ -10,8 +10,8 @@
 
   &__header {
     padding: 0rem 0 1rem 0;
-    font-weight: 600;
-    font-size: 1.5rem;
+    @include section-header;
+    
     
     @include tablet {
       padding: 1rem 0 1.5rem 0;
@@ -20,7 +20,7 @@
   }
 
   &__card {
-    max-width: 900px;
+    // max-width: 900px;
     margin: 0 auto;
     // padding: 0 1rem;
 
@@ -40,7 +40,7 @@
   }
 
   &__post {
-    font-size: 1rem;
+    @include body-text;
     line-height: 1.4rem;
 
     @include tablet {
@@ -48,4 +48,32 @@
       // font-size: 1.2rem;
     }
   }
+
+  &__form {
+    margin: 1rem 0;
+  }
+
+ 
+
+  &__form_comment {
+    
+  }
+  
+  &__comments_card {
+    position: relative;
+    margin: 1rem 0;
+  }
+  
+  &__comments_content {
+    padding: 0.5rem 1rem 1rem 1rem;
+    
+    @include body-text;
+  }
+
+  &__comments_delete {
+    position: absolute;
+    right: 3%;
+    top: 5%;
+  }
+
 }

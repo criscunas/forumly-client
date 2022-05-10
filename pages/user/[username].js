@@ -1,5 +1,5 @@
 import pubProfileStyles from "../../styles/PublicProfile.module.scss";
-import { Box, Container} from "@material-ui/core";
+import { Box, Container, Snackbar, SnackbarContent } from "@material-ui/core";
 import PublicProfileCard from "../../src/components/PublicProfileCard/PublicProfileCard";
 import axios from "axios";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -8,6 +8,8 @@ import { useRouter } from "next/router";
 import fetcher from "../../lib/fetcher";
 import useSWR, { useSWRConfig } from "swr";
 import { sessionOptions } from "../../lib/session";
+import { useState } from "react";
+import CheckIcon from "@mui/icons-material/Check";
 
 const fetchFollow = (url, token) =>
   axios
@@ -21,6 +23,7 @@ const fetchFollow = (url, token) =>
 export const getServerSideProps = withIronSessionSsr(async function ({
   req,
   res,
+  params,
 }) {
   const user = req.session.user;
 
@@ -32,6 +35,12 @@ export const getServerSideProps = withIronSessionSsr(async function ({
     };
   }
 
+  if (user.username === params.username) {
+    res.setHeader("location", "/profile");
+    res.statusCode = 302;
+    res.end();
+  }
+
   return {
     props: {
       user,
@@ -41,10 +50,9 @@ export const getServerSideProps = withIronSessionSsr(async function ({
 sessionOptions);
 
 export default function PublicProfile({ user }) {
-  
-  const router = useRouter();
-  const { username } = router.query;
-
+  const [open, setOpen] = useState(false);
+  const Router = useRouter();
+  const { username } = Router.query;
 
   const { data: profile } = useSWR(
     `https://dgisvr.xyz/user/public/${username}`,
@@ -59,6 +67,47 @@ export default function PublicProfile({ user }) {
 
   const isLoading = profile && relations;
 
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      setOpen(false);
+    }
+  };
+
+  const CrudAlert = () => {
+    return (
+      <Box>
+        <Snackbar
+          open={open}
+          autoHideDuration={5000}
+          onClose={handleClose}
+          anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+        >
+          <SnackbarContent
+            style={{ backgroundColor: "green" }}
+            message={
+              <p
+                style={{
+                  fontSize: "1rem",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  gap: "0.5rem",
+                }}
+              >
+                {" "}
+                Success !
+                <span>
+                  {" "}
+                  <CheckIcon />
+                </span>
+              </p>
+            }
+          />
+        </Snackbar>
+      </Box>
+    );
+  };
+
   const followUser = () => {
     axios
       .post(
@@ -72,6 +121,7 @@ export default function PublicProfile({ user }) {
       )
       .then(() => {
         mutate(["https://dgisvr.xyz/follow/get", user.auth]);
+        setOpen(true)
       })
       .catch((error) => {
         console.log(error);
@@ -91,6 +141,7 @@ export default function PublicProfile({ user }) {
       })
       .then(() => {
         mutate(["https://dgisvr.xyz/follow/get", user.auth]);
+        setOpen(true)
       })
       .catch((err) => {
         console.log(err);
@@ -115,6 +166,7 @@ export default function PublicProfile({ user }) {
                 user={profile.user}
                 blogs={profile.blogs}
                 posts={profile.status}
+                loggedin={false}
               />
             </Box>
           </Container>
@@ -137,6 +189,7 @@ export default function PublicProfile({ user }) {
               followings={relations}
               followHandle={followUser}
               unfollowHandle={unfollowUser}
+              loggedin={true}
             />
           </Box>
         </Container>

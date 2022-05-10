@@ -34,8 +34,8 @@ export const getServerSideProps = withSessionSsr(
 
 export default function ThreadPage ({user}) {
   
-  const router = useRouter();
-  const { id } = router.query;
+  const Router = useRouter();
+  const { id } = Router.query;
   
   const { mutate } = useSWRConfig();
   const { data, error } = useSWR(`https://dgisvr.xyz/thread/${id}`, fetcher);
@@ -89,7 +89,7 @@ export default function ThreadPage ({user}) {
 
   if(user.isLoggedIn) {
     return (
-      <>
+      <div>
         {!isLoading ? (
           <p className={ThreadPageStyles.mainThread__loading}>
             {" "}
@@ -103,19 +103,18 @@ export default function ThreadPage ({user}) {
                 username={user.username}
                 deleteHandle={deletePost}
                 refresh={refresh}
+                createHandle = {createPost}
+                loggedIn = {true}
               />
-              <div>
-                <CreatePostForm handler={createPost} />
-              </div>
             </Box>
           </Container>
         )}
-      </>
+      </div>
     );}
 
   if(!user.isLoggedIn) {
     return (
-      <>
+      <div>
         {!isLoading ? (
           <p className={ThreadPageStyles.mainThread__loading}>
             <CircularProgress />
@@ -123,12 +122,13 @@ export default function ThreadPage ({user}) {
         ) : (
           <Container className={ThreadPageStyles.mainThread}>
             <Box className={ThreadPageStyles.mainThread__content}>
-              <MainThreadContent main={data} />
+              <MainThreadContent main={data} loggedIn = {false}/>
             </Box>
           </Container>
         )}
-      </>
-    );}
+      </div>
+    );
+  }
   
 };
 

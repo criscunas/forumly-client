@@ -43,8 +43,8 @@ export const getServerSideProps = withSessionSsr(
 export default function DiscoverIDPage({ user }) {
   
   const [open,setOpen] = useState(false)
-  const router = useRouter();
-  const { id } = router.query;
+  const Router = useRouter();
+  const { id } = Router.query;
 
   const { mutate } = useSWRConfig();
   const { data } = useSWR(`https://dgisvr.xyz/categories/${id}`, fetcher);
@@ -173,7 +173,7 @@ export default function DiscoverIDPage({ user }) {
                 >
                   <CardHeader
                     onClick={() => {
-                      router.push(`/user/${post.username}`);
+                      Router.push(`/user/${post.username}`);
                     }}
                     title={post.username}
                     titleTypographyProps={{ variant: "h6" }}

@@ -2,18 +2,45 @@
 @use '../../../styles/mixins.scss'as *;
 
 .bottomNav {
-
+  padding: 1rem 0;
   
+  @include beforeTablet {
+    display: none;
+  }
+
   &__menu {
-    background-color: $light-gray;
-    padding: 0.5rem 0;
+    background-color: white;
+    // padding-bottom: 1rem;
   }
 
   &__menu_link {
     display: flex;
     flex-direction: column;
     gap: 0.3rem;
-    text-align: center;
+    
     align-items: center;
+  }
+
+  &__menu_post {
+    color: $medium-blue;
+    text-align: center;    
+  }
+
+  &__menu_nonuser {
+    padding: 0 0.5rem;
+    
+  }
+
+  &__menu_icon {
+
+    // display: flex;
+    // align-items: center;
+    // text-align: center;
+  }
+
+  &__menu_nonuser_link {
+    text-align: center;
+    padding: 0.2rem 0;
+    color: $medium-blue;
   }
 }

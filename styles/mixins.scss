@@ -6,22 +6,20 @@
   line-height:1.3rem;
   font-weight: 400;
   
-  @include tablet {
-    font-size: 1.1rem;
-    line-height: 1.6rem;
-  }
+
 }
 
+@mixin tablet-text {
+  font-size: 0.95rem;
+  line-height: 1.5rem;
+  font-weight:400;
+}
 
 @mixin sub-header {
-  font-size: 0.8125rem;
+  font-size: 0.85rem;
   line-height: 1.125rem;
   font-weight: 700;
 
-  @include tablet {
-    font-size: 0.875rem;
-    line-height: 1.375rem;
-  }
 
 }
 
@@ -34,14 +32,18 @@
 @mixin page-header {
     font-size: 1.5rem;
     line-height:2rem;
-    font-weight: 700;
+    font-weight: 600;
 
-    @include tablet {
-    font-size: 2.063rem;
-    line-height: 2.75rem;
-    }
+ 
 }
 
+
+
+@mixin beforeTablet {
+  @media screen and (min-width: $before-tablet) {
+    @content;
+  }
+}
 
 @mixin tablet {
   @media screen and (min-width: $tablet-size) {

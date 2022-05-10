@@ -49,8 +49,14 @@ export default function ProfileCard(props) {
               <div className={profileCardStyles.profilecard__bio}>
                 <h1 className={profileCardStyles.profilecard__username}>
                   {username}
-                  <span>
-                    <IconButton aria-describedby={id} size = "small" onClick={handleClick} sx = {{padding: "0"}}>
+
+                  <div className={profileCardStyles.profilecard__edit}>
+                    <IconButton
+                      aria-describedby={id}
+                      size="small"
+                      onClick={handleClick}
+                      sx={{ padding: "0" }}
+                    >
                       <MoreHorizOutlinedIcon htmlColor="white" />
                     </IconButton>
                     <Popover
@@ -68,47 +74,14 @@ export default function ProfileCard(props) {
                           <UpdateBio />
                         </p>
                         <p className={profileCardStyles.profilecard__edit_list}>
-                          <ImageUpload/>
+                          <ImageUpload />
                         </p>
                       </div>
                     </Popover>
-                  </span>
+                  </div>
                 </h1>
                 <p className={profileCardStyles.profilecard__status}>
                   {userInfo.user.bio}
-                </p>
-              </div>
-            </Grid>
-          </Grid>
-
-          <Grid container className={profileCardStyles.profilecard__followers}>
-            <Grid item xs={4} sx={{ borderRight: "1px solid white" }}>
-              <div className={profileCardStyles.profilecard__followers_length}>
-                <p className={profileCardStyles.profilecard__followers_num}>
-                  {userInfo.followers.length}
-                </p>
-                <p className={profileCardStyles.profilecard__followers_text}>
-                  Followers
-                </p>
-              </div>
-            </Grid>
-            <Grid item xs={4} sx={{ borderRight: "1px solid white" }}>
-              <div className={profileCardStyles.profilecard__followers_length}>
-                <p className={profileCardStyles.profilecard__followers_num}>
-                  {userInfo.following.length}
-                </p>
-                <p className={profileCardStyles.profilecard__followers_text}>
-                  Following
-                </p>
-              </div>
-            </Grid>
-            <Grid item xs={4}>
-              <div className={profileCardStyles.profilecard__followers_length}>
-                <p className={profileCardStyles.profilecard__followers_num}>
-                  0
-                </p>
-                <p className={profileCardStyles.profilecard__followers_text}>
-                  Posts
                 </p>
               </div>
             </Grid>

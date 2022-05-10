@@ -1,92 +1,97 @@
-import pubCardStyles from './PublicProfileCard.module.scss';
-import { Card, CardContent, CardHeader, Avatar, Button, CardActions } from "@mui/material";
-import {useState} from 'react';
+import pubCardStyles from "./PublicProfileCard.module.scss";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  Avatar,
+  Grid,
+  Button,
+} from "@mui/material";
+import { useState } from "react";
 import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
 import PersonRemoveIcon from "@mui/icons-material/PersonRemove";
-import TextsmsIcon from "@mui/icons-material/Textsms";
-import ForumIcon from "@mui/icons-material/Forum";
 import { v4 as uuidv4 } from "uuid";
-import {useRouter} from 'next/router';
-
+import { useRouter } from "next/router";
 
 export default function PublicProfileCard(props) {
+  const {
+    user,
+    posts,
+    blogs,
+    followings,
+    unfollowHandle,
+    followHandle,
+    loggedin,
+  } = props;
 
-  const {user , posts, blogs, followings, unfollowHandle, followHandle} = props;
-  
-  const [blog, showBlogs] = useState(true);
-  const [status,showStatus] = useState(false)
+  const [blog, showBlogs] = useState(false);
+  const [status, showStatus] = useState(true);
 
-  const router = useRouter()
+  const Router = useRouter();
 
   const displayBlogs = () => {
-    showBlogs(true)
-    showStatus(false)
-  }
+    showBlogs(true);
+    showStatus(false);
+  };
 
-  const displayStatus = () => {
-    showStatus(true)
-    showBlogs(false)
-  }
+  const displayStatus = () => {
+    showStatus(true);
+    showBlogs(false);
+  };
 
-  const renderFollowing =  () => {
-
+  const renderFollowing = () => {
     const filterFollowing = followings.following.filter(
       (o1) => o1.username == user[0].username
     );
-    
+
     const filterFollowers = followings.followers.filter(
       (o1) => o1.username == user[0].username
     );
 
     if (filterFollowing.length === 1 && filterFollowers.length === 1) {
       return (
-        <div className= {pubCardStyles.public__button}>
-          <Button onClick = {unfollowHandle} variant = "contained"
-          size = "small" >
+        <div className={pubCardStyles.public__button}>
+          <Button onClick={unfollowHandle} variant="contained" size="small">
             <PersonRemoveIcon />
           </Button>
-          <p className = {pubCardStyles.public__button_text}> You follow each other ! </p>
         </div>
       );
     }
 
     if (filterFollowing.length === 1) {
       return (
-        <div className= {pubCardStyles.public__button}>
-          <Button onClick = {unfollowHandle} variant = "contained" size = "small" >
-            <PersonRemoveIcon/>
+        <div className={pubCardStyles.public__button}>
+          <Button onClick={unfollowHandle} variant="contained" size="small">
+            <PersonRemoveIcon />
           </Button>
-          <p className = {pubCardStyles.public__button_text}> You follow {user[0].username} </p>
         </div>
       );
     }
     if (filterFollowers.length === 1) {
       return (
         <div className={pubCardStyles.public__button}>
-          <Button onClick={followHandle} variant ="contained" size = "small" >
+          <Button onClick={followHandle} variant="contained" size="small">
             <PersonAddAltIcon />
           </Button>
-          <p className = {pubCardStyles.public__button_text}> {user[0].username} follows you. </p>
         </div>
-      );    
-    }
-
-    else {
+      );
+    } else {
       return (
         <div className={pubCardStyles.public__button}>
-          <Button onClick={followHandle} variant = "contained" size = "small" >
+          <Button onClick={followHandle} variant="contained" size="small">
             <PersonAddAltIcon />
           </Button>
         </div>
       );
     }
-
-  }
-
+  };
 
   const renderStatus = () => {
     return (
-      <>
+      <div
+        style={{ backgroundColor: "white" }}
+        className={pubCardStyles.public__userposts}
+      >
         {posts.map((post, i) => {
           return (
             <>
@@ -100,7 +105,8 @@ export default function PublicProfileCard(props) {
               >
                 <CardHeader
                   title={user[0].username}
-                  titleTypographyProps={{ variant: "h6" }}
+                  titleTypographyProps={{ variant: "subtitle1" }}
+                  subheader={post.created.slice(11, 19)}
                   avatar={
                     <Avatar
                       alt="user-img"
@@ -109,114 +115,138 @@ export default function PublicProfileCard(props) {
                     />
                   }
                 />
-                <p
-                  style={{ padding: "0.5rem 1rem" }}
-                  className={pubCardStyles.public__status_text}
-                >
-                  {post.personal_post}
-                </p>
-                <CardContent className={pubCardStyles.public__status_time}>
-                  {post.created.slice(11, 19)}
+                <CardContent className={pubCardStyles.public__status_content}>
+                  <p className={pubCardStyles.public__status_text}>
+                    {post.personal_post}
+                  </p>
                 </CardContent>
               </Card>
             </>
           );
         })}
-      </>
+      </div>
     );
-  }
+  };
 
   const renderBlogs = () => {
     return (
-      <div>
-        <ul>
-          {blogs.map((post) => {
-            return (
-              <li key={uuidv4()} style={{ listStyleType: "none" }}>
-                <Card variant="outlined" className={pubCardStyles.public__blog}>
-                  <CardHeader
-                    avatar={
-                      <Avatar
-                        alt="user-img"
-                        src={user[0].img_path}
-                        sx={{ width: 46, height: 46 }}
-                      />
-                    }
-                    title={user[0].username}
-                    titleTypographyProps={{ variant: "h6" }}
+      <div
+        style={{ backgroundColor: "white" }}
+        className={pubCardStyles.public__userposts}
+      >
+        {blogs.map((post) => {
+          return (
+            <Card
+              key={uuidv4()}
+              variant="outlined"
+              className={pubCardStyles.public__status}
+              sx={{
+                boxShadow: "0 3px 10px rgb(0 0 0 / 0.2)",
+              }}
+            >
+              <CardHeader
+                avatar={
+                  <Avatar
+                    alt="user-img"
+                    src={user[0].img_path}
+                    sx={{ width: 46, height: 46 }}
                   />
-
-                  <h1 className={pubCardStyles.public__blog_content_title}>
-                    {post.title}
-                  </h1>
-                  <p
-                    onClick={() => router.push(`/blog/${post.id}`)}
-                    className={pubCardStyles.public__blog_content}
-                  >
-                    {post.content.slice(0, 350)}...
-                  </p>
-                  <p className={pubCardStyles.public__blog_created}>
-                    {post.created.slice(0, 10)}
-                  </p>
-                </Card>
-              </li>
-            );
-          })}
-        </ul>
+                }
+                title={user[0].username}
+                titleTypographyProps={{ variant: "subtitle1" }}
+                subheader={post.created.slice(11, 19)}
+              />
+              <div className={pubCardStyles.public__blog_content}>
+                <h1
+                  onClick={() => Router.push(`/blog/${post.id}`)}
+                  className={pubCardStyles.public__blog_title}
+                >
+                  {post.title}
+                </h1>
+                <p className={pubCardStyles.public__blog_descr}>
+                  {post.content.slice(0, 350)} ...
+                </p>
+                <p className={pubCardStyles.public__blog_footer}></p>
+              </div>
+            </Card>
+          );
+        })}
       </div>
     );
   };
 
   return (
     <>
-      <Card
-        variant="outlined"
-        style={{ boxShadow: "0 3px 10px rgb(0 0 0 / 0.2)" }}
-        className={pubCardStyles.public}
-      >
-        <div className={pubCardStyles.public__main}>
-          <Avatar
-            alt="user-img"
-            src={user[0].img_path}
-            sx={{ width: 80, height: 80 }}
-          />
-          <h1 className={pubCardStyles.public__name}>{user[0].username}</h1>
-        </div>
-        <CardContent className={pubCardStyles.public__content}>
-          <p className={pubCardStyles.public__bio}> {user[0].bio} </p>
-          <p> Joined {user[0].created.slice(0, 10)} </p>
-        </CardContent>
-        {!followings ? null :
-        <div className = {pubCardStyles.public__actions}>
-            {renderFollowing()}
-        </div>
-        }
-      </Card>
+      <div className={pubCardStyles.public}>
+        <Grid container>
+          <Grid item xs={12}>
+            <div className={pubCardStyles.public__main}>
+              <div className={pubCardStyles.public__main_img}>
+                <Avatar
+                  alt="user-img"
+                  src={user[0].img_path}
+                  sx={{ width: 75, height: 75 }}
+                />
+                {loggedin ? renderFollowing() : null}
+              </div>
+              <div className={pubCardStyles.public__main_bio}>
+                <h1 className={pubCardStyles.public__main_username}>
+                  {user[0].username}
+                </h1>
+                <p className={pubCardStyles.public__main_bio}>{user[0].bio}</p>
+                <p className={pubCardStyles.public__main_created}> Member since {user[0].created.slice(0,10)}</p>
+              </div>
+            </div>
+          </Grid>
+        </Grid>
 
-      <Card
-        variant="outlined"
-        style={{ boxShadow: "0 3px 10px rgb(0 0 0 / 0.2)" }}
-        className={pubCardStyles.public__options}
-      >
-        <ul className={pubCardStyles.public__options_list}>
-          <li
-            onClick={displayBlogs}
-            className={pubCardStyles.public__options_list_item}
-          >
-            Blog Post <ForumIcon htmlColor="#1976d2" />
-          </li>
+        <Grid container>
+          <Grid item xs={12}>
+            <div className={pubCardStyles.public__followers}>
+              <div className={pubCardStyles.public_followers_length}>
+                <p className={pubCardStyles.public_followers_num}>1</p>
+                <p className={pubCardStyles.public_followers_text}>Followers</p>
+              </div>
+              <div className={pubCardStyles.public__followers_length}>
+                <p className={pubCardStyles.public__followers_num}>1</p>
+                <p className={pubCardStyles.public__followers_text}>
+                  Following
+                </p>
+              </div>
+              <div className={pubCardStyles.public__followers_length}>
+                <p className={pubCardStyles.public__followers_num}>
+                  {posts.length}
+                </p>
+                <p className={pubCardStyles.public__followers_text}>Posts</p>
+              </div>
+            </div>
+          </Grid>
+        </Grid>
 
-          <li
-            onClick={displayStatus}
-            className={pubCardStyles.public__options_list_item}
-          >
-            Status <TextsmsIcon htmlColor="#1976d2" />
-          </li>
-        </ul>
-      </Card>
+        <Grid container>
+          <Grid item xs={6}>
+            <p
+              onClick={displayStatus}
+              className={pubCardStyles.public__options_text}
+            >
+              Status
+            </p>
+          </Grid>
 
-      {blog ? renderBlogs() : null}
-      {status ? renderStatus() : null}
+          <Grid item xs={6}>
+            <p
+              onClick={displayBlogs}
+              className={pubCardStyles.public__options_text_right}
+            >
+              Recent Posts
+            </p>
+          </Grid>
+        </Grid>
+      </div>
+      
+        {blog ? renderBlogs() : null}
+        {status ? renderStatus() : null}
+      
     </>
   );
 }
