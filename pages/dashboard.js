@@ -12,7 +12,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Navigation, Autoplay } from "swiper";
-
+import Image from 'next/image';
 
 export const getServerSideProps = withIronSessionSsr(async function ({
   req,
@@ -60,15 +60,13 @@ export default function Dashboard ({feedData,username}) {
           <CircularProgress />{" "}
         </div>
       ) : (
-        <>
+        <div>
           <h1 className={userFeedStyles.feed__article_header}> Trending </h1>
           <Swiper
             slidesPerView={1}
             spaceBetween={20}
-            
-            
             autoplay={{
-              delay: 2500,
+              delay: 4500,
               disableOnInteraction: false,
             }}
             breakpoints={{
@@ -102,7 +100,7 @@ export default function Dashboard ({feedData,username}) {
               );
             })}
           </Swiper>
-        </>
+        </div>
       )}
       <Box className={userFeedStyles.feed__followers}>
         {feedData.length === 0 ? (
@@ -111,12 +109,12 @@ export default function Dashboard ({feedData,username}) {
             follow someone to get started !{" "}
           </h1>
         ) : (
-          <>
+          <div>
             <h1 className={userFeedStyles.feed__followers_section}>
               {username}'s feed.
             </h1>
             <GenerateFollowFeed feed={feedData} />
-          </>
+          </div>
         )}
       </Box>
     </Container>
