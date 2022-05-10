@@ -2,8 +2,9 @@ import threadContentStyles from "./MainThreadContent.module.scss";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useRouter } from 'next/router';
 import { useState } from "react";
-import DeleteIcon from "@mui/icons-material/Delete";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { v4 as uuidv4 } from "uuid";
+import CreatePostForm from '../CreatePostForm/CreatePostForm'
 import {
   CardContent,
   CardHeader,
@@ -14,29 +15,31 @@ import {
 
 export default function MainThreadContent (props) {
 
-  const {main, username, refresh , deleteHandle} = props;
+  const {main, username, refresh , deleteHandle, createHandle, loggedIn} = props;
 
   const {thread, posts} = main;
 
   const [expandedId, setExpandedId] = useState(-1);
 
-  const router = useRouter();
+  const Router = useRouter();
 
 
   return (
     <div>
-      <Card variant="outlined" className={threadContentStyles.initial}>
+      <Card variant="none" className={threadContentStyles.initial}>
         <CardHeader
           onClick={() => {
-            router.push(`/user/${thread[0].username}`);
+            Router.push(`/user/${thread[0].username}`);
           }}
           title={thread[0].username}
+          titleTypographyProps={{ variant: "subtitle1", fontWeight: "500" }}
+          subheader={thread[0].created.slice(12, 19)}
           style={{ cursor: "pointer" }}
           avatar={
             <Avatar
               alt="user-img"
               src={thread[0].img_path}
-              sx={{ width: 46, height: 46 }}
+              sx={{ width: 50, height: 50 }}
             />
           }
         />
@@ -46,25 +49,26 @@ export default function MainThreadContent (props) {
         <p className={threadContentStyles.initial__description}>
           {thread[0].initial_post}
         </p>
-        {thread[0].created ? (
-          <p className={threadContentStyles.initial__timestamp}>
-            {thread[0].created.slice(14, 22)}{" "}
-          </p>
-        ) : null}
       </Card>
-      <ul>
+
+      {loggedIn === true ?
+      <div className={threadContentStyles.initial__form}>
+        <CreatePostForm handler={createHandle} />
+      </div>
+      :
+      null
+    }
+
+      <div className={threadContentStyles.initial__post}>
         {posts.map((posts, i) => {
           return (
-            <Card
-              key={uuidv4()}
-              variant="outlined"
-              className={threadContentStyles.thread__post}
-            >
+            <Card key={uuidv4()} variant="outlined">
               <CardHeader
                 onClick={() => {
-                  router.push(`/user/${posts.username}`);
+                  Router.push(`/user/${posts.username}`);
                 }}
-                subheader={posts.username}
+                title={posts.username}
+                subheader={posts.created.slice(11, 19)}
                 style={{ cursor: "pointer" }}
                 avatar={
                   <Avatar
@@ -74,47 +78,28 @@ export default function MainThreadContent (props) {
                   />
                 }
               />
-              <p className={threadContentStyles.thread__post_content}>
+              <p 
+              onClick = {() => {
+                Router.push(`/discuss/${posts.id}`)
+              }}
+              className={threadContentStyles.initial__post_content}>
                 {posts.content}
               </p>
-              <CardContent className={threadContentStyles.thread_post_card}>
-                {!username ? (
-                  <p className={threadContentStyles.thread__post_timestamp}>
-                    {" "}
-                    {posts.created.slice(11, 19)}{" "}
-                  </p>
-                ) : posts.username === username ? (
-                  <div className={threadContentStyles.thread__post_timestamp}>
-                    <DeleteIcon
-                      onClick={() => {
-                        deleteHandle(posts.id);
-                        refresh();
-                      }}
-                    />
-                    <p> {posts.created.slice(11, 19)}</p>
-                  </div>
-                ) : (
-                  <p className={threadContentStyles.thread__post_timestamp}>
-                    {posts.created.slice(11, 19)}
-                  </p>
-                )}
-
-                {!username ? null : (
-                  <IconButton
-                    onClick={() => handleExpandClick(i)}
-                    aria-expanded={expandedId === i}
-                    aria-label="show more"
-                  >
-                    <ExpandMoreIcon
-                      className={threadContentStyles.thread__post_comment}
-                    />
-                  </IconButton>
-                )}
-              </CardContent>
+              {!username ? null : posts.username === username ? (
+                <DeleteOutlineIcon
+                  size="small"
+                  htmlColor="red"
+                  className={threadContentStyles.initial__post_del}
+                  onClick={() => {
+                    deleteHandle(posts.id);
+                    refresh();
+                  }}
+                />
+              ) : null}
             </Card>
           );
         })}
-      </ul>
+      </div>
     </div>
   );
 }

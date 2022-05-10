@@ -3,14 +3,14 @@
 
 .profile {
   
-  max-width: 900px;
-
+  // max-width: 900px;
+  
   @include tablet {
-    margin: 2rem;
+    // margin: 2rem;
   }
 
   @include breakpoint {
-    margin: 2rem auto;  
+    
   }
   
 }

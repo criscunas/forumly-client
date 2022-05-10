@@ -1,0 +1,44 @@
+@use './mixins.scss'as *;
+@use './variables.scss'as *;
+
+
+.postPage {
+  // border: 1px solid red;
+
+  &__main {
+    margin: 1rem;
+  }
+
+
+  &__content {
+    @include body-text;
+    padding: 1rem;
+    
+  }
+
+  &__form {
+    margin: 0 1rem;
+  }
+
+  &__comments {
+    // border: 1px solid red;
+  }
+
+  &__comments_card {
+    margin: 1rem;
+    position: relative;
+  }
+
+  &__comments_content {
+    
+    padding: 0.5rem 1rem 1.5rem 1rem;
+    @include body-text;
+  }
+
+  &__comments_delete {
+    position: absolute;
+    right: 3%;
+    top: 5%;
+  }
+
+}

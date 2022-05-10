@@ -15,7 +15,7 @@ export default function CreateBlogForm(props) {
   
   const [open, setOpen] = useState(false);
   
-  const { username, handler, refresh } = props;
+  const {handler } = props;
 
   const [expanded, setExpanded] = useState(false);
 
@@ -95,7 +95,6 @@ export default function CreateBlogForm(props) {
               size="small"
               type="submit"
               variant="contained"
-              onClick={refresh(`https://dgisvr.xyz/user/${username}/blogs`)}
             >
               Submit
             </Button>

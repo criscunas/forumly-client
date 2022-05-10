@@ -2,17 +2,17 @@
 @use '../styles/variables.scss'as *;
 
 .mainThread {
-  padding-top: 1rem;
+  // padding-top: 1rem;
 
   &__content {
-    margin: 0 1rem;
+    // margin: 0 1rem;
     
     @include tablet {
-      margin: 0 2rem;
+      // margin: 0 2rem;
     }
     
     @include breakpoint {
-      margin: 0 2.5rem;
+      // margin: 0 2.5rem;
     }
   }
 

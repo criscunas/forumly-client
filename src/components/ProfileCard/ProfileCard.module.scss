@@ -3,31 +3,38 @@
 
 
 .profilecard {
-  background-color: #fff;
+  background-color: $black;
   color: white;
 
   &__card {
-  
-  background-color: #28282B;
-  display: flex;
-  padding: 2rem 1rem;
-  align-items: center;
-  gap: 0.8rem;
-  position: relative;
+    background-color: #28282B;
+    display: flex;
+    padding: 2rem 1rem;
+    align-items: center;
+    gap: 0.8rem;
+    position: relative;
+    max-width: 650px;
+    
+    @include beforeTablet {
+      margin: 0 auto;
+      padding: 2.5rem 2rem;  
+    }
+
   }
 
   &__bio {
     display: flex;
-    // align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     flex-direction: column;
-    // gap: 0.1rem;
     padding-left: 0.5rem;
   }
 
   &__status {
     @include body-text;
     
+    @include tablet {
+      font-size: 0.9rem;
+    }
   }
 
   &__edit {
@@ -51,17 +58,22 @@
     align-items: center;
     justify-content: space-between;
     @include section-header;
+
+    @include tablet {
+      font-size: 1.3rem;
+    }
   }
 
   &__followers {
     background-color: #28282B;
-    padding: 0rem 0 1.5rem 0;
+    padding: 0rem 0 1rem 0;
     text-align: center;
     color: white;
   }
 
   &__followers_length {  
     display: flex;
+    
     flex-direction: column;
     gap: 0.2rem;
   }
@@ -71,6 +83,7 @@
   }
 
   &__followers_text {
-    @include sub-header;
+    @include body-text;
+    
   }
 }

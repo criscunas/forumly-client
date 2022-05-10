@@ -60,45 +60,49 @@ export default function Dashboard ({feedData,username}) {
           <CircularProgress />{" "}
         </div>
       ) : (
-        <div>
+        <>
           <h1 className={userFeedStyles.feed__article_header}> Trending </h1>
           <Swiper
             slidesPerView={1}
-            spaceBetween={30}
-            loop={true}
+            spaceBetween={20}
+            
+            
             autoplay={{
-              delay: 11500,
+              delay: 2500,
               disableOnInteraction: false,
             }}
-            navigation={false}
+            breakpoints={{
+              500: {
+                slidesPerView: 2,
+                spaceBetween: 30,
+              },
+              768: {
+                slidesPerView: 3,
+                spaceBetween: 30,
+              },
+            }}
             modules={[Autoplay, Navigation]}
-            className={userFeedStyles.feed__news}
           >
             {data.articles.map((article, i) => {
               return (
                 <SwiperSlide key={i}>
-                  <div className={userFeedStyles.feed__article}>
+                  <div className={userFeedStyles.feed__article_body}>
+                    <img src={article.urlToImage} />
                     <a
+                      className={userFeedStyles.feed__article_link}
                       href={article.url}
-                      className={userFeedStyles.feed__article_title}
                     >
                       {article.title}
                     </a>
-                    <div className={userFeedStyles.feed__article_img}>
-                      <img
-                        style={{ height: "150px" }}
-                        src={article.urlToImage}
-                      />
-                      <p className={userFeedStyles.feed__article_src}>
-                        {article.source.name}{" "}
-                      </p>
-                    </div>
+                    <p className={userFeedStyles.feed__article_line}>
+                      {article.source.name}{" "}
+                    </p>
                   </div>
                 </SwiperSlide>
               );
             })}
           </Swiper>
-        </div>
+        </>
       )}
       <Box className={userFeedStyles.feed__followers}>
         {feedData.length === 0 ? (
@@ -108,8 +112,8 @@ export default function Dashboard ({feedData,username}) {
           </h1>
         ) : (
           <>
-            <h1 className={userFeedStyles.feed__followers_section}> 
-              {username}'s feed. 
+            <h1 className={userFeedStyles.feed__followers_section}>
+              {username}'s feed.
             </h1>
             <GenerateFollowFeed feed={feedData} />
           </>

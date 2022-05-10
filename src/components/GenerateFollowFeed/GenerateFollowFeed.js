@@ -6,7 +6,7 @@ import {v4 as uuidv4} from 'uuid';
 export default function GenerateFollowFeed (props) {
 
   const {feed} = props;
-  const router = useRouter();
+  const Router = useRouter();
   
   return (
     <>
@@ -22,7 +22,7 @@ export default function GenerateFollowFeed (props) {
             >
               <CardHeader
                 onClick={() => {
-                  router.push(`/user/${posts.username}`);
+                  Router.push(`/user/${posts.username}`);
                 }}
                 title={posts.username}
                 subheader={posts.created.slice(11,19)}

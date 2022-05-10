@@ -116,21 +116,26 @@ export default function Discuss({ fallbackData, auth }) {
     <>
       {!auth ? (
         <Container maxWidth="xl" disableGutters>
-          <Box className={discussStyles.general}>
-            <div className={discussStyles.general__header}>
-              <h1 className={discussStyles.general__title}>General</h1>
-
-              <p>Must be a member to post. </p>
+          <Box className={discussStyles.discuss}>
+            <div className={discussStyles.discuss__top}>
+            <h1 className={discussStyles.discuss__header}>
+              Sign up or sign in to start posting.
+            </h1>
             </div>
-            
+            <div className={discussStyles.discuss__bottom}>
             <GenerateThreads threads={data} auth={false} />
+            </div>
           </Box>
         </Container>
       ) : (
         <Container maxWidth="xl" disableGutters>
-          <Box className={discussStyles.general}>
-            <CreateThread handler = {createThread} refresh = {refresh}/>
-            <GenerateThreads threads = {data} />
+          <Box className={discussStyles.discuss}>
+            <div className={discussStyles.discuss__top}>
+              <CreateThread handler={createThread} refresh={refresh} />
+            </div>
+            <div className={discussStyles.discuss__bottom}>
+              <GenerateThreads threads={data} />
+            </div>
           </Box>
         </Container>
       )}

@@ -21,7 +21,7 @@ const style = {
 
 export default function CreateStatusForm (props) {
 
-  const {handler,username,refresh} = props;
+  const {handler} = props;
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -41,15 +41,14 @@ export default function CreateStatusForm (props) {
     },
     onSubmit: (values, { resetForm }) => {
       handler(values)      
-      refresh(`https://dgisvr.xyz/user/${username}/personals`);
       resetForm();
     },
   });
 
   return (
     <>
-      <IconButton onClick={handleOpen} size = "large">
-        <AddBoxIcon  htmlColor="#007ee5" />
+      <IconButton onClick={handleOpen} size="large" style={{ padding: "0" }}>
+        <AddBoxIcon className = {statusFormStyles.status__icon} />
       </IconButton>
       <Modal
         aria-labelledby="transition-modal-title"
@@ -69,9 +68,9 @@ export default function CreateStatusForm (props) {
               className={statusFormStyles.status__form}
               onSubmit={formik.handleSubmit}
             >
-            <h1 className={statusFormStyles.status__form_header}>
-              Status Update
-            </h1>
+              <h1 className={statusFormStyles.status__form_header}>
+                Status Update
+              </h1>
               <TextField
                 className={statusFormStyles.status__input}
                 name="personal_post"

@@ -4,31 +4,39 @@
 .createThread {
 
   padding: 1rem; 
-
+  
 
   &__header {
     @include section-header;
-    
+    color: $dark-blue;
     
     @include tablet {
-    
-      padding: 1.5rem 0;
+      padding: 0.5rem 0 1rem 0;
     }
   }
 
   &__form {
-    margin: 1.5rem 0 1rem 0;
+    margin: 1.5rem auto 1rem auto;
+    max-width: 350px;
     
   }
  
   &__subhead {
     padding: 1rem 0;
     @include body-text;
+
+    @include tablet {
+      padding: 1.5rem 0;
+    }
   }
 
   &__button {
     text-align:right;
     padding-top: 0.5rem;
+
+    @include tablet {
+      padding-top: 1rem;
+    }    
   }
 
 }

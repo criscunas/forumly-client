@@ -13,7 +13,7 @@ export default function CreateThread(props) {
 
   const ThreadSchema = Yup.object({
     thread_subject: Yup.string().required("Subject Required"),
-    initial_post: Yup.string().required("Post Required"),
+    initial_post: Yup.string().required("Post Required")
   });
 
   const formik = useFormik({
@@ -39,7 +39,7 @@ export default function CreateThread(props) {
           sx={{ display: "flex" }}
           name="thread_subject"
           type="text"
-          label="Subject"
+          label="Topic"
           size="small"
           value={formik.values.thread_subject}
           onChange={formik.handleChange}

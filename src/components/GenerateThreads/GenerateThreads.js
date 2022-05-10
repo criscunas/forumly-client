@@ -26,9 +26,12 @@ export default function GenerateThreads({ threads }) {
   return (
     <div className={threadStyles.threads}>
       <h1 className={threadStyles.threads__section}> Latest </h1>
-      <TableContainer>
+      <TableContainer
+        style={{ borderRadius: "5px " }}
+        className={threadStyles.threads__container}
+      >
         <Table aria-label="thread-table" size="medium">
-          <TableHead>
+          <TableHead style={{ border: "2px solid #d6d4d4" }}>
             <TableRow>
               <TableCell>
                 <p className={threadStyles.threads__header}>User</p>
@@ -37,7 +40,7 @@ export default function GenerateThreads({ threads }) {
                 <p className={threadStyles.threads__header}>Title</p>
               </TableCell>
               <TableCell align="right">
-                <p className={threadStyles.threads__header}>Category</p>
+                <p className={threadStyles.threads__header}>Created</p>
               </TableCell>
             </TableRow>
           </TableHead>
@@ -63,7 +66,7 @@ export default function GenerateThreads({ threads }) {
                   {row.thread_subject}
                 </TableCell>
                 <TableCell align="right" className={threadStyles.threads__text}>
-                  Category
+                  {row.created.slice(0, 10)}
                 </TableCell>
               </TableRow>
             ))}

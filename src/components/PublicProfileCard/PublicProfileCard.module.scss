@@ -3,38 +3,104 @@
 
 .public {
 
-  // margin: 1rem 0;
-
-  &__card {
-    background-color: #28282B;
+  
+  
+  &__main {
     display: flex;
-    padding: 2rem 1rem;
-    align-items: center;
-    gap: 0.8rem;
+    gap: 2rem;
+    padding: 1.5rem 1rem 0.5rem 1rem;
+
+    @include tablet {
+      padding: 2.5rem 2rem 0.5rem 2rem;
+    }
   }
 
-  &__username {
-    @include section-header; 
+  &__main_img {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
   }
 
-  &__bio {
-    display: flex; 
+  &__main_bio {
+    padding-top: 1rem;
+    color: white;
+    display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    padding-left: 1rem;
+  }
+
+  &__main_username{
+    @include section-header;
+  }
+
+  &__main_created {
+    font-size: 0.7rem;
+  }
+
+  &__followers {
+    display: flex;
+    padding: 1rem 0;
+    justify-content: space-evenly;
+    text-align: center;
+    background-color: #28282B;
+    color: white;
+  }
+
+  &__followers_length {
+    
+  }
+
+  &__followers_num {
+    text-align: center;
+  }
+
+  &__followers_text {
+    text-align: center;
+    
+  }
+
+
+  &__options_text {
+    color: white;
+    padding: 1rem 0;
+    @include body-text;
+    border-top-left-radius: 40px;
+    text-align: center;
+    background-color: $medium-blue;
+  }
+
+  &__options_text_right {
+    color: white;
+    @include body-text;
+    text-align: center;
+    background-color: $medium-blue;
+    padding: 1rem 0;
+    border-top-right-radius: 40px;
+  }
+
+  &__userposts {
+    background-color: white;
+    padding-top: 0.5rem;
+    // border: 1px solid red;
   }
 
   &__status {
-    
-    margin: 0 1rem 1rem 1rem;
-    
+    margin: 1rem;
+
+    @include tablet {
+      margin: 1.5rem 0;
+    }
+  
   }
 
   &__button {
     margin-top: 0.3rem;
+    text-align: center;
   }
 
   &__content {
+    
     text-align: center;
   }
 
@@ -52,20 +118,6 @@
   &__status_content {
     padding: 0.5rem 1rem 0 1rem;
   }
-
-
-  &__options {
-    text-align: center;
-    padding: 1.5rem 0 1.5rem 0;
-    background-color: white;
-    border-top-right-radius: 4em;
-
-  }
-
-  &__options_text {
-    @include sub-header;
-  }
-
 
   &__blog { 
     margin: 0 1rem 1rem 1rem;
@@ -118,4 +170,7 @@
     flex-direction: column;
   }
 
+
+
 }
+

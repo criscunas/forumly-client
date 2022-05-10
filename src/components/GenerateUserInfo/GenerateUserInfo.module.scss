@@ -4,11 +4,15 @@
 
 .user {
 
+  // max-width: 900px;
   
   &__blog {
     position: relative;
     margin-bottom: 1rem;
     
+    @include tablet {
+      margin-bottom: 1.5rem;
+    }
   }
   
   &__delete {
@@ -23,16 +27,27 @@
   &__blog_preview {
     padding: 0.5rem 1rem 1rem 1rem;
     @include body-text;
+
+    @include tablet {
+      padding: 1rem 1.5rem 1.5rem 1.5rem;
+      @include tablet-text;
+    }
   }
 
   &__status {
     position: relative;
+    margin: 1rem 0;
   }
 
   &__status_post {
     
     padding: 0 1rem 1rem 1rem;
     @include body-text;
+
+    @include tablet {
+      padding: 0.5rem 1.5rem 1.5rem 1.5rem;
+      @include tablet-text;
+    }
   }
 
   &__threads {
@@ -52,31 +67,42 @@
   &__threads_post {
     @include body-text;
     padding: 0.5rem 1rem 1rem 1rem;
+    
+    @include tablet {
+      padding: 0.5rem 1.5rem 1.5rem 1.5rem;
+      @include tablet-text;
+    }
   }
   
 
   &__options {
+    display: flex;
+    justify-content: space-evenly;
     font-weight: 500;    
-    font-size: 0.9rem;
+    font-size: 0.9rem; 
+    padding: 1rem 0;
     background-color: #28282B;
-    
-  }
-
-  &__options_grid {
     border-top-right-radius: 4em;
-    padding: 0.5rem;
-    background-color: #fff;
+    background-color: $medium-blue;
   }
 
   &__options_list{
+    @include sub-header;    
     text-align: center;
-    font-weight: 500;   
+    font-weight: 500; 
+    color: white;  
     cursor: pointer; 
   }
 
   &__content {
-    margin-top: 1rem;
+    margin-top: 1.5rem;
     padding: 0 1rem;
+    
+
+    @include tablet {
+      padding: 0;
+    }
+
   }
 
 
@@ -86,6 +112,8 @@
 
   &__posts_options {
     text-align: center;
+    @include sub-header;
+    color: $dark-blue;
   }
 
   &__posts_body {
@@ -109,13 +137,19 @@
 
   &__follow_header {
     @include section-header;
+    color: $dark-blue;
     padding: 0.5rem 0 1.5rem 0;
+
+    @include tablet {
+      padding: 1rem 0 2rem 0;
+    }
   }
 
   &__follow_box {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    border: 1px solid red;
     align-items: center;
   }
 
@@ -125,26 +159,20 @@
 
   }
 
-  &__follow_card {
-    // display: inline-flex;
-    // border: 1px solid red;
-    // padding: 1rem;
-    padding: 0.5rem 0;
-    // gap: 1rem;
-    
-    // justify-content: center;
-    // gap: 0.5rem;
 
-  }
 
   &__follow_img {
     
   }
 
   &__follow_name {
-    font-size: 1rem;
-    font-weight: bold;
+    
+    @include body-text;
     cursor: pointer;
+
+    @include tablet {
+      @include tablet-text;
+    }
   }
 
   &__follow_text {

@@ -133,24 +133,6 @@ export default function Profile  ({auth, username}) {
       })
   }
 
-  const postStatus = (values) => {
-    
-    axios
-      .post("https://dgisvr.xyz/personal/post", values, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${auth}`,
-        },
-      })
-      .then(() => {
-        setOpen(true);
-        mutate(`https://dgisvr.xyz/user/${username}/personals`);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-
   const postBio = (values) => {
 
     axios

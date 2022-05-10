@@ -21,7 +21,7 @@ export default function GenerateUserInfo(props) {
     createBlog,
   } = props;
 
-  const router = useRouter();
+  const Router = useRouter();
 
   const [userThread, showUserThread] = useState(false);
   const [userPost, showUserPost] = useState(true);
@@ -80,6 +80,7 @@ export default function GenerateUserInfo(props) {
   const renderBlogs = () => {
     return (
       <div>
+        <CreateBlogForm handler = {createBlog}/>
         {blogs.map((post) => {
           return (
             <Card
@@ -101,7 +102,7 @@ export default function GenerateUserInfo(props) {
                 }}
                 subheader={post.created.slice(0, 10)}
                 sx={{ cursor: "pointer" }}
-                onClick={() => router.push(`/blog/${id}`)}
+                onClick={() => Router.push(`/blog/${post.id}`)}
               />
               <p className={genUserStyles.user__blog_preview}>
                 {post.content.slice(0,100)}...
@@ -191,7 +192,7 @@ export default function GenerateUserInfo(props) {
                       sx={{ width: 55, height: 55 }}
                     />
                   }
-                  onClick={() => router.push(`/thread/${thread.id}`)}
+                  onClick={() => Router.push(`/thread/${thread.id}`)}
                   title={thread.thread_subject}
                   titleTypographyProps={{ variant: "subtitle1" }}
                   subheader={thread.created.slice(0, 10)}
@@ -243,7 +244,7 @@ export default function GenerateUserInfo(props) {
                 subheader={post.created.slice(0, 10)}
               />
               <p
-                onClick={() => router.push(`/thread/${post.thread_id}`)}
+                onClick={() => Router.push(`/thread/${post.thread_id}`)}
                 className={genUserStyles.user__threads_post}
               >
                 {post.content}
@@ -302,13 +303,13 @@ export default function GenerateUserInfo(props) {
         <Grid container spacing={1}>
           {userFollowers.map((follower) => {
             return (
-              <Grid item xs={3} sm={4}key={uuidv4()}>
+              <Grid item xs={3} sm={4} key={uuidv4()}>
                 <div className={genUserStyles.user__follow_box}>
                   <Avatar
                     alt="user-img"
                     src={follower.img_path}
                     sx={{ width: 45, height: 45, cursor: "pointer" }}
-                    onClick={() => router.push(`/user/${follower.username}`)}
+                    onClick={() => Router.push(`/user/${follower.username}`)}
                   />
                   <p className={genUserStyles.user__follow_user}>
                     {follower.username}
@@ -335,7 +336,7 @@ export default function GenerateUserInfo(props) {
                     alt="user-img"
                     src={user.img_path}
                     sx={{ width: 45, height: 45, cursor: "pointer" }}
-                    onClick={() => router.push(`/user/${follower.username}`)}
+                    onClick={() => Router.push(`/user/${follower.username}`)}
                   />
                   <p className={genUserStyles.user__follow_user}>
                     {user.username}
@@ -387,23 +388,31 @@ export default function GenerateUserInfo(props) {
           </div>
         </Grid>
       </Grid>
-      <div className={genUserStyles.user__options}>
-        <Grid
-          container
-          spacing={1}
-          className={genUserStyles.user__options_grid}
-        >
-          <Grid item xs={4} onClick={displayBlogs}>
-            <p className={genUserStyles.user__options_list}>Blog</p>
-          </Grid>
-          <Grid item xs={4} onClick={displayPersonals}>
-            <p className={genUserStyles.user__options_list}>Status</p>
-          </Grid>
-          <Grid item xs={4} onClick={displayPost}>
-            <p className={genUserStyles.user__options_list}>Posts</p>
-          </Grid>
+
+      <Grid container sx={{ backgroundColor: "#28282B" }}>
+        <Grid item xs={12}>
+          <div className={genUserStyles.user__options}>
+            <p
+              onClick={displayBlogs}
+              className={genUserStyles.user__options_list}
+            >
+              Blog
+            </p>
+            <p
+              onClick={displayPersonals}
+              className={genUserStyles.user__options_list}
+            >
+              Status
+            </p>
+            <p
+              onClick={displayPost}
+              className={genUserStyles.user__options_list}
+            >
+              Posts
+            </p>
+          </div>
         </Grid>
-      </div>
+      </Grid>
 
       <div className={genUserStyles.user__content}>
         {postOptions ? renderPostOptions() : null}

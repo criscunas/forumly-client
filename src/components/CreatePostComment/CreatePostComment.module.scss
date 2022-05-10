@@ -3,15 +3,15 @@
 
 .postCard {
   // color: white;
-  background-color: $medium-blue;  
-  
+  background-color: $medium-blue;
+
 
   &__form {
-    display: flex;  
+    display: flex;
     flex-direction: column;
     margin: 0 auto;
-    max-width: 550px;
-    background-color: white;  
+    max-width: 750px;
+    background-color: white;
   }
 
   &__form_input {
