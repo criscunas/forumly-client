@@ -45,8 +45,6 @@ sessionOptions);
 export default function Profile  ({auth, username}) {
 
   const [open, setOpen] = useState(false);
-  const [followers, showFollowers] = useState(false)
-  const [following, showFollowing] = useState(false)
 
   const { data: user } = useSWR(
     `https://dgisvr.xyz/user/profile/${username}`,
