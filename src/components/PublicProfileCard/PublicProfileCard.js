@@ -22,6 +22,8 @@ export default function PublicProfileCard(props) {
     unfollowHandle,
     followHandle,
     loggedin,
+    followCount,
+    followingCount
   } = props;
 
   const [blog, showBlogs] = useState(false);
@@ -94,9 +96,9 @@ export default function PublicProfileCard(props) {
       >
         {posts.map((post, i) => {
           return (
-            <>
+            
               <Card
-                key={i}
+                key={uuidv4()}
                 variant="outlined"
                 className={pubCardStyles.public__status}
                 sx={{
@@ -121,7 +123,7 @@ export default function PublicProfileCard(props) {
                   </p>
                 </CardContent>
               </Card>
-            </>
+            
           );
         })}
       </div>
@@ -164,7 +166,7 @@ export default function PublicProfileCard(props) {
                   {post.title}
                 </h1>
                 <p className={pubCardStyles.public__blog_descr}>
-                  {post.content.slice(0, 350)} ...
+                  {post.content.slice(0, 500)} ...
                 </p>
                 <p className={pubCardStyles.public__blog_footer}></p>
               </div>
@@ -204,11 +206,15 @@ export default function PublicProfileCard(props) {
           <Grid item xs={12}>
             <div className={pubCardStyles.public__followers}>
               <div className={pubCardStyles.public_followers_length}>
-                <p className={pubCardStyles.public_followers_num}>1</p>
+                <p className={pubCardStyles.public_followers_num}>
+                  {followCount}
+                </p>
                 <p className={pubCardStyles.public_followers_text}>Followers</p>
               </div>
               <div className={pubCardStyles.public__followers_length}>
-                <p className={pubCardStyles.public__followers_num}>1</p>
+                <p className={pubCardStyles.public__followers_num}>
+                  {followingCount}
+                </p>
                 <p className={pubCardStyles.public__followers_text}>
                   Following
                 </p>

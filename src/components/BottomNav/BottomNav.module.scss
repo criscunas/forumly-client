@@ -2,8 +2,9 @@
 @use '../../../styles/mixins.scss'as *;
 
 .bottomNav {
-  padding: 1rem 0;
+
   background-color: $black;
+  padding: 0.5rem 0;
 
   @include beforeTablet {
     display: none;
@@ -12,11 +13,16 @@
   &__menu {
     background-color: $black;
     text-align: center;
-    // padding-bottom: 1rem;
+    padding: 0.5rem 0;
+    
+    
   }
 
   &__menu_link {
     
+    a {
+      color: whitesmoke;
+    }
     color: white;
     align-items: center;
   }
@@ -29,19 +35,20 @@
   &__menu_nonuser {
     background-color: $black;
     text-align: center;
-
-  }
-  &__menu_icon {
-
-    // display: flex;
-    // align-items: center;
-    // text-align: center;
+    padding: 0.5rem 0;
   }
 
   &__menu_nonuser_link {
-    // text-align: center;
-    // padding: 0.2rem 0;
-    color: whitesmoke;
-    font-weight: 500;
+   
+    a {
+      color: whitesmoke;
+      text-decoration: none;
+      @include tablet-text;
+    }
+
+    p {
+      font-weight: 600;
+    }
+  
   }
 }

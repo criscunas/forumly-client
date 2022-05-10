@@ -193,7 +193,7 @@ export default function BlogPage({ user }) {
                   <p className={BlogStyles.blog__comments_content}>
                     {posts.comment_body}
                   </p>
-                  {!posts.username === user.username ? null : (
+                  {posts.username !== user.username ? null : (
                     <DeleteOutlinedIcon
                       className={BlogStyles.blog__comments_delete}
                       size="small"

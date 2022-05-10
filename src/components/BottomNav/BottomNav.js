@@ -5,11 +5,9 @@ import {
   Box
 } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
-
 import useUser from "../../../lib/useUser";
 import ChatIcon from "@mui/icons-material/Chat";
-
-import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import bottomNav from "./BottomNav.module.scss";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -31,9 +29,14 @@ export default function BottomNav() {
 
   const Router = useRouter()
 
-  const navTo = (url) => {
-    Router.push(url)
-  }
+  const Mailto = ({ email, subject, body, ...props }) => {
+    return (
+      <a href={`mailto:${email}?subject=${subject || ""}&body=${body || ""}`}>
+        {props.children}
+      </a>
+    );
+  }; 
+  
 
 
   const postStatus = (values) => {
@@ -101,61 +104,57 @@ export default function BottomNav() {
       <CssBaseline />
       {!user?.isLoggedIn ? null : (
         <div className={bottomNav.bottomNav}>
-        {CrudAlert()}
+          {CrudAlert()}
           <Grid className={bottomNav.bottomNav__menu} container>
-            <Grid
-              item
-              xs={3}
-              className={bottomNav.bottomNav__menu_link}
-              onClick={() => navTo("/profile")}
-            >
-              <AccountCircleOutlinedIcon />
+            <Grid item xs={3} className={bottomNav.bottomNav__menu_link}>
+              <Link href="/profile">
+                <a>
+                  <AccountBoxIcon />
+                </a>
+              </Link>
             </Grid>
-            <Grid
-              item
-              xs={3}
-              className={bottomNav.bottomNav__menu_link}
-              onClick={() => navTo("/dashboard")}
-            >
-              <DashboardIcon />
+            <Grid item xs={3} className={bottomNav.bottomNav__menu_link}>
+              <Link href="/dashboard">
+                <a>
+                  <DashboardIcon />
+                </a>
+              </Link>
             </Grid>
-            <Grid
-              item
-              xs={3}
-              className={bottomNav.bottomNav__menu_link}
-              onClick={() => navTo("/discuss")}
-            >
-              <ChatIcon />
+            <Grid item xs={3} className={bottomNav.bottomNav__menu_link}>
+              <Link href="/discuss">
+                <a>
+                  <ChatIcon />
+                </a>
+              </Link>
             </Grid>
-            <Grid
-              item
-              xs={3}
-              className={bottomNav.bottomNav__menu_link}
-              onClick={() => navTo("")}
-            >
-              <CreateStatusForm handler = {postStatus}/>
+            <Grid item xs={3} className={bottomNav.bottomNav__menu_link}>
+              <CreateStatusForm handler={postStatus} />
             </Grid>
           </Grid>
         </div>
       )}
       {user?.isLoggedIn ? null : (
         <div className={bottomNav.bottomNav}>
-          <Grid className={bottomNav.bottomNav__menu_nonuser} container>
+          <Grid className={bottomNav.bottomNav__menu_nonuser} container spacing = {1}>
             <Grid
               item
               xs={6}
               className={bottomNav.bottomNav__menu_nonuser_link}
-              onClick={() => navTo("/discuss")}
-            >     
-            <ChatIcon />
+            >
+              <Link href="/discuss">
+                <a>
+                  <ChatIcon />
+                </a>
+              </Link>
             </Grid>
             <Grid
               item
               xs={6}
               className={bottomNav.bottomNav__menu_nonuser_link}
-              onClick={() => navTo("/login")}
             >
-              <p>Contact </p>
+              <Mailto email="criscunas@criscunas.dev">
+                <p> Contact </p>
+              </Mailto>
             </Grid>
           </Grid>
         </div>

@@ -21,12 +21,9 @@ export default function Layout({ children }) {
       <div style = {{paddingBottom:"8rem"}} className = {layoutStyles.layout__content}>
       {children}
       </div>
-      <Paper
-        sx={{ position: "fixed", bottom: 0, left: 0, right: 0 }}
-        elevation={3}
-      >
+      <div style={{ position: "fixed", bottom: 0, left: 0, right: 0 }} >
         <BottomNav />
-      </Paper>
+      </div>
     </div>
   );
 }

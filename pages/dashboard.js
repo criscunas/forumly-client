@@ -92,9 +92,6 @@ export default function Dashboard ({feedData,username}) {
                     >
                       {article.title}
                     </a>
-                    <p className={userFeedStyles.feed__article_line}>
-                      {article.source.name}{" "}
-                    </p>
                   </div>
                 </SwiperSlide>
               );

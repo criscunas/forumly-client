@@ -3,10 +3,12 @@
 @use '../../../styles/mixins.scss'as *;
 
 .layout {
+
   
+
   &__content {
     max-width: 900px;
-    
+
     @include tablet{
       padding: 0 2rem;
       margin: 0 auto;

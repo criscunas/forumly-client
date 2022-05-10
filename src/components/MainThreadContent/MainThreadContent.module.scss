@@ -2,9 +2,9 @@
 @use '../../../styles/mixins.scss'as *;
 
 .initial {
-  padding-top: 1rem;
-  border-bottom: 2px solid $dark-blue;
-  border-radius: 0;
+  margin-top: 1rem;
+  border: 2px solid $dark-blue;
+  border-radius: 4px;
 
   @include breakpoint {
     margin: 1.5rem 0;
@@ -16,8 +16,8 @@
     font-size: 1.3rem;
     padding: 1.2rem 1rem 0.5rem 1rem;
 
-    @include breakpoint {
-      padding: 1.5rem 1.5rem 1rem 1.5rem;
+    @include tablet {
+      padding: 1.5rem 1.5rem 0.5rem 1.5rem;
     }
   }
 
@@ -26,8 +26,9 @@
     padding: 1rem 1rem 1.5rem 1rem;
 
     @include tablet {
-      padding: 1rem 1.5rem 2rem 1.5rem;
-      color:red;
+    padding: 1rem 1.5rem 2rem 1.5rem;
+      // padding: 1.5rem 1rem 2rem 1rem;
+      @include tablet-text;
     }
   }
 
@@ -40,24 +41,51 @@
     
 
     @include tablet {
-      padding: 1.5rem 0;
+      // padding: 1.5rem 0;
     }
   }
 
 
   &__post_content {
-    @include body-text;
-    padding: 1rem 1rem 2rem 1rem;
+
+    padding: 1rem 1rem 1.5rem 1rem;
+
 
     @include tablet {
-      padding: 1.5rem 1.5rem 2.5rem 1.5rem;
+      padding: 1.2rem 1.5rem 1.7rem 1.5rem;
+    }
+
+
+    a {
+      @include body-text;
+      text-decoration: none;
+      color: black;
+    
+      @include tablet {
+        @include tablet-text;
+      }
+      &:hover {
+        color: $dark-blue;
+      }
+    }
+
+    
+    
+    
+    
+    
+    @include body-text;
+    // padding: 1rem 1rem 2rem 1rem;
+
+    @include tablet {
+      // padding: 1.5rem 1.5rem 2.5rem 1.5rem;
     }
   }
 
   &__post_del {
     
     position: absolute;
-    right: 5%;
+    right: 5px;
     top: 6%;
   }
 

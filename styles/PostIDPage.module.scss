@@ -12,7 +12,13 @@
 
   &__content {
     @include body-text;
+    font-size: 0.9rem;
     padding: 1rem;
+
+    @include tablet {
+      @include tablet-text;
+      padding: 1.5rem;
+    }
     
   }
 
@@ -37,8 +43,8 @@
 
   &__comments_delete {
     position: absolute;
-    right: 3%;
-    top: 5%;
+    right: 5px;
+    top: 6%;
   }
 
 }

@@ -6,12 +6,11 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { v4 as uuidv4 } from "uuid";
 import CreatePostForm from '../CreatePostForm/CreatePostForm'
 import {
-  CardContent,
   CardHeader,
   Avatar,
-  Card,
-  IconButton,
+  Card
 } from "@mui/material";
+import Link from 'next/link';
 
 export default function MainThreadContent (props) {
 
@@ -26,7 +25,7 @@ export default function MainThreadContent (props) {
 
   return (
     <div>
-      <Card variant="none" className={threadContentStyles.initial}>
+      <Card variant="outlined" className={threadContentStyles.initial}>
         <CardHeader
           onClick={() => {
             Router.push(`/user/${thread[0].username}`);
@@ -78,13 +77,12 @@ export default function MainThreadContent (props) {
                   />
                 }
               />
-              <p 
-              onClick = {() => {
-                Router.push(`/discuss/${posts.id}`)
-              }}
-              className={threadContentStyles.initial__post_content}>
-                {posts.content}
-              </p>
+
+              <div className={threadContentStyles.initial__post_content}>
+                <Link href={`/discuss/${posts.id}`}>
+                  <a>{posts.content}</a>
+                </Link>
+              </div>
               {!username ? null : posts.username === username ? (
                 <DeleteOutlineIcon
                   size="small"
