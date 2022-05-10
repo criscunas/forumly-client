@@ -184,6 +184,8 @@ export default function PublicProfile({ user }) {
           <Box className={pubProfileStyles.publicProfile}>
             <PublicProfileCard
               user={profile.user}
+              followCount={profile.followers}
+              followingCount={profile.followings}
               blogs={profile.blogs}
               posts={profile.status}
               followings={relations}

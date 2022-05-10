@@ -6,6 +6,7 @@ import { useState } from "react";
 import CreateBlogForm from "../CreateBlogForm/CreateBlogForm";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import profileCardStyles from "../ProfileCard/ProfileCard.module.scss";
+import Link from "next/link";
 
 export default function GenerateUserInfo(props) {
   const {
@@ -100,19 +101,21 @@ export default function GenerateUserInfo(props) {
                 }
                 title={post.title}
                 titleTypographyProps={{
-                  variant: "subtitle1"
+                  variant: "subtitle1",
                 }}
                 subheader={post.created.slice(0, 10)}
                 sx={{ cursor: "pointer" }}
                 onClick={() => Router.push(`/blog/${post.id}`)}
               />
-              <p className={genUserStyles.user__blog_preview}>
-                {post.content.slice(0,100)}...
-              </p>
+              <div className={genUserStyles.user__blog_preview}>
+                <Link href={`/blog/${post.id}`}>
+                  <a>{post.content.slice(0, 100)}... </a>
+                </Link>
+              </div>
               <p className={genUserStyles.user__delete}>
                 <DeleteOutlinedIcon
-                  color = "error"
-                  fontSize = "small"
+                  color="error"
+                  fontSize="small"
                   style={{ cursor: "pointer" }}
                   onClick={() => {
                     deleteHandle(

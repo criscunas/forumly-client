@@ -1,4 +1,5 @@
 @use '../styles/mixins.scss' as *;
+@use './variables.scss'as *;
 
 html,
 body,
@@ -156,12 +157,13 @@ html {
 .swiper {
   width: 100%;
   height: fit-content;
-
+  border-bottom: 2px solid $dark-blue;
 }
 
 .swiper-slide {
   text-align: center;
   background: #fff;
+  margin-bottom: 1rem;
   /* Center slide text vertically */
   display: -webkit-box;
   display: -ms-flexbox;
@@ -180,6 +182,6 @@ html {
 .swiper-slide img {
   display: block;
   width: 100%;
-  height: 200px;
+  height: 155px;
   object-fit: contain;
 }

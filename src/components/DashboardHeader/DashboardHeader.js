@@ -5,11 +5,8 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import fetchJson from "../../../lib/fetchJson";
 import useUser from "../../../lib/useUser";
 import LoginIcon from "@mui/icons-material/Login";
-import MenuIcon from "@mui/icons-material/Menu";
-import MenuItem from "@mui/material/MenuItem";
 import { useState } from "react";
-import {Fade, Button , Menu , IconButton, InputBase, Paper, Box , Snackbar, SnackbarContent} from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
+import { Box , Snackbar, SnackbarContent} from "@mui/material";
 import CreateStatusForm from "../CreateStatusForm/CreateStatusForm";
 import axios from "axios";
 import useSWR, { useSWRConfig } from "swr";
@@ -24,14 +21,6 @@ export default function DashboardHeader() {
   const { user, mutateUser } = useUser();
   const Router = useRouter();
   const { mutate } = useSWRConfig();
-
-
-  
-  // const open = Boolean(anchorEl);
-  // const handleClick = (event) => {
-  //   setAnchorEl(event.currentTarget);
-  // };
-
 
   const postStatus = (values) => {
     axios
@@ -97,23 +86,20 @@ export default function DashboardHeader() {
       {user?.isLoggedIn ? (
         <header className={dashHeader.header}>
           <div className={dashHeader.header__container}>
-            <h1
-              onClick={() => Router.push("/dashboard")}
-              className={dashHeader.header__title}
-            >
-              digi.
-            </h1>
+            <Link href="/dashboard">
+              <a className={dashHeader.header__title}>digi.</a>
+            </Link>
 
             <div className={dashHeader.header__menu}>
-              <CreateStatusForm handler = {postStatus} />
+              <CreateStatusForm handler={postStatus} />
               <Link href="/profile">
-                <a>Profile</a>
+                <a className={dashHeader.header__menu_link}> Profile</a>
               </Link>
               <Link href="/discuss">
-                <a>Discuss</a>
+                <a className={dashHeader.header__menu_link}>Discuss</a>
               </Link>
               <LogoutIcon
-              sx = {{cursor:"pointer"}}
+                sx={{ cursor: "pointer" }}
                 htmlColor="white"
                 onClick={async (e) => {
                   e.preventDefault();
@@ -137,20 +123,17 @@ export default function DashboardHeader() {
             >
               digi
             </h1>
-              <div className={dashHeader.header__mobile_menu}>
+            <div className={dashHeader.header__mobile_menu}>
               <Link href="/discuss">
                 <a>Discuss</a>
               </Link>
 
-              <LoginIcon
-                sx = {{cursor:"pointer"}}
-                htmlColor="white"
-                onClick={() => {
-                  Router.push("/login");
-                }}
-              />
+              <Link href="/login">
+                <a>
+                  <LoginIcon sx={{ cursor: "pointer" }} htmlColor="white" />
+                </a>
+              </Link>
             </div>
- 
           </div>
         </header>
       )}

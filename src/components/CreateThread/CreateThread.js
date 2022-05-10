@@ -39,7 +39,7 @@ export default function CreateThread(props) {
           sx={{ display: "flex" }}
           name="thread_subject"
           type="text"
-          label="Topic"
+          label="Title"
           size="small"
           value={formik.values.thread_subject}
           onChange={formik.handleChange}
@@ -55,7 +55,7 @@ export default function CreateThread(props) {
           }}
         />
         <p className={createThreadStyles.createThread__subhead}>
-          Describe your topic well, while keeping it short as possible.{" "}
+          Describe your title well, while keeping it short as possible.{" "}
         </p>
         <TextField
           sx={{ display: "flex" }}

@@ -15,7 +15,8 @@
     
     @include tablet {
       padding: 1rem 0 1.5rem 0;
-      font-size: 2rem;
+      font-size: 1.6rem;
+      
     }
   }
 
@@ -68,6 +69,10 @@
     padding: 0.5rem 1rem 1rem 1rem;
     
     @include body-text;
+
+    @include tablet {
+      padding: 1rem 1.5rem 1.5rem 1.5rem;
+    }
   }
 
   &__comments_delete {
