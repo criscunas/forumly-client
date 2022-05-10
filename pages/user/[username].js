@@ -1,5 +1,5 @@
 import pubProfileStyles from "../../styles/PublicProfile.module.scss";
-import { Box, Container } from "@material-ui/core";
+import { Box, Container, Snackbar, SnackbarContent } from "@material-ui/core";
 import PublicProfileCard from "../../src/components/PublicProfileCard/PublicProfileCard";
 import axios from "axios";
 import CircularProgress from "@mui/material/CircularProgress";
