@@ -67,6 +67,7 @@
   &__threads_post {
     @include body-text;
     padding: 0.5rem 1rem 1rem 1rem;
+    cursor:pointer;
     
     @include tablet {
       padding: 0.5rem 1.5rem 1.5rem 1.5rem;
@@ -114,6 +115,7 @@
     text-align: center;
     @include sub-header;
     color: $dark-blue;
+    cursor:pointer;
   }
 
   &__posts_body {
@@ -149,7 +151,6 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    border: 1px solid red;
     align-items: center;
   }
 

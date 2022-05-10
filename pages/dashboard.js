@@ -85,7 +85,7 @@ export default function Dashboard ({feedData,username}) {
               return (
                 <SwiperSlide key={i}>
                   <div className={userFeedStyles.feed__article_body}>
-                    <img src={article.urlToImage} alt = "newsimg" />
+                    <img src={article.urlToImage} alt="newsimg" />
                     <a
                       className={userFeedStyles.feed__article_link}
                       href={article.url}
@@ -104,10 +104,10 @@ export default function Dashboard ({feedData,username}) {
       )}
       <Box className={userFeedStyles.feed__followers}>
         {feedData.length === 0 ? (
-          <h1 className={userFeedStyles.feed_followers_empty}>
-            {" "}
-            follow someone to get started !{" "}
-          </h1>
+          <div className={userFeedStyles.feed__empty}>
+            <h1 className={userFeedStyles.feed__empty_header}> Follow someone to get started ! </h1>
+            <p className={userFeedStyles.feed__empty_subhead}> Check out recent threads in our discussion section to find other users.</p>
+          </div>
         ) : (
           <div>
             <h1 className={userFeedStyles.feed__followers_section}>

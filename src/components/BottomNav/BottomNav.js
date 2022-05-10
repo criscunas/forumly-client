@@ -143,33 +143,15 @@ export default function BottomNav() {
           <Grid className={bottomNav.bottomNav__menu_nonuser} container>
             <Grid
               item
-              xs={4}
+              xs={6}
               className={bottomNav.bottomNav__menu_nonuser_link}
               onClick={() => navTo("/discuss")}
-            >
-              <p
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: "0.5rem",
-                }}
-              >
-                {" "}
-                Explore <ChatIcon />
-              </p>
+            >     
+            <ChatIcon />
             </Grid>
             <Grid
               item
-              xs={4}
-              className={bottomNav.bottomNav__menu_nonuser_link}
-              onClick={() => navTo("/dashboard")}
-            >
-              <p> About us </p>
-            </Grid>
-            <Grid
-              item
-              xs={4}
+              xs={6}
               className={bottomNav.bottomNav__menu_nonuser_link}
               onClick={() => navTo("/login")}
             >
