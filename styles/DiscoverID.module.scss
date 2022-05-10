@@ -107,13 +107,13 @@
   }
 
   &__nouser {
-    @include p-text;
+    
     font-weight: 500;
     text-align: right;
   }
 
   &__comment_nouser {
-    @include p-text;
+    
     font-size: 1rem;
     text-align: center;
   }

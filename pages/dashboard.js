@@ -85,7 +85,7 @@ export default function Dashboard ({feedData,username}) {
               return (
                 <SwiperSlide key={i}>
                   <div className={userFeedStyles.feed__article_body}>
-                    <img src={article.urlToImage} />
+                    <img src={article.urlToImage} alt = "newsimg" />
                     <a
                       className={userFeedStyles.feed__article_link}
                       href={article.url}
