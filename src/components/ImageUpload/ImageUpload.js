@@ -38,7 +38,6 @@ export default function ImageUpload(props) {
       .then((response) => {
         const img = { img_path: response.data.secure_url };
         handler(img);
-        refresh(`https://dgisvr.xyz/user/profile/${username}`);
         setImageSelected("");
       });
   };

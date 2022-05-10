@@ -1,71 +1,79 @@
-import postIdStyles from '../../styles/PostIDPage.module.scss';
+import postIdStyles from "../../styles/PostIDPage.module.scss";
 import { withIronSessionSsr } from "iron-session/next";
+import { useState } from "react";
 import { useRouter } from "next/router";
 import fetcher from "../../lib/fetcher";
 import useSWR, { useSWRConfig } from "swr";
 import { sessionOptions } from "../../lib/session";
-import axios from 'axios';
+import axios from "axios";
 import {
   CardHeader,
   Avatar,
   Card,
-  IconButton,
+  Snackbar,
+  SnackbarContent,
+  Box,
 } from "@mui/material";
 import { v4 as uuidv4 } from "uuid";
-import CreatePostComment from '../../src/components/CreatePostComment/CreatePostComment';
+import CreatePostComment from "../../src/components/CreatePostComment/CreatePostComment";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
+import CheckIcon from "@mui/icons-material/Check";
 
 export const getServerSideProps = withIronSessionSsr(async function ({
   req,
   res,
   params,
 }) {
-  
   const user = req.session.user;
-  
+
   const id = params.id;
 
   const main = await fetch(`https://dgisvr.xyz/post/${id}`);
 
-  const mainPost = await main.json()
-
+  const mainPost = await main.json();
 
   if (user === undefined) {
     return {
       props: {
-        user: { isLoggedIn: false },
+        user: { isLoggedIn: false }, mainPost
       },
     };
   }
 
-
   return {
     props: {
-      user, mainPost
+      user,
+      mainPost,
     },
   };
 },
 sessionOptions);
 
-export default function DiscussPage ({user,mainPost}) {
-  
-  const Router = useRouter()
-  const {id} = Router.query
-  const {mutate} = useSWRConfig()
+export default function DiscussPage({ user, mainPost }) {
+  const [open, setOpen] = useState(false);
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      setOpen(false);
+    }
+  };
+
+  const Router = useRouter();
+  const { id } = Router.query;
+  const { mutate } = useSWRConfig();
 
   const { data: comments } = useSWR(
-      `https://dgisvr.xyz/post/allcomments/${id}`,
-      fetcher
-    );
+    `https://dgisvr.xyz/post/allcomments/${id}`,
+    fetcher
+  );
 
   const isLoading = comments;
 
   const createComment = (values) => {
-
     let obj = {
       comment_body: values.comment_body,
-      post_id: parseInt(id)
-    }
+      post_id: parseInt(id),
+    };
 
     axios
       .post("https://dgisvr.xyz/post/comment", obj, {
@@ -74,14 +82,15 @@ export default function DiscussPage ({user,mainPost}) {
           Authorization: `Bearer ${user.auth}`,
         },
       })
-      .then(()=> {
+      .then(() => {
         mutate(`https://dgisvr.xyz/post/allcomments/${parseInt(id)}`);
+        setOpen(true);
       })
       .catch((err) => {
         console.log(err);
       });
   };
-  
+
   const deleteComment = (comment_id) => {
     axios
       .delete("https://dgisvr.xyz/post/deleteComment", {
@@ -95,16 +104,51 @@ export default function DiscussPage ({user,mainPost}) {
       })
       .then(() => {
         mutate(`https://dgisvr.xyz/post/allcomments/${parseInt(id)}`);
+        setOpen(true);
       })
       .catch((error) => {
         console.log(error);
       });
   };
 
-
+  const CrudAlert = () => {
+    return (
+      <Box>
+        <Snackbar
+          open={open}
+          autoHideDuration={5000}
+          onClose={handleClose}
+          anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+        >
+          <SnackbarContent
+            style={{ backgroundColor: "green" }}
+            message={
+              <p
+                style={{
+                  fontSize: "1rem",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  gap: "0.5rem",
+                }}
+              >
+                {" "}
+                Success !
+                <span>
+                  {" "}
+                  <CheckIcon />
+                </span>
+              </p>
+            }
+          />
+        </Snackbar>
+      </Box>
+    );
+  };
 
   return (
     <div className={postIdStyles.postPage}>
+    <h1 className={postIdStyles.postPage__header} > Responding to {mainPost[0].username}</h1> 
       <Card variant="outlined" className={postIdStyles.postPage__main}>
         <CardHeader
           onClick={() => {
@@ -122,17 +166,16 @@ export default function DiscussPage ({user,mainPost}) {
             />
           }
         />
-        <p className={postIdStyles.postPage__content}>
-          {mainPost[0].content}
-        </p>
+        <p className={postIdStyles.postPage__content}>{mainPost[0].content}</p>
       </Card>
 
-      {!user.isLoggedIn ? null : 
-      <div className = {postIdStyles.postPage__form}>
-          <CreatePostComment handler = {createComment}/>
-      </div>
-      }
-      
+      {!user.isLoggedIn ? null : (
+        <div className={postIdStyles.postPage__form}>
+          <CreatePostComment handler={createComment} />
+          {CrudAlert()}
+        </div>
+      )}
+
       {!isLoading ? (
         <p>loading</p>
       ) : (
@@ -179,4 +222,4 @@ export default function DiscussPage ({user,mainPost}) {
       )}
     </div>
   );
-} 
+}

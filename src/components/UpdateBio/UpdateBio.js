@@ -25,7 +25,7 @@ const style = {
 
 export default function UpdateBio(props) {
 
-  const {handle, username, refresh } = props;
+  const {handler, username, refresh } = props;
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -43,7 +43,7 @@ export default function UpdateBio(props) {
       bio: "",
     },
     onSubmit : (values, { resetForm }) => {
-      handle(values);
+      handler(values);
       refresh(`https://dgisvr.xyz/user/profile/${username}`);
       resetForm();
     }

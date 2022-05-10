@@ -71,10 +71,10 @@ export default function ProfileCard(props) {
                     >
                       <div className={profileCardStyles.profilecard__edit}>
                         <p className={profileCardStyles.profilecard__edit_list}>
-                          <UpdateBio />
+                          <UpdateBio handler = {bioHandle} />
                         </p>
                         <p className={profileCardStyles.profilecard__edit_list}>
-                          <ImageUpload />
+                          <ImageUpload handler = {imgHandle} />
                         </p>
                       </div>
                     </Popover>
