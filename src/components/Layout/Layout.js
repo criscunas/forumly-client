@@ -18,7 +18,7 @@ export default function Layout({ children }) {
   return (
     <div style={{ backgroundColor: "#fff" }} className ={layoutStyles.layout}>
       <DashboardHeader />
-      <div style = {{paddingBottom:"4rem"}} className = {layoutStyles.layout__content}>
+      <div style = {{paddingBottom:"8rem"}} className = {layoutStyles.layout__content}>
       {children}
       </div>
       <Paper

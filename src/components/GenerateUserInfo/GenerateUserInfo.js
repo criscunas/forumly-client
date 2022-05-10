@@ -34,6 +34,8 @@ export default function GenerateUserInfo(props) {
   const displayPost = () => {
     showPostOptions(true);
     showStatus(false);
+    showFollowing(false);
+    showFollower(false);
     showBlogs(false);
   };
 
@@ -196,6 +198,7 @@ export default function GenerateUserInfo(props) {
                   title={thread.thread_subject}
                   titleTypographyProps={{ variant: "subtitle1" }}
                   subheader={thread.created.slice(0, 10)}
+                  style = {{cursor:"pointer"}}
                 />
                 <p className={genUserStyles.user__threads_post}>
                   {thread.initial_post}
@@ -369,12 +372,13 @@ export default function GenerateUserInfo(props) {
         <Grid item xs={4} sx={{ borderRight: "1px solid white" }}>
           <div className={profileCardStyles.profilecard__followers_length}>
             <p
-              onClick={displayFollowing}
               className={profileCardStyles.profilecard__followers_num}
             >
               {userFollowing.length}
             </p>
-            <p className={profileCardStyles.profilecard__followers_text}>
+            <p
+            onClick={displayFollowing}
+            className={profileCardStyles.profilecard__followers_text}>
               Following
             </p>
           </div>

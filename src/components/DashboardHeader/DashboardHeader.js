@@ -113,6 +113,7 @@ export default function DashboardHeader() {
                 <a>Discuss</a>
               </Link>
               <LogoutIcon
+              sx = {{cursor:"pointer"}}
                 htmlColor="white"
                 onClick={async (e) => {
                   e.preventDefault();
@@ -142,6 +143,7 @@ export default function DashboardHeader() {
               </Link>
 
               <LoginIcon
+                sx = {{cursor:"pointer"}}
                 htmlColor="white"
                 onClick={() => {
                   Router.push("/login");

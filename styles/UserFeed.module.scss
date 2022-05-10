@@ -81,10 +81,20 @@
   }
 
   &__empty {
-    display: flex;
-    justify-content: center;
-    padding-top: 5rem;
+    color: $dark-blue;
+    padding-top: 1rem;
+    text-align: center;
   }
+
+  &__empty_header {
+    @include section-header;    
+    margin-bottom: 1rem;
+  }
+
+  &__empty_subhead {
+    @include sub-header;
+  }
+
 
   &__wrapper {
     margin: 0 auto;

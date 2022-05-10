@@ -3,21 +3,21 @@
 
 .bottomNav {
   padding: 1rem 0;
-  
+  background-color: $black;
+
   @include beforeTablet {
     display: none;
   }
 
   &__menu {
-    background-color: white;
+    background-color: $black;
+    text-align: center;
     // padding-bottom: 1rem;
   }
 
   &__menu_link {
-    display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
     
+    color: white;
     align-items: center;
   }
 
@@ -27,10 +27,10 @@
   }
 
   &__menu_nonuser {
-    padding: 0 0.5rem;
-    
-  }
+    background-color: $black;
+    text-align: center;
 
+  }
   &__menu_icon {
 
     // display: flex;
@@ -39,8 +39,9 @@
   }
 
   &__menu_nonuser_link {
-    text-align: center;
-    padding: 0.2rem 0;
-    color: $medium-blue;
+    // text-align: center;
+    // padding: 0.2rem 0;
+    color: whitesmoke;
+    font-weight: 500;
   }
 }
