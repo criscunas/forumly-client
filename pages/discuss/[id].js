@@ -205,7 +205,8 @@ export default function DiscussPage({ user, mainPost }) {
                 <p className={postIdStyles.postPage__comments_content}>
                   {posts.comment_body}
                 </p>
-                {!posts.username === user.username ? null : (
+                {user.isLoggedIn === false ? null : (
+                  user.username === posts.username ? 
                   <DeleteOutlinedIcon
                     className={postIdStyles.postPage__comments_delete}
                     size="small"
@@ -214,6 +215,7 @@ export default function DiscussPage({ user, mainPost }) {
                       deleteComment(posts.id);
                     }}
                   />
+                  : null
                 )}
               </Card>
             );

@@ -17,25 +17,26 @@
   }
 
   &__form_header {
-    padding-bottom: 2rem;
-    text-align: center;
-    color: #0798ec;
+    padding: 1.5rem 0;
+    color: $dark-blue;
+    
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
     font-size: 1.5rem;
-    font-weight: bold;
+    justify-content: center;
+    
 
     @include tablet {
-      // padding-bottom: 3rem;
-      font-size: 1.8rem;
+
     }
   }
 
   &__form {
-    padding: 3rem 1rem;
+    padding: 0 1rem 1.5rem 1rem;
     background-color: #fff;
     border-radius: 5px;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
-    rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;  
-    text-align: center;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
     max-width: 500px;
     margin: 0 auto;
   }
@@ -47,13 +48,12 @@
   }
 
   label {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     color: black;
     
   }
 
   input {
     margin-top: 1rem;
-    
   }
 }

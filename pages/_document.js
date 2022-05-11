@@ -7,12 +7,15 @@ export default class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>      
-          <link
-      href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700&family=Poppins:ital,wght@0,300;0,400;1,200&display=swap"
-      rel="stylesheet"></link>
+
+      
       <link rel="preconnect" href="https://fonts.googleapis.com"></link>
-      <link href="https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,400;0,500;1,500&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet"></link>
-      <link href="https://fonts.googleapis.com/css2?family=Asap:ital,wght@0,400;0,500;1,500&family=Passion+One&display=swap" rel="stylesheet"></link>
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin = "true"></link>
+      
+      
+      <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600&display=swap" rel="stylesheet"></link>
+      <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;300;400;500&display=swap" rel="stylesheet"></link>
+    
         </Head>
         <body>
           <Main />

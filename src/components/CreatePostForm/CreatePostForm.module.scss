@@ -3,7 +3,7 @@
 
 .postCard {
   // color: white;
-  background-color: $medium-blue;  
+  // background-color: $medium-blue;  
   
 
   &__form {
@@ -18,14 +18,16 @@
   }
 
   &-collapse {
+
     // padding: 1rem;
   }
 
   &__title {
     padding-left: 1rem;
-    @include body-text;
+    color: $dark-blue;
     font-size: 1rem;
-    color: white;
+    font-weight: 600px;
+    
   }
 }
 

@@ -43,7 +43,7 @@ export default function CreatePostForm(props) {
           aria-label="show more"
         >
           <ExpandMoreIcon />
-          <p className={createPostStyles.postCard__title}> Create new post </p>
+          <h1 className={createPostStyles.postCard__title}> Create new post </h1>
         </IconButton>
         <Collapse in={expanded} timeout="auto">
           <div>

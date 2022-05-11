@@ -40,10 +40,17 @@
 
   &__menu_nonuser_link {
    
+    
     a {
+      font-size: 1rem;
       color: whitesmoke;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
       text-decoration: none;
-      @include tablet-text;
+      
+      font-weight: 500;
     }
 
     p {
