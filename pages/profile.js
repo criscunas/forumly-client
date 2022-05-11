@@ -1,7 +1,8 @@
 import {
   Box,
   Snackbar,
-  SnackbarContent
+  SnackbarContent,
+  CircularProgress
 } from "@material-ui/core";
 import ProfileCard from '../src/components/ProfileCard/ProfileCard';
 import GenerateUserInfo from "../src/components/GenerateUserInfo/GenerateUserInfo";
@@ -182,7 +183,7 @@ export default function Profile  ({auth, username}) {
     <>
       {!isLoading ? (
         <Box className={profileStyles.profile}>
-          <ProfileCard username={username} />
+          <CircularProgress />
         </Box>
       ) : (
         <Box className={profileStyles.profile}>

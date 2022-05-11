@@ -59,40 +59,41 @@ export default function MainThreadContent (props) {
     }
 
       <div className={threadContentStyles.initial__post}>
-        {posts.map((posts, i) => {
+        {posts.map((post, i) => {
           return (
-            <Card key={uuidv4()} variant="outlined">
+            <Card key={uuidv4} variant="outlined">
               <CardHeader
                 onClick={() => {
-                  Router.push(`/user/${posts.username}`);
+                  Router.push(`/user/${post.username}`);
                 }}
-                title={posts.username}
-                subheader={posts.created.slice(11, 19)}
+                title={post.username}
+                subheader={post.created.slice(11, 19)}
                 style={{ cursor: "pointer" }}
                 avatar={
                   <Avatar
                     alt="user-img"
-                    src={posts.img_path}
+                    src={post.img_path}
                     sx={{ width: 46, height: 46 }}
                   />
                 }
               />
 
               <div className={threadContentStyles.initial__post_content}>
-                <Link href={`/discuss/${posts.id}`}>
-                  <a>{posts.content}</a>
+                <Link href={`/discuss/${post.id}`}>
+                  <a>{post.content}</a>
                 </Link>
               </div>
-              {!username ? null : posts.username === username ? (
-                <DeleteOutlineIcon
-                  size="small"
-                  htmlColor="red"
-                  className={threadContentStyles.initial__post_del}
-                  onClick={() => {
-                    deleteHandle(posts.id);
-                    refresh();
-                  }}
-                />
+              {post.username === username ? (
+                <div className={threadContentStyles.initial__post_del}>
+                  <DeleteOutlineIcon
+                    size="small"
+                    htmlColor="red"
+                    onClick={() => {
+                      deleteHandle(posts.id);
+                      refresh();
+                    }}
+                  />
+                </div>
               ) : null}
             </Card>
           );

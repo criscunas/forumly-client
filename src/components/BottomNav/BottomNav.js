@@ -16,7 +16,9 @@ import CssBaseline from "@mui/material/CssBaseline";
 import CreateStatusForm from '../CreateStatusForm/CreateStatusForm';
 import axios from 'axios';
 import useSWR, { useSWRConfig} from "swr";
-import { useState } from 'react';
+import { useState, useEffect} from 'react';
+import fetchJson from "../../../lib/fetchJson";
+
 
 export default function BottomNav() {
   
@@ -89,11 +91,22 @@ export default function BottomNav() {
      }
    };
 
+   useEffect(() => {
+    try {
+      mutateUser(fetchJson("/api/user"));
+    } catch (err) {
+      console.log(err);
+    }
+  }, [user]);
+
+
 
   return (
     <>
+    {user?.isLoggedIn === true ? console.log(true): console.log(false)}
       <CssBaseline />
-      {!user?.isLoggedIn ? null : (
+
+      {user?.isLoggedIn === true ? (
         <div className={bottomNav.bottomNav}>
           {CrudAlert()}
           <Grid className={bottomNav.bottomNav__menu} container>
@@ -123,8 +136,8 @@ export default function BottomNav() {
             </Grid>
           </Grid>
         </div>
-      )}
-      {user?.isLoggedIn ? null : (
+      ) :
+      (
         <div className={bottomNav.bottomNav}>
           <Grid className={bottomNav.bottomNav__menu_nonuser} container spacing = {1}>
             <Grid

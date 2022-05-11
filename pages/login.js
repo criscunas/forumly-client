@@ -1,14 +1,16 @@
 import loginStyles from "../styles/Login.module.scss";
-import { Formik, Form, useFormik } from "formik";
-import { useRouter } from "next/router";
+import {useFormik } from "formik";
 import useUser from "../lib/useUser";
 import fetchJson from "../lib/fetchJson";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import * as Yup from "yup";
 import { Button, Box, TextField } from "@material-ui/core";
 
-
 export default function LoginPage() {
+  
+  
+  const [error, setError] = useState("")
+
   const { mutateUser } = useUser({
     redirectTo: "/dashboard",
     redirectIfFound: true,
@@ -30,6 +32,7 @@ export default function LoginPage() {
       );
     } catch (error) {
       console.error("An unexpected error happened:", error);
+      setError('Invalid username or Password')
     }
   }
 
@@ -66,6 +69,7 @@ export default function LoginPage() {
           className={loginStyles.login__form}
         >
           <h1 className={loginStyles.login__form_header}> Welcome Back <span aria-label="wave"> 👋🏼 </span></h1>
+          <p className={loginStyles.login__form_error}> {error} </p>
           <div className={loginStyles.login__form_body}>
             <TextField
               className={loginStyles.login__form_input}

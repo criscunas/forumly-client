@@ -47,6 +47,11 @@
     flex-direction: column;
   }
 
+  &__form_error {
+    color: red;
+    text-align: center;
+  }
+
   label {
     font-size: 1.2rem;
     color: black;
