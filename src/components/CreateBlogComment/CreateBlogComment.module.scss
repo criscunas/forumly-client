@@ -2,9 +2,7 @@
 @use '../../../styles/mixins.scss'as *;
 
 .blogComment {
-  background-color: $medium-blue !important;
   
-
   &__form {
     display: flex;
     flex-direction: column;
@@ -22,7 +20,7 @@
     padding-left: 1rem;
     @include body-text;
     font-size: 1rem;
-    color: white;
+    color: $dark-blue;
     
   }
 }

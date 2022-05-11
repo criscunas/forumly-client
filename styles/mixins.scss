@@ -2,9 +2,10 @@
 
 @mixin body-text {
 
-  font-size: 0.8rem;
-  line-height:1.3rem;
+  font-size: 0.85rem;
+  line-height:1.4rem;
   font-weight: 400;
+  font-family: 'Noto Sans JP', sans-serif;
   
 
 }
@@ -18,7 +19,8 @@
 @mixin sub-header {
   font-size: 0.85rem;
   line-height: 1.125rem;
-  font-weight: 700;
+  font-weight:600;
+  font-family: 'Noto Sans JP', sans-serif;
 
 
 }
@@ -27,6 +29,7 @@
     font-size: 1.2rem;
     line-height:1.3rem;
     font-weight: 600;   
+    font-family: 'Noto Sans JP', sans-serif;
 }
 
 @mixin page-header {
@@ -37,7 +40,11 @@
  
 }
 
-
+@mixin mobileBreak {
+  @media screen and (min-width: $mobile) {
+    @content;
+  }
+}
 
 @mixin beforeTablet {
   @media screen and (min-width: $before-tablet) {

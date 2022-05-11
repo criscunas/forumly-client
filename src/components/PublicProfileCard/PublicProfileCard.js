@@ -187,7 +187,7 @@ export default function PublicProfileCard(props) {
                 <Avatar
                   alt="user-img"
                   src={user[0].img_path}
-                  sx={{ width: 75, height: 75 }}
+                  sx={{ width: 85, height: 85 }}
                 />
                 {loggedin ? renderFollowing() : null}
               </div>
@@ -196,7 +196,10 @@ export default function PublicProfileCard(props) {
                   {user[0].username}
                 </h1>
                 <p className={pubCardStyles.public__main_bio}>{user[0].bio}</p>
-                <p className={pubCardStyles.public__main_created}> Member since {user[0].created.slice(0,10)}</p>
+                <p className={pubCardStyles.public__main_created}>
+                  {" "}
+                  Member since {user[0].created.slice(0, 10)}
+                </p>
               </div>
             </div>
           </Grid>
@@ -206,18 +209,24 @@ export default function PublicProfileCard(props) {
           <Grid item xs={12}>
             <div className={pubCardStyles.public__followers}>
               <div className={pubCardStyles.public_followers_length}>
-                <p className={pubCardStyles.public_followers_num}>
-                  {followCount}
-                </p>
+                {!followCount ? (
+                  <p className={pubCardStyles.public_followers_num}> 0 </p>
+                ) : (
+                  <p className={pubCardStyles.public_followers_num}>
+                    {followCount}
+                  </p>
+                )}
                 <p className={pubCardStyles.public_followers_text}>Followers</p>
               </div>
-              <div className={pubCardStyles.public__followers_length}>
-                <p className={pubCardStyles.public__followers_num}>
-                  {followingCount}
-                </p>
-                <p className={pubCardStyles.public__followers_text}>
-                  Following
-                </p>
+              <div className={pubCardStyles.public_followers_length}>
+                {!followingCount ? (
+                  <p className={pubCardStyles.public_followers_num}> 0 </p>
+                ) : (
+                  <p className={pubCardStyles.public_followers_num}>
+                    {followingCount}
+                  </p>
+                )}
+                <p className={pubCardStyles.public_followers_text}>Followers</p>
               </div>
               <div className={pubCardStyles.public__followers_length}>
                 <p className={pubCardStyles.public__followers_num}>
@@ -249,10 +258,9 @@ export default function PublicProfileCard(props) {
           </Grid>
         </Grid>
       </div>
-      
-        {blog ? renderBlogs() : null}
-        {status ? renderStatus() : null}
-      
+
+      {blog ? renderBlogs() : null}
+      {status ? renderStatus() : null}
     </>
   );
 }

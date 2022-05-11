@@ -2,27 +2,30 @@
 @use './variables.scss' as *;
 
 .home {
-  height: 100vh;
-  
+  // height: 100vh;
 
   &__hero {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 4rem 1rem 2rem 1rem;
+    padding: 2rem 1rem 2rem 1rem;
   }
 
   &__hero_header {
     font-size: 4rem;
-    padding-bottom: 3rem;
-    font-family: 'Passion One', cursive;
-    font-weight: 400;
+    font-weight: 600;
     color: $dark-blue;
+    font-family: 'Comfortaa', cursive;
+
+    @include tablet {
+      padding-bottom: 1rem;
+    }
   }
 
   &__hero_subhead {
-    font-weight: 600;
-    font-size: 1.4rem;
+    font-weight: 400;
+    font-size: 1.3rem;
+    font-family: 'Comfortaa', cursive;
     color: $dark-blue;
   }
 
@@ -30,8 +33,6 @@
     display: flex;
     justify-content: center;
     padding: 1.5rem 1rem 2rem 1rem;
-    
-    max-width: 600px;
     margin: 0 auto;
   }
   
@@ -45,46 +46,99 @@
     font-size: 0.9rem;
   }
 
+  &__bottom {
+  
+    @include beforeTablet{
+      display: flex;
+      gap: 1rem;
+      padding: 0 2rem;
+      align-items: baseline;
+    }
+  }
 
-  &__form {
-    margin: 0 1rem;
-    padding: 3rem 1rem;
-    border-radius: 3px;
-    background-color: white;
-    box-shadow: 0 3px 10px rgb(0 0 0 / 0.5);
+  &__about {
+    box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
+    display: flex;
     flex-direction: column;
     gap: 1.5rem;
+    margin: 1.5rem 1rem;
+    max-width: 496px;
+
+    @include mobileBreak {
+      margin: 1.5rem auto;
+    }
+
+      @include beforeTablet {
+        flex: 1;
+        margin: 2rem auto;
+      }
+  }
+  
+  &__about_header {
+    
+    
+  }
+  
+  &__about_text {
+    @include tablet-text;
+    line-height: 1.7rem;
+    padding: 0rem 1rem 1rem 1rem;
 
     @include tablet {
-      margin: 0 auto 2rem auto;
+      padding-top: 0.5rem;
+    }
+  }
 
-      max-width: 600px;
+  &__about_dt {
+    color: $dark-blue;
+    @include tablet-text;
+    padding: 0 1rem;
+    
+  }
+
+  &__about_dd {
+    padding: 1rem;
+    @include tablet-text;
+    line-height: 1.5rem;
+  }
+
+
+  &__form {
+    margin: 1rem;
+    padding: 1rem;
+    border-radius: 3px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
+    max-width: 496px;
+    gap: 1.5rem;
+
+    @include mobileBreak {
+      margin: 0 auto;
+    }
+
+    @include beforeTablet {
+      flex: 0.6;
+      
     }
   }
 
   &__form_header {
     text-align: center;
-    padding-bottom: 1.5rem;
-    color: $dark-blue;
-    font-size: 1.5rem;
-    font-weight: bold;
+    padding: 0.5rem;
+    font-weight: 500;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size:1.3rem;
+    // line-height: 1.5rem;
   }
 
-  &__create__form {
-    // display: flex;
-    // flex-direction: column;
-    // padding: 0 1rem;
-    // gap: 2.5rem;
+  label {
+    @include tablet-text;
+    font-weight: 500;
+}
 
-    label {
-      font-size: 1rem;  
-      font-family: 'Asap', sans-serif;
-      font-weight: 500;
-      
-    }
-    
-  }
-
-
+input {
+  margin-top: 0.5rem;
+}
 
 }

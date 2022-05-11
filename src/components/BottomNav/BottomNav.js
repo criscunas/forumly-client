@@ -29,15 +29,6 @@ export default function BottomNav() {
 
   const Router = useRouter()
 
-  const Mailto = ({ email, subject, body, ...props }) => {
-    return (
-      <a href={`mailto:${email}?subject=${subject || ""}&body=${body || ""}`}>
-        {props.children}
-      </a>
-    );
-  }; 
-  
-
 
   const postStatus = (values) => {
     axios
@@ -138,23 +129,14 @@ export default function BottomNav() {
           <Grid className={bottomNav.bottomNav__menu_nonuser} container spacing = {1}>
             <Grid
               item
-              xs={6}
+              xs={12}
               className={bottomNav.bottomNav__menu_nonuser_link}
             >
               <Link href="/discuss">
                 <a>
-                  <ChatIcon />
+                  Explore <ChatIcon />
                 </a>
               </Link>
-            </Grid>
-            <Grid
-              item
-              xs={6}
-              className={bottomNav.bottomNav__menu_nonuser_link}
-            >
-              <Mailto email="criscunas@criscunas.dev">
-                <p> Contact </p>
-              </Mailto>
             </Grid>
           </Grid>
         </div>

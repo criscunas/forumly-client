@@ -60,12 +60,12 @@ export default function LoginPage() {
 
   return (
     <Box className={loginStyles.login}>
-      <div className= {loginStyles.login__container} >
+      <div className={loginStyles.login__container}>
         <form
           onSubmit={formik.handleSubmit}
           className={loginStyles.login__form}
         >
-          <h1 className={loginStyles.login__form_header}> Welcome Back</h1>
+          <h1 className={loginStyles.login__form_header}> Welcome Back <span aria-label="wave"> 👋🏼 </span></h1>
           <div className={loginStyles.login__form_body}>
             <TextField
               className={loginStyles.login__form_input}
