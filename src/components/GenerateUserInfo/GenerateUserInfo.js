@@ -249,11 +249,12 @@ export default function GenerateUserInfo(props) {
                 subheader={post.created.slice(0, 10)}
               />
 
-              <Link href={`/thread/${post.thread_id}`}>
-                <a className={genUserStyles.user__threads_post}>
-                  {post.content}
-                </a>
-              </Link>
+              <div className={genUserStyles.user__threads_post}>
+                <Link href={`/thread/${post.thread_id}`}>
+                  <a>{post.content}</a>
+                </Link>
+              </div>
+
               <p className={genUserStyles.user__delete}>
                 <DeleteOutlinedIcon
                   color="error"

@@ -65,7 +65,7 @@ export default function Dashboard ({feedData,username}) {
             slidesPerView={1}
             spaceBetween={20}
             autoplay={{
-              delay: 4500,
+              delay: 6000,
               disableOnInteraction: false,
             }}
             breakpoints={{

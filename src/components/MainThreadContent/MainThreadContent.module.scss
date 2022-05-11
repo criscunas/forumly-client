@@ -42,6 +42,21 @@
     }
   }
 
+  &__post_comment {
+    display: flex;
+    color: black;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+
+    &:hover{
+      color:$dark-blue;
+    }
+
+    @include tablet {
+      padding: 1rem 1.5rem;
+    }
+  }
 
   &__post_content {
 
@@ -52,16 +67,13 @@
     }
 
 
-    a {
+    p {
       @include body-text;
       text-decoration: none;
       color: black;
     
       @include tablet {
         @include tablet-text;
-      }
-      &:hover {
-        color: $dark-blue;
       }
     }
     

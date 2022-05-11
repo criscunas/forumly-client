@@ -89,7 +89,7 @@ export const Home = () => {
     <>
       <Box className={homeStyles.home}>
         <div className={homeStyles.home__hero}>
-          <h1 className={homeStyles.home__hero_header}> digi. </h1>
+          <h1 className={homeStyles.home__hero_header}> forumly </h1>
           <p className={homeStyles.home__hero_subhead}>
             Frame your social space.
           </p>
@@ -100,13 +100,13 @@ export const Home = () => {
             <Typewriter
               options={{
                 strings: [
-                  "Welcome to digi",
-                  "digi is a platform that allows to create, share & connect with everyone. ",
+                  "Welcome to Forumly",
+                  "Forumly is a new platform that allows you to create, share & connect with everyone. ",
                   "Host your blog, discuss anything through our forumns, follow other users plus many more exciting features to come",
                 ],
                 autoStart: true,
                 loop: true,
-                deleteSpeed: 8,
+                deleteSpeed: 10,
                 pauseFor: "4000ms",
               }}
             />
@@ -182,7 +182,7 @@ export const Home = () => {
               size="medium"
               variant="contained"
               style={{
-                backgroundColor: "#112d4e",
+                backgroundColor: "#1C6E8C",
                 color: "white",
                 borderRadius: 5,
               }}
@@ -191,9 +191,7 @@ export const Home = () => {
             </Button>
           </form>
           <div className={homeStyles.home__about}>
-            <Card
-              style={{ boxShadow: "rgba(0, 0, 0, 0.15) 0px 3px 3px 0px" }}
-            >
+            <Card style={{ boxShadow: "rgba(0, 0, 0, 0.15) 0px 3px 3px 0px" }}>
               <CardHeader
                 className={homeStyles.home__about_header}
                 title="A little bit about us."
@@ -209,7 +207,9 @@ export const Home = () => {
                 will be rolling out new features in the future. Feel free to
                 contact me with any questions.
               </div>
-              <CardActions style={{ textAlign: "center", margin:"0 0 0.5rem 0" }}>
+              <CardActions
+                style={{ textAlign: "center", margin: "0 0 0.5rem 0" }}
+              >
                 <Grid container spacing={1}>
                   <Grid item xs={3}>
                     {NavTo(
@@ -240,14 +240,11 @@ export const Home = () => {
                 </Grid>
               </CardActions>
             </Card>
-            <Card
-              
-              style={{ boxShadow: "rgba(0, 0, 0, 0.15) 0px 3px 3px 0px" }}
-            >
+            <Card style={{ boxShadow: "rgba(0, 0, 0, 0.15) 0px 3px 3px 0px" }}>
               <CardHeader
                 className={homeStyles.home__about_header}
                 title="Getting Started"
-                titleTypographyProps={{ variant: "h5", gutterBottom: "true" }}
+                titleTypographyProps={{ variant: "h5", gutterBottom: "true", fontWeight: "500" }}
                 subheader="Creating an account is easier than ever. Simply fill out the signup form and your all set to go."
                 subheaderTypographyProps={{ gutterBottom: "true" }}
               />

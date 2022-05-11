@@ -6,6 +6,22 @@
 .header {
   background-color: #007ee5;
  
+
+
+  &__container_nouser {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 1rem;
+    gap: 1.2rem;
+
+
+    @include tablet {
+      padding: 1.5rem 2.5rem;
+      
+    }
+  }
+
   &__container {
     display: flex;
     justify-content: space-between;
@@ -13,9 +29,10 @@
     padding: 1rem;
     gap: 1.2rem;
 
+
     @include tablet {
       padding: 1.5rem 2.5rem;
-      // justify-content: initial;
+      
     }
     // padding: 1rem 0.5rem;
   }
@@ -27,6 +44,9 @@
     font-size: 1.6rem;
     font-weight: 600;
     font-family: "Comfortaa", 'cursive';
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 
     &:visited {
       color: white;
@@ -85,6 +105,10 @@
       cursor:pointer;
     }
     
+  }
+
+  &__mobile_link {
+    @include body-text;
   }
 }
 

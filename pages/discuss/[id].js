@@ -75,6 +75,7 @@ export default function DiscussPage({ user, mainPost }) {
     let obj = {
       comment_body: values.comment_body,
       post_id: parseInt(id),
+      thread_id: mainPost[0].thread_id
     };
 
     axios
@@ -160,10 +161,18 @@ export default function DiscussPage({ user, mainPost }) {
   
   return (
     <div className={postIdStyles.postPage}>
-    <h1 className={postIdStyles.postPage__header} > Responding to {mainPost[0].username}</h1> 
+      <div className={postIdStyles.postPage__header}>
+        <h1 className={postIdStyles.postPage__header_text}>
+          {" "}
+          Responding to {mainPost[0].username}
+        </h1>
+        <Link href={`/thread/${mainPost[0].thread_id}`}>
+          <a> Go back </a>
+        </Link>
+      </div>
       <Card variant="outlined" className={postIdStyles.postPage__main}>
         <CardHeader
-          title = {linkTo(`/user/${mainPost[0].username}`, mainPost[0].username)}
+          title={linkTo(`/user/${mainPost[0].username}`, mainPost[0].username)}
           titleTypographyProps={{ variant: "subtitle1", fontWeight: "500" }}
           subheader={mainPost[0].created.slice(12, 19)}
           style={{ cursor: "pointer" }}
@@ -186,7 +195,10 @@ export default function DiscussPage({ user, mainPost }) {
       )}
 
       {!isLoading ? (
-        <div> <CircularProgress />  </div>
+        <div>
+          {" "}
+          <CircularProgress />{" "}
+        </div>
       ) : (
         <div className={postIdStyles.postPage__comments}>
           {comments.map((posts, i) => {
@@ -197,7 +209,7 @@ export default function DiscussPage({ user, mainPost }) {
                 className={postIdStyles.postPage__comments_card}
               >
                 <CardHeader
-                  title = {linkTo(`/user/${posts.username}`, posts.username)}
+                  title={linkTo(`/user/${posts.username}`, posts.username)}
                   subheader={posts.created.slice(11, 19)}
                   style={{ cursor: "pointer" }}
                   avatar={
@@ -211,8 +223,8 @@ export default function DiscussPage({ user, mainPost }) {
                 <p className={postIdStyles.postPage__comments_content}>
                   {posts.comment_body}
                 </p>
-                {user.isLoggedIn === false ? null : (
-                  user.username === posts.username ? 
+                {user.isLoggedIn === false ? null : user.username ===
+                  posts.username ? (
                   <DeleteOutlinedIcon
                     className={postIdStyles.postPage__comments_delete}
                     size="small"
@@ -221,8 +233,7 @@ export default function DiscussPage({ user, mainPost }) {
                       deleteComment(posts.id);
                     }}
                   />
-                  : null
-                )}
+                ) : null}
               </Card>
             );
           })}

@@ -34,6 +34,8 @@ export const getServerSideProps = withSessionSsr(
 
 export default function ThreadPage ({user}) {
   
+  const [comments, setComments] = useState([])
+
   const Router = useRouter();
   const { id } = Router.query;
   
@@ -67,7 +69,7 @@ export default function ThreadPage ({user}) {
   }
 
 
-  const deletePost = (id) => {
+  const deletePost = (post_id) => {
     axios
       .delete("https://dgisvr.xyz/post/delete", {
         headers: {
@@ -75,7 +77,7 @@ export default function ThreadPage ({user}) {
           Authorization: `Bearer ${user.auth}`,
         },
         data: {
-          id: id,
+          id:post_id,
         },
       })
       .then(() => {

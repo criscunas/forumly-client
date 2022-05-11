@@ -11,7 +11,7 @@ import CreateStatusForm from "../CreateStatusForm/CreateStatusForm";
 import axios from "axios";
 import useSWR, { useSWRConfig } from "swr";
 import CheckIcon from "@mui/icons-material/Check";
-
+import BubbleChartOutlinedIcon from "@mui/icons-material/BubbleChartOutlined";
 
 const Header = () => {
   
@@ -95,7 +95,10 @@ const Header = () => {
         <header className={dashHeader.header}>
           <div className={dashHeader.header__container}>
             <Link href="/dashboard">
-              <a className={dashHeader.header__title}>digi.</a>
+              <a className={dashHeader.header__title}>
+                frm
+                <BubbleChartOutlinedIcon />
+              </a>
             </Link>
 
             <div className={dashHeader.header__menu}>
@@ -124,13 +127,16 @@ const Header = () => {
         </header>
       ) : (
         <header className={dashHeader.header}>
-          <div className={dashHeader.header__container}>
+          <div className={dashHeader.header__container_nouser}>
             <Link href="/">
-              <a className={dashHeader.header__title}>digi</a>
+              <a className={dashHeader.header__title}>
+                frm
+                <BubbleChartOutlinedIcon />
+              </a>
             </Link>
             <div className={dashHeader.header__mobile_menu}>
               <Link href="/discuss">
-                <a>Discuss</a>
+                <a className={dashHeader.header__mobile_link}>Explore</a>
               </Link>
               <Link href="/login">
                 <a>

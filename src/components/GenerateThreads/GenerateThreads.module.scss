@@ -7,23 +7,25 @@
 
 
   @include tablet {
-    padding: 2rem;
+    padding: 1.5rem 1.2rem 0 1.2rem;
   }
 
   &__section {
+    padding-bottom: 1.5rem;
+
     @include section-header;
     color: $dark-blue;
-    margin-bottom: 1rem;
-
+    
     @include tablet { 
-      margin-bottom: 1.5rem;
+      // padding: 0 1.5rem 0 1.5rem;
+      font-size: 1.5rem;
     }
   }
 
   &__header {
     font-weight: 500;
     @include sub-header;
-    
+
   }
 
   &__text {
