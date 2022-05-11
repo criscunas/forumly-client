@@ -1,15 +1,20 @@
 import genFeedStyles from './GenerateFollowFeed.module.scss';
-import { useRouter } from 'next/router';
 import { Card, CardContent, CardHeader, Avatar} from "@mui/material";
 import {v4 as uuidv4} from 'uuid';
+import Link from 'next/link';
 
-export default function GenerateFollowFeed (props) {
+const GenerateFollowFeed =  ({feed}) => {
 
-  const {feed} = props;
-  const Router = useRouter();
+  const linkTo = (url, txt) => {
+    return (
+      <Link href={url}>
+        <a> {txt} </a>
+      </Link>
+    );
+  };
   
   return (
-    <>
+    <div>
         {feed.map((posts) => {
           return (
             <Card
@@ -21,10 +26,7 @@ export default function GenerateFollowFeed (props) {
               }}
             >
               <CardHeader
-                onClick={() => {
-                  Router.push(`/user/${posts.username}`);
-                }}
-                title={posts.username}
+                title = {linkTo(`/user/${posts.username}`, posts.username)}
                 subheader={posts.created.slice(11,19)}
                 sx={{ cursor: "pointer"}}
                 avatar={
@@ -43,6 +45,8 @@ export default function GenerateFollowFeed (props) {
             </Card>
           );
         })}
-    </>
+    </div>
   );
 } 
+
+export default GenerateFollowFeed;

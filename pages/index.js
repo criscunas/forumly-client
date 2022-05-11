@@ -8,7 +8,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import * as Yup from "yup";
 import Typewriter from "typewriter-effect";
-import TwitterIcon from "@mui/icons-material/Twitter";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import TerminalIcon from "@mui/icons-material/Terminal";

@@ -1,24 +1,15 @@
 import React, { Component } from "react";
-import DashboardHeader from "../DashboardHeader/DashboardHeader";
+import Header from "../Header/Header";
 import BottomNav from "../BottomNav/BottomNav";
-import { useState, useEffect } from "react";
-import useUser from "../../../lib/useUser";
-import fetchJson from "../../../lib/fetchJson";
-import { Paper } from "@mui/material";
-import CreateThread from '../CreateThread/CreateThread';
-import { withIronSessionSsr } from "iron-session/next";
-import { sessionOptions } from "../../../lib/session";
 import layoutStyles from './Layout.module.scss';
-
-
 
 
 export default function Layout({ children }) {
   
   return (
     <div style={{ backgroundColor: "#fff" }} className ={layoutStyles.layout}>
-      <DashboardHeader />
-      <div style = {{paddingBottom:"8rem"}} className = {layoutStyles.layout__content}>
+      <Header />
+      <div style = {{paddingBottom:"6rem"}} className = {layoutStyles.layout__content}>
       {children}
       </div>
       <div style={{ position: "fixed", bottom: 0, left: 0, right: 0 }} >

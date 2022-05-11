@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import dashHeader from "./DashboardHeader.module.scss";
+import dashHeader from "./Header.module.scss";
 import Link from "next/link";
 import LogoutIcon from "@mui/icons-material/Logout";
 import fetchJson from "../../../lib/fetchJson";
@@ -13,9 +13,8 @@ import useSWR, { useSWRConfig } from "swr";
 import CheckIcon from "@mui/icons-material/Check";
 
 
-export default function DashboardHeader() {
+const Header = () => {
   
-  const [anchorEl, setAnchorEl] = useState(null);
   const [open, setOpen] = useState(false);
   
   const { user, mutateUser } = useUser();
@@ -126,12 +125,9 @@ export default function DashboardHeader() {
       ) : (
         <header className={dashHeader.header}>
           <div className={dashHeader.header__container}>
-            <h1
-              onClick={() => Router.push("/")}
-              className={dashHeader.header__title}
-            >
-              digi
-            </h1>
+            <Link href="/">
+              <a className={dashHeader.header__title}>digi</a>
+            </Link>
             <div className={dashHeader.header__mobile_menu}>
               <Link href="/discuss">
                 <a>Discuss</a>
@@ -149,5 +145,5 @@ export default function DashboardHeader() {
   );
 };
 
-
+export default Header;
 

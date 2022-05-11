@@ -2,6 +2,7 @@ import postIdStyles from "../../styles/PostIDPage.module.scss";
 import { withIronSessionSsr } from "iron-session/next";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import Link from 'next/link';
 import fetcher from "../../lib/fetcher";
 import useSWR, { useSWRConfig } from "swr";
 import { sessionOptions } from "../../lib/session";
@@ -13,6 +14,7 @@ import {
   Snackbar,
   SnackbarContent,
   Box,
+  CircularProgress
 } from "@mui/material";
 import { v4 as uuidv4 } from "uuid";
 import CreatePostComment from "../../src/components/CreatePostComment/CreatePostComment";
@@ -146,15 +148,22 @@ export default function DiscussPage({ user, mainPost }) {
     );
   };
 
+  const linkTo = (url, txt) => {
+    return (
+      <Link href={url}>
+        <a> {txt} </a>
+      </Link>
+    );
+  };
+
+
+  
   return (
     <div className={postIdStyles.postPage}>
     <h1 className={postIdStyles.postPage__header} > Responding to {mainPost[0].username}</h1> 
       <Card variant="outlined" className={postIdStyles.postPage__main}>
         <CardHeader
-          onClick={() => {
-            Router.push(`/user/${mainPost[0].username}`);
-          }}
-          title={mainPost[0].username}
+          title = {linkTo(`/user/${mainPost[0].username}`, mainPost[0].username)}
           titleTypographyProps={{ variant: "subtitle1", fontWeight: "500" }}
           subheader={mainPost[0].created.slice(12, 19)}
           style={{ cursor: "pointer" }}
@@ -177,7 +186,7 @@ export default function DiscussPage({ user, mainPost }) {
       )}
 
       {!isLoading ? (
-        <p>loading</p>
+        <div> <CircularProgress />  </div>
       ) : (
         <div className={postIdStyles.postPage__comments}>
           {comments.map((posts, i) => {
@@ -188,10 +197,7 @@ export default function DiscussPage({ user, mainPost }) {
                 className={postIdStyles.postPage__comments_card}
               >
                 <CardHeader
-                  onClick={() => {
-                    Router.push(`/user/${posts.username}`);
-                  }}
-                  title={posts.username}
+                  title = {linkTo(`/user/${posts.username}`, posts.username)}
                   subheader={posts.created.slice(11, 19)}
                   style={{ cursor: "pointer" }}
                   avatar={

@@ -1,4 +1,4 @@
-import { Box, CardHeader, Card, CardContent, Avatar, Snackbar, SnackbarContent } from "@material-ui/core";
+import { Box, CardHeader, Card, CardContent, Avatar, Snackbar, SnackbarContent, CircularProgress } from "@material-ui/core";
 import BlogStyles from "../../styles/BlogPage.module.scss";
 import { useRouter } from "next/router";
 import CreateBlogComment from "../../src/components/CreateBlogComment/CreateBlogComment";
@@ -11,6 +11,7 @@ import axios from 'axios';
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import CheckIcon from '@mui/icons-material/Check';
 import { useState } from "react";
+import Link from 'next/link';
 
 export const getServerSideProps = withIronSessionSsr(async function ({
   req,
@@ -133,11 +134,17 @@ export default function BlogPage({ user }) {
       });
   };
 
-
+  const linkTo = (url, txt) => {
+    return (
+      <Link href={url}>
+        <a> {txt} </a>
+      </Link>
+    );
+  };
 
   return (
     <>
-    {!isLoading ? <div className={BlogStyles.blog__loading}> loading </div> : 
+    {!isLoading ? <div className={BlogStyles.blog__loading}> <CircularProgress/> </div> : 
       <Box className={BlogStyles.blog}>
         <Card className={BlogStyles.blog__card}>
           <CardHeader
@@ -148,9 +155,8 @@ export default function BlogPage({ user }) {
                 style={{ height: 65, width: 65 }}
               />
             }
-            title={blogs.user[0].username}
+            title={linkTo(`/user/${blogs.user[0].username}`, blogs.user[0].username)}
             titleTypographyProps={{ variant: "h6" }}
-            onClick={() => Router.push(`/user/${blogs.user[0].username}`)}
           />
           <CardContent>
             <h1 className={BlogStyles.blog__header}>{blogs.post[0].title}</h1>
@@ -176,10 +182,7 @@ export default function BlogPage({ user }) {
                   className={BlogStyles.blog__comments_card}
                 >
                   <CardHeader
-                    onClick={() => {
-                      Router.push(`/user/${posts.username}`);
-                    }}
-                    title={posts.username}
+                    title={linkTo(`/user/${posts.username}`, posts.username)}
                     subheader={posts.created.slice(11, 19)}
                     style={{ cursor: "pointer" }}
                     avatar={

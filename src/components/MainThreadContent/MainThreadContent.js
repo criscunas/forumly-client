@@ -1,7 +1,4 @@
 import threadContentStyles from "./MainThreadContent.module.scss";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { useRouter } from 'next/router';
-import { useState } from "react";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { v4 as uuidv4 } from "uuid";
 import CreatePostForm from '../CreatePostForm/CreatePostForm'
@@ -12,25 +9,26 @@ import {
 } from "@mui/material";
 import Link from 'next/link';
 
-export default function MainThreadContent (props) {
+const MainThreadContent = (props) => {
 
   const {main, username, refresh , deleteHandle, createHandle, loggedIn} = props;
 
   const {thread, posts} = main;
 
-  const [expandedId, setExpandedId] = useState(-1);
-
-  const Router = useRouter();
-
+  
+  const linkTo = (url, txt) => {
+    return (
+      <Link href={url}>
+        <a> {txt} </a>
+      </Link>
+    );
+  }
 
   return (
     <div>
       <Card variant="outlined" className={threadContentStyles.initial}>
         <CardHeader
-          onClick={() => {
-            Router.push(`/user/${thread[0].username}`);
-          }}
-          title={thread[0].username}
+          title={linkTo(`/user/${thread[0].username}`, thread[0].username)}
           titleTypographyProps={{ variant: "subtitle1", fontWeight: "500" }}
           subheader={thread[0].created.slice(12, 19)}
           style={{ cursor: "pointer" }}
@@ -63,10 +61,10 @@ export default function MainThreadContent (props) {
           return (
             <Card key={uuidv4} variant="outlined">
               <CardHeader
-                onClick={() => {
-                  Router.push(`/user/${post.username}`);
-                }}
-                title={post.username}
+                title={linkTo(
+                  `/user/${post.username}`,
+                  post.username
+                )}
                 subheader={post.created.slice(11, 19)}
                 style={{ cursor: "pointer" }}
                 avatar={
@@ -102,3 +100,5 @@ export default function MainThreadContent (props) {
     </div>
   );
 }
+
+export default MainThreadContent;

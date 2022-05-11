@@ -183,7 +183,9 @@ export default function Profile  ({auth, username}) {
     <>
       {!isLoading ? (
         <Box className={profileStyles.profile}>
+          <div className = {profileStyles.profile__loading}>
           <CircularProgress />
+          </div>
         </Box>
       ) : (
         <Box className={profileStyles.profile}>

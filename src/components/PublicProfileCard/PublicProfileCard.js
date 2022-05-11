@@ -11,7 +11,7 @@ import { useState } from "react";
 import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
 import PersonRemoveIcon from "@mui/icons-material/PersonRemove";
 import { v4 as uuidv4 } from "uuid";
-import { useRouter } from "next/router";
+import Link from 'next/link';
 
 export default function PublicProfileCard(props) {
   const {
@@ -28,8 +28,6 @@ export default function PublicProfileCard(props) {
 
   const [blog, showBlogs] = useState(false);
   const [status, showStatus] = useState(true);
-
-  const Router = useRouter();
 
   const displayBlogs = () => {
     showBlogs(true);
@@ -113,7 +111,7 @@ export default function PublicProfileCard(props) {
                     <Avatar
                       alt="user-img"
                       src={user[0].img_path}
-                      sx={{ width: 46, height: 46 }}
+                      sx={{ width: 44, height: 44 }}
                     />
                   }
                 />
@@ -159,12 +157,12 @@ export default function PublicProfileCard(props) {
                 subheader={post.created.slice(11, 19)}
               />
               <div className={pubCardStyles.public__blog_content}>
-                <h1
-                  onClick={() => Router.push(`/blog/${post.id}`)}
-                  className={pubCardStyles.public__blog_title}
-                >
-                  {post.title}
-                </h1>
+                <Link href={`/blog/${post.id}`}>
+                  <a style = {{fontWeight: 500}} className={pubCardStyles.public__blog_title}>
+                    {post.title}
+                  </a>
+                </Link>
+
                 <p className={pubCardStyles.public__blog_descr}>
                   {post.content.slice(0, 500)} ...
                 </p>
@@ -187,7 +185,7 @@ export default function PublicProfileCard(props) {
                 <Avatar
                   alt="user-img"
                   src={user[0].img_path}
-                  sx={{ width: 85, height: 85 }}
+                  sx={{ width: 75, height: 75 }}
                 />
                 {loggedin ? renderFollowing() : null}
               </div>

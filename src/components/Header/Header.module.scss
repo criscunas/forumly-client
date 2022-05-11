@@ -21,12 +21,18 @@
   }
 
   &__title {
+
     color: white;
     cursor:pointer;
     font-size: 1.6rem;
-    text-decoration: none;
-    font-weight: 500;
+    font-weight: 600;
     font-family: "Comfortaa", 'cursive';
+
+    &:visited {
+      color: white;
+      text-decoration: none;
+      border-bottom: none;
+    }
   }
 
   &__menu {
