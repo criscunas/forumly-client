@@ -3,9 +3,7 @@
 
 .postCard {
   // color: white;
-  background-color: $medium-blue;
-
-
+  
   &__form {
     display: flex;
     flex-direction: column;
@@ -25,7 +23,7 @@
     padding-left: 1rem;
     @include body-text;
     font-size: 1rem;
-    color: white;
+    color: $dark-blue;
   }
 }
 

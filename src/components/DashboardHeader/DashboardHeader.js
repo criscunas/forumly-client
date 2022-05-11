@@ -5,7 +5,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import fetchJson from "../../../lib/fetchJson";
 import useUser from "../../../lib/useUser";
 import LoginIcon from "@mui/icons-material/Login";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Box , Snackbar, SnackbarContent} from "@mui/material";
 import CreateStatusForm from "../CreateStatusForm/CreateStatusForm";
 import axios from "axios";
@@ -21,6 +21,15 @@ export default function DashboardHeader() {
   const { user, mutateUser } = useUser();
   const Router = useRouter();
   const { mutate } = useSWRConfig();
+
+   useEffect(() => {
+     try {
+       mutateUser(fetchJson("/api/user"));
+     } catch (err) {
+       console.log(err);
+     }
+   }, [user]);
+
 
   const postStatus = (values) => {
     axios
@@ -127,7 +136,6 @@ export default function DashboardHeader() {
               <Link href="/discuss">
                 <a>Discuss</a>
               </Link>
-
               <Link href="/login">
                 <a>
                   <LoginIcon sx={{ cursor: "pointer" }} htmlColor="white" />

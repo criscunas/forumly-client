@@ -58,14 +58,16 @@ export default function PublicProfile({ user }) {
     `https://dgisvr.xyz/user/public/${username}`,
     fetcher
   );
-  const { data: relations } = useSWR(
-    [`https://dgisvr.xyz/follow/get`, user.auth],
+  const { data: relations } = useSWR(user.isLoggedIn === true ?
+    [`https://dgisvr.xyz/follow/get`, user.auth] : null,
     fetchFollow
   );
 
   const { mutate } = useSWRConfig();
 
   const isLoading = profile && relations;
+
+  
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -193,6 +195,7 @@ export default function PublicProfile({ user }) {
               unfollowHandle={unfollowUser}
               loggedin={true}
             />
+            {CrudAlert()}
           </Box>
         </Container>
       )}
