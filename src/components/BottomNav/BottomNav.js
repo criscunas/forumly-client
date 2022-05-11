@@ -103,9 +103,7 @@ export default function BottomNav() {
 
   return (
     <>
-    {user?.isLoggedIn === true ? console.log(true): console.log(false)}
       <CssBaseline />
-
       {user?.isLoggedIn === true ? (
         <div className={bottomNav.bottomNav}>
           {CrudAlert()}

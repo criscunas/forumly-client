@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import dashHeader from "./DashboardHeader.module.scss";
+import dashHeader from "./Header.module.scss";
 import Link from "next/link";
 import LogoutIcon from "@mui/icons-material/Logout";
 import fetchJson from "../../../lib/fetchJson";
@@ -11,11 +11,10 @@ import CreateStatusForm from "../CreateStatusForm/CreateStatusForm";
 import axios from "axios";
 import useSWR, { useSWRConfig } from "swr";
 import CheckIcon from "@mui/icons-material/Check";
+import BubbleChartOutlinedIcon from "@mui/icons-material/BubbleChartOutlined";
 
-
-export default function DashboardHeader() {
+const Header = () => {
   
-  const [anchorEl, setAnchorEl] = useState(null);
   const [open, setOpen] = useState(false);
   
   const { user, mutateUser } = useUser();
@@ -96,7 +95,10 @@ export default function DashboardHeader() {
         <header className={dashHeader.header}>
           <div className={dashHeader.header__container}>
             <Link href="/dashboard">
-              <a className={dashHeader.header__title}>digi.</a>
+              <a className={dashHeader.header__title}>
+                frm
+                <BubbleChartOutlinedIcon />
+              </a>
             </Link>
 
             <div className={dashHeader.header__menu}>
@@ -125,16 +127,16 @@ export default function DashboardHeader() {
         </header>
       ) : (
         <header className={dashHeader.header}>
-          <div className={dashHeader.header__container}>
-            <h1
-              onClick={() => Router.push("/")}
-              className={dashHeader.header__title}
-            >
-              digi
-            </h1>
+          <div className={dashHeader.header__container_nouser}>
+            <Link href="/">
+              <a className={dashHeader.header__title}>
+                frm
+                <BubbleChartOutlinedIcon />
+              </a>
+            </Link>
             <div className={dashHeader.header__mobile_menu}>
               <Link href="/discuss">
-                <a>Discuss</a>
+                <a className={dashHeader.header__mobile_link}>Explore</a>
               </Link>
               <Link href="/login">
                 <a>
@@ -149,5 +151,5 @@ export default function DashboardHeader() {
   );
 };
 
-
+export default Header;
 

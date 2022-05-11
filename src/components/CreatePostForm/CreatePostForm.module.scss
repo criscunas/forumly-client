@@ -24,7 +24,8 @@
 
   &__title {
     padding-left: 1rem;
-    color: $dark-blue;
+    color: $black;
+    @include body-text;
     font-size: 1rem;
     font-weight: 600px;
     

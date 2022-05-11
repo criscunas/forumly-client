@@ -1,7 +1,7 @@
-import { Box, Container, Card, CardMedia, CardContent} from "@material-ui/core";
+import { Box, Container} from "@material-ui/core";
 import GenerateFollowFeed from '../src/components/GenerateFollowFeed/GenerateFollowFeed';
 import axios from "axios";
-import userFeedStyles from '../styles/UserFeed.module.scss';
+import userFeedStyles from '../styles/Dashboard.module.scss';
 import { sessionOptions } from "../lib/session";
 import { withIronSessionSsr } from "iron-session/next";
 import fetcher from "../lib/fetcher";
@@ -12,7 +12,6 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Navigation, Autoplay } from "swiper";
-import Image from 'next/image';
 
 export const getServerSideProps = withIronSessionSsr(async function ({
   req,
@@ -66,7 +65,7 @@ export default function Dashboard ({feedData,username}) {
             slidesPerView={1}
             spaceBetween={20}
             autoplay={{
-              delay: 4500,
+              delay: 6000,
               disableOnInteraction: false,
             }}
             breakpoints={{

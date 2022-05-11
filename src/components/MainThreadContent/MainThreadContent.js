@@ -1,7 +1,4 @@
 import threadContentStyles from "./MainThreadContent.module.scss";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { useRouter } from 'next/router';
-import { useState } from "react";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { v4 as uuidv4 } from "uuid";
 import CreatePostForm from '../CreatePostForm/CreatePostForm'
@@ -10,27 +7,29 @@ import {
   Avatar,
   Card
 } from "@mui/material";
+import CommentIcon from "@mui/icons-material/Comment";
 import Link from 'next/link';
 
-export default function MainThreadContent (props) {
+const MainThreadContent = (props) => {
 
   const {main, username, refresh , deleteHandle, createHandle, loggedIn} = props;
 
-  const {thread, posts} = main;
+  const {thread, posts, comments} = main;
 
-  const [expandedId, setExpandedId] = useState(-1);
-
-  const Router = useRouter();
-
+  
+  const linkTo = (url, txt) => {
+    return (
+      <Link href={url}>
+        <a> {txt} </a>
+      </Link>
+    );
+  }
 
   return (
     <div>
       <Card variant="outlined" className={threadContentStyles.initial}>
         <CardHeader
-          onClick={() => {
-            Router.push(`/user/${thread[0].username}`);
-          }}
-          title={thread[0].username}
+          title={linkTo(`/user/${thread[0].username}`, thread[0].username)}
           titleTypographyProps={{ variant: "subtitle1", fontWeight: "500" }}
           subheader={thread[0].created.slice(12, 19)}
           style={{ cursor: "pointer" }}
@@ -60,13 +59,11 @@ export default function MainThreadContent (props) {
 
       <div className={threadContentStyles.initial__post}>
         {posts.map((post, i) => {
+          const commentLen = comments.filter(ele => ele.post_id === post.id)
           return (
-            <Card key={uuidv4} variant="outlined">
+            <Card key={uuidv4()} variant="outlined">
               <CardHeader
-                onClick={() => {
-                  Router.push(`/user/${post.username}`);
-                }}
-                title={post.username}
+                title={linkTo(`/user/${post.username}`, post.username)}
                 subheader={post.created.slice(11, 19)}
                 style={{ cursor: "pointer" }}
                 avatar={
@@ -79,17 +76,38 @@ export default function MainThreadContent (props) {
               />
 
               <div className={threadContentStyles.initial__post_content}>
-                <Link href={`/discuss/${post.id}`}>
-                  <a>{post.content}</a>
-                </Link>
+                <p>{post.content}</p>
               </div>
+
+              <div>
+                {commentLen.length === 1 ? (
+                  <Link href={`/discuss/${post.id}`}>
+                    <a className={threadContentStyles.initial__post_comment}>
+                      <span>
+                        <CommentIcon fontSize="small" />{" "}
+                      </span>{" "}
+                      {commentLen.length} Comment
+                    </a>
+                  </Link>
+                ) : (
+                  <Link href={`/discuss/${post.id}`}>
+                    <a className={threadContentStyles.initial__post_comment}>
+                      <span>
+                        <CommentIcon fontSize="small" />{" "}
+                      </span>{" "}
+                      {commentLen.length} Comments
+                    </a>
+                  </Link>
+                )}
+              </div>
+
               {post.username === username ? (
                 <div className={threadContentStyles.initial__post_del}>
                   <DeleteOutlineIcon
                     size="small"
                     htmlColor="red"
                     onClick={() => {
-                      deleteHandle(posts.id);
+                      deleteHandle(post.id);
                       refresh();
                     }}
                   />
@@ -102,3 +120,5 @@ export default function MainThreadContent (props) {
     </div>
   );
 }
+
+export default MainThreadContent;

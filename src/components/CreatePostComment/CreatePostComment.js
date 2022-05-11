@@ -35,11 +35,6 @@ export default function CreatePostForm(props) {
   });
 
 
-
-
-
-
-
   return (
     <>
       <Card className={createPostCommentStyles.postCard}>

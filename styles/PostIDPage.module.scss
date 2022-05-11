@@ -3,21 +3,30 @@
 
 
 .postPage {
-  // border: 1px solid red;
-
+  
   &__main {
     margin: 1rem;
   }
 
-  &__header {
+  &__header{
     color: $dark-blue;
-    @include sub-header;
-    padding: 1rem 1rem 0rem 1rem;
+    padding: 1.5rem 1rem 0.5rem 1rem;
 
     @include tablet {
-      font-size: 1.2rem;
-      padding: 1.5rem 1rem 0.5rem 1rem;
-      line-height: 2rem;
+      padding: 2.5rem 1.5rem 1rem 1.5rem;
+      
+    }
+  }
+
+  &__header_text {
+    
+    @include section-header;
+    margin-bottom: 1rem;
+
+    @include tablet {
+      @include page-header;
+      // font-size: 1.2rem;      
+      // line-height: 2rem;
     }
   }
 
