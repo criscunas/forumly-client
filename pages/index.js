@@ -59,7 +59,7 @@ export default function Home (){
     }
   };
 
-  const usernameRegex = /^[A-Za-z]+$/;
+  const usernameRegex = /^[A-Za-z0-9]+$/;
 
   const SignUpSchema = Yup.object({
     username: Yup.string()
