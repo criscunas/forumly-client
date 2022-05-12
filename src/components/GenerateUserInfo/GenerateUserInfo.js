@@ -342,7 +342,7 @@ export default function GenerateUserInfo(props) {
             return (
               <Grid item xs={3} sm={4} key={uuidv4()}>
                 <div className={genUserStyles.user__follow_box}>
-                  <Link href={`/user/${follower.username}`}>
+                  <Link href={`/user/${user.username}`}>
                     <a>
                       <Avatar
                         alt="user-img"

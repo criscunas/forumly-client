@@ -2,7 +2,7 @@ import {useFormik} from "formik";
 import { Button, TextField, Fade, Modal, Fab, Backdrop, IconButton, Box } from "@mui/material";
 import statusFormStyles from "./CreateStatusForm.module.scss";
 import * as Yup from 'yup';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import AddIcon from "@mui/icons-material/Add";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 
@@ -24,13 +24,13 @@ export default function CreateStatusForm (props) {
   const {handler} = props;
 
   const [open, setOpen] = useState(false);
+  const [count,setCount] = useState(0)
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
  
 
-
   const StatusSchema = Yup.object({
-    personal_post: Yup.string().required("Status Required"),
+    personal_post: Yup.string().max(280).required("Status Required"),
   });
 
 
@@ -45,10 +45,14 @@ export default function CreateStatusForm (props) {
     },
   });
 
+  useEffect(() => {
+    setCount(formik.values.personal_post.length)
+  })
+
   return (
     <>
       <IconButton onClick={handleOpen} size="large" style={{ padding: "0" }}>
-        <AddBoxIcon className = {statusFormStyles.status__icon} />
+        <AddBoxIcon className={statusFormStyles.status__icon} />
       </IconButton>
       <Modal
         aria-labelledby="transition-modal-title"
@@ -76,6 +80,7 @@ export default function CreateStatusForm (props) {
                 name="personal_post"
                 type="text"
                 size="small"
+                multiline
                 label="Status"
                 value={formik.values.personal_post}
                 onChange={formik.handleChange}
@@ -95,6 +100,15 @@ export default function CreateStatusForm (props) {
               >
                 Post
               </Button>
+
+              {count <= 280 ? (
+                <p style = {{color:"black", textAlign: "center", paddingTop: "1rem"}}>
+                  {" "}
+                  {280 - count} characters remaining
+                </p>
+              ) : (
+                <p style = {{color:"red", textAlign: "center", paddingTop: "1rem"}}> {280 - count} characters over </p>
+              )}
             </form>
           </Box>
         </Fade>

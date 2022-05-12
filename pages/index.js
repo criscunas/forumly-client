@@ -12,10 +12,14 @@ import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import TerminalIcon from "@mui/icons-material/Terminal";
 import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
+import {useState} from 'react'
 
-export const Home = () => {
+export default function Home (){
 
-  const router = useRouter()
+  const [error, setError] = useState('')
+
+
+  const router = useRouter();
 
   const NavTo = (url, avatar) => {
     return (
@@ -57,6 +61,7 @@ export const Home = () => {
       router.push("/profile");
     } catch (error) {
       console.log(error);
+      setError("Invalid username or email.")
     }
   };
 
@@ -123,6 +128,9 @@ export const Home = () => {
             <h1 className={homeStyles.home__form_header}>
               Lets Get You Started
             </h1>
+            <p className={homeStyles.home__form_error}>
+              {error}
+            </p>
             <TextField
               name="username"
               type="text"
@@ -279,5 +287,3 @@ export const Home = () => {
     </>
   );
 }
-
-export default Home;

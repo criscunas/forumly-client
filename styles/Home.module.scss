@@ -111,7 +111,7 @@
     flex-direction: column;
     box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
     max-width: 496px;
-    gap: 1.5rem;
+    gap: 1.2rem;
 
     @include mobileBreak {
       margin: 0 auto;
@@ -121,6 +121,12 @@
       flex: 0.6;
       
     }
+  }
+
+  &__form_error {
+    color: red;
+    text-align: center;
+    
   }
 
   &__form_header {
@@ -140,5 +146,4 @@
 input {
   margin-top: 0.5rem;
 }
-
 }

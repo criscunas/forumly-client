@@ -50,12 +50,21 @@ export default function BlogPage({ user }) {
 
   const {mutate} = useSWRConfig()
 
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
+
+
   const CrudAlert = () => {
     return (
       <Box>
         <Snackbar
           open={open}
-          autoHideDuration={5000}
+          autoHideDuration={3000}
           onClose={handleClose}
           anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
         >
@@ -84,13 +93,6 @@ export default function BlogPage({ user }) {
       </Box>
     );
   };
-
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      setOpen(false);
-    }
-  };
-
 
   const createBlogComment = (values) => {
     let obj = {

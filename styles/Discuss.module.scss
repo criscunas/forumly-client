@@ -45,7 +45,6 @@
 
     @include tablet {
       width: 35%;
-      border: 2px solid $light-blue;
       border-radius: 5px;
     }
   }
@@ -55,7 +54,6 @@
   
     @include tablet {
       width: 65%;
-      border: 2px solid $light-blue;
           // flex: 1;
         }
   }

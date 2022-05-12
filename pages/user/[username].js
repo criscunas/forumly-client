@@ -35,7 +35,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({
     };
   }
 
-  if (user.username === params.username) {
+  if (user.username == params.username) {
     res.setHeader("location", "/profile");
     res.statusCode = 302;
     res.end();
@@ -71,8 +71,9 @@ export default function PublicProfile({ user }) {
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
-      setOpen(false);
+      return;
     }
+    setOpen(false)
   };
 
   const CrudAlert = () => {
@@ -80,7 +81,7 @@ export default function PublicProfile({ user }) {
       <Box>
         <Snackbar
           open={open}
-          autoHideDuration={5000}
+          autoHideDuration={3000}
           onClose={handleClose}
           anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
         >
@@ -123,6 +124,7 @@ export default function PublicProfile({ user }) {
       )
       .then(() => {
         mutate(["https://dgisvr.xyz/follow/get", user.auth]);
+        mutate(`https://dgisvr.xyz/user/public/${username}`);
         setOpen(true)
       })
       .catch((error) => {
@@ -143,6 +145,7 @@ export default function PublicProfile({ user }) {
       })
       .then(() => {
         mutate(["https://dgisvr.xyz/follow/get", user.auth]);
+        mutate(`https://dgisvr.xyz/user/public/${username}`)
         setOpen(true)
       })
       .catch((err) => {
