@@ -202,7 +202,7 @@ export default function Home (){
               />
               <div className={homeStyles.home__about_text}>
                 We are a new platform that allows users to create & share with
-                each other. User can create blog posts, create threads, post
+                each other. Users can create blog posts, create threads, post
                 status updates, comment on posts, customize thier profile &
                 follow other users to recieve a personal feed. We are in our
                 early stages & constantly working to enhace your time here. I
