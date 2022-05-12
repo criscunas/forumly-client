@@ -59,8 +59,14 @@ export default function Home (){
     }
   };
 
+  const usernameRegex = /^[A-Za-z]+$/;
+
   const SignUpSchema = Yup.object({
-    username: Yup.string().min(4, "Too Short!").max(15, "Too Long!"),
+    username: Yup.string()
+      .matches(usernameRegex, "No spaces")
+      .required("Username required")
+      .min(4, "Too Short!")
+      .max(15, "Too Long!"),
     email: Yup.string().required(" Email Required"),
     password: Yup.string()
       .min(5, "Must be at least 5 characters")
