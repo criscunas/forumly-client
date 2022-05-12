@@ -1,7 +1,6 @@
 import homeStyles from '../styles/Home.module.scss';
-import {TextField, Box, Button, InputAdornment, Card, CardHeader, CardContent, Grid, CardActions} from "@material-ui/core";
+import {TextField, Box, Button, InputAdornment, Card, CardHeader, Grid, CardActions} from "@material-ui/core";
 import {useFormik} from 'formik';
-import {useRouter} from 'next/router';
 import useUser from "../lib/useUser";
 import fetchJson from "../lib/fetchJson";
 import Image from 'next/image';
@@ -17,9 +16,6 @@ import {useState} from 'react'
 export default function Home (){
 
   const [error, setError] = useState('')
-
-
-  const router = useRouter();
 
   const NavTo = (url, avatar) => {
     return (
@@ -39,7 +35,7 @@ export default function Home (){
   
 
   const { mutateUser } = useUser({
-    redirectTo: "/profile",
+    redirectTo: "/dashboard",
     redirectIfFound: true,
   });
 
@@ -58,15 +54,13 @@ export default function Home (){
           body: JSON.stringify(body),
         })
       );
-      router.push("/profile");
     } catch (error) {
-      console.log(error);
-      setError("Invalid username or email.")
+      setError("Invalid username or email.");
     }
   };
 
   const SignUpSchema = Yup.object({
-    username: Yup.string().min(5, "Too Short!").max(30, "Too Long!"),
+    username: Yup.string().min(4, "Too Short!").max(15, "Too Long!"),
     email: Yup.string().required(" Email Required"),
     password: Yup.string()
       .min(5, "Must be at least 5 characters")
