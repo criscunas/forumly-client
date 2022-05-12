@@ -50,7 +50,6 @@ export default function Discuss({ fallbackData, auth }) {
    if (reason === "clickaway") {
      return;
    }
-
    setOpen(false);
  };
 
@@ -132,6 +131,7 @@ export default function Discuss({ fallbackData, auth }) {
           <Box className={discussStyles.discuss}>
             <div className={discussStyles.discuss__top}>
               <CreateThread handler={createThread} refresh={refresh} />
+              {CrudAlert()}
             </div>
             <div className={discussStyles.discuss__bottom}>
               <GenerateThreads threads={data} />

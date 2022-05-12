@@ -56,8 +56,9 @@ export default function DiscussPage({ user, mainPost }) {
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
-      setOpen(false);
+      return;
     }
+    setOpen(false);
   };
 
   const Router = useRouter();
@@ -223,7 +224,7 @@ export default function DiscussPage({ user, mainPost }) {
                 <p className={postIdStyles.postPage__comments_content}>
                   {posts.comment_body}
                 </p>
-                {user.isLoggedIn === false ? null : user.username ===
+                {user.isLoggedIn === false ? null : user.username ==
                   posts.username ? (
                   <DeleteOutlinedIcon
                     className={postIdStyles.postPage__comments_delete}

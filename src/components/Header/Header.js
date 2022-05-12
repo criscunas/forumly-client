@@ -6,29 +6,28 @@ import fetchJson from "../../../lib/fetchJson";
 import useUser from "../../../lib/useUser";
 import LoginIcon from "@mui/icons-material/Login";
 import { useState, useEffect } from "react";
-import { Box , Snackbar, SnackbarContent} from "@mui/material";
+import { Box, Snackbar, SnackbarContent } from "@mui/material";
 import CreateStatusForm from "../CreateStatusForm/CreateStatusForm";
 import axios from "axios";
 import useSWR, { useSWRConfig } from "swr";
 import CheckIcon from "@mui/icons-material/Check";
 import BubbleChartOutlinedIcon from "@mui/icons-material/BubbleChartOutlined";
 
-const Header = () => {
+export default function Header () {
   
   const [open, setOpen] = useState(false);
-  
+
   const { user, mutateUser } = useUser();
   const Router = useRouter();
   const { mutate } = useSWRConfig();
 
-   useEffect(() => {
-     try {
-       mutateUser(fetchJson("/api/user"));
-     } catch (err) {
-       console.log(err);
-     }
-   }, [user]);
-
+  useEffect(() => {
+    try {
+      mutateUser(fetchJson("/api/user"));
+    } catch (err) {
+      console.log(err);
+    }
+  }, [user]);
 
   const postStatus = (values) => {
     axios
@@ -38,7 +37,7 @@ const Header = () => {
           Authorization: `Bearer ${user.auth}`,
         },
       })
-      .then((res) => {
+      .then(() => {
         mutate(`https://dgisvr.xyz/user/${user.username}/personals`);
         setOpen(true);
       })
@@ -82,12 +81,12 @@ const Header = () => {
     );
   };
 
-   const handleClose = (event, reason) => {
-     if (reason === "clickaway") {
-       setOpen(false);
-     }
-   };
-
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
 
   return (
     <>
@@ -102,6 +101,7 @@ const Header = () => {
             </Link>
 
             <div className={dashHeader.header__menu}>
+            {console.log(user.username)}
               <CreateStatusForm handler={postStatus} />
               <Link href="/profile">
                 <a className={dashHeader.header__menu_link}> Profile</a>
@@ -150,6 +150,4 @@ const Header = () => {
     </>
   );
 };
-
-export default Header;
 

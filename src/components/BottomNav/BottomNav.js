@@ -40,10 +40,9 @@ export default function BottomNav() {
           Authorization: `Bearer ${user.auth}`,
         },
       })
-      .then((res) => {
+      .then(() => {
         mutate(`https://dgisvr.xyz/user/${user.username}/personals`);
         setOpen(true)
-        console.log(res)
       })
       .catch((err) => {
         console.log(err);
@@ -87,9 +86,11 @@ export default function BottomNav() {
 
    const handleClose = (event, reason) => {
      if (reason === "clickaway") {
-       setOpen(false);
+       return;
      }
+     setOpen(false);
    };
+
 
    useEffect(() => {
     try {

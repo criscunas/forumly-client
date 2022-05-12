@@ -1,64 +1,96 @@
 import threadStyles from "./GenerateThreads.module.scss";
 import { v4 as uuidv4 } from "uuid";
-import {
-  TableRow,
-  TableHead,
-  TableContainer,
-  TableCell,
-  TableBody,
-  Table,
-} from "@material-ui/core";
+import { Card, Box, CardContent, Avatar } from "@material-ui/core";
 import Link from "next/link";
 
-const GenerateThreads = ({ threads }) =>  {
-
+const GenerateThreads = ({ threads }) => {
   return (
-    <div className={threadStyles.threads}>
+    <Box className={threadStyles.threads}>
       <h1 className={threadStyles.threads__section}> Latest </h1>
-      <TableContainer
-        style={{ borderRadius: "5px " }}
-        className={threadStyles.threads__container}
-      >
-        <Table aria-label="thread-table" size="medium">
-          <TableHead style={{ border: "2px solid #d6d4d4" }}>
-            <TableRow>
-              <TableCell>
-                <p className={threadStyles.threads__header}>User</p>
-              </TableCell>
-              <TableCell align="right">
-                <p className={threadStyles.threads__header}>Title</p>
-              </TableCell>
-              <TableCell align="right">
-                <p className={threadStyles.threads__header}>Created</p>
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {threads.map((row) => (
-              <TableRow style={{ border: "2px solid #d6d4d4" }} key={uuidv4()}>
-                <TableCell scope="row" className={threadStyles.threads__text}>
-                  <Link href={`/user/${row.username}`}>
-                    <a> {row.username} </a>
+      {threads
+        .slice(-4)
+        .reverse()
+        .map((post) => {
+          return (
+            <Card key={uuidv4()} className={threadStyles.threads__body}>
+              <CardContent>
+                <div className={threadStyles.threads__header}>
+                  <h1 className={threadStyles.threads__header}>
+                    <Link href={`/thread/${post.id}`}>
+                      <a> {post.thread_subject}</a>
+                    </Link>
+                  </h1>
+                  <p className={threadStyles.threads__text}>
+                    {" "}
+                    {post.initial_post}
+                  </p>
+                </div>
+              </CardContent>
+              <div className={threadStyles.threads__user}>
+                <Link href={`/user/${post.username}`}>
+                  <a>
+                    <Avatar
+                      src={post.img_path}
+                      sx={{ width: 55, height: 55 }}
+                      alt="img_profile_photo"
+                    />
+                  </a>
+                </Link>
+                <div>
+                  <Link href={`/user/${post.username}`}>
+                    <a className={threadStyles.threads__username}>
+                      {post.username}
+                    </a>
                   </Link>
-                </TableCell>
-                <TableCell
-                  align="right"
-                  className={threadStyles.threads__text}
-                >
-                  <Link href={`/thread/${row.id}`}>
-                    <a> {row.thread_subject} </a>
+                  <p className={threadStyles.threads__created}>
+                    {post.created.slice(0, 10)}{" "}
+                  </p>
+                </div>
+              </div>
+            </Card>
+          );
+        })}
+      {threads.slice(0, -4).map((post) => {
+        return (
+          <Card key={uuidv4()} className={threadStyles.threads__body}>
+            <CardContent>
+              <div className={threadStyles.threads__header}>
+                <h1 className={threadStyles.threads__header}>
+                  <Link href={`/thread/${post.id}`}>
+                    <a> {post.thread_subject} </a>
                   </Link>
-                </TableCell>
-                <TableCell align="right" className={threadStyles.threads__text}>
-                  {row.created.slice(0, 10)}
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </div>
+                </h1>
+                <p className={threadStyles.threads__text}>
+                  {post.initial_post}
+                </p>
+              </div>
+            </CardContent>
+            <div className={threadStyles.threads__user}>
+              <Link href={`/user/${post.username}`}>
+                <a>
+                  <Avatar
+                    src={post.img_path}
+                    sx={{ width: 55, height: 55 }}
+                    alt="img_profile_photo"
+                  />
+                </a>
+              </Link>
+              <div>
+                <Link href={`/user/${post.username}`}>
+                  <a className={threadStyles.threads__username}>
+                    {post.username}
+                  </a>
+                </Link>
+                <p className={threadStyles.threads__created}>
+                  {post.created.slice(0, 10)}{" "}
+                </p>
+              </div>
+            </div>
+          </Card>
+        );
+      })}
+    </Box>
   );
-} 
+};
 
 export default GenerateThreads;

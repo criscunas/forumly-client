@@ -71,7 +71,7 @@ export default function CreatePostForm(props) {
                       size="medium"
                       type="text"
                       multiline
-                      rows={4}
+                      rows={5}
                       label="Post"
                       error={
                         props.touched.content && Boolean(props.errors.content)

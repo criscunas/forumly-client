@@ -18,9 +18,9 @@ const style = {
 
 export default function ImageUpload(props) {
   
-  const { handler, username, refresh } = props;
+  const { handler, username} = props;
 
-  const [status, setStatus] = useState("");
+  const [error, setError] = useState("");
   const [imageSelected, setImageSelected] = useState("");
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -39,7 +39,10 @@ export default function ImageUpload(props) {
         const img = { img_path: response.data.secure_url };
         handler(img);
         setImageSelected("");
-      });
+      })
+      .catch(() => {
+        setError("Invalid Image")
+      })
   };
 
   return (
@@ -62,6 +65,9 @@ export default function ImageUpload(props) {
             <h1 className={imageStyles.imageForm__title}>
               Upload Profile Photo
             </h1>
+            <p style = {{color:"red", "textAlign": "center"}}>
+              {error} 
+            </p>
             <Input
               className={imageStyles.imageForm__input}
               type="file"

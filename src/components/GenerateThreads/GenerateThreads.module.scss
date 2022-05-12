@@ -22,20 +22,45 @@
     }
   }
 
-  &__header {
-    font-weight: 500;
-    @include sub-header;
 
+  &__body {
+    margin-bottom: 1rem;
+  }
+
+  &__header {
+    font-family: 'Noto Sans JP', sans-serif;
+    @include tablet-text;
+    font-weight: 600;
+    padding-bottom: 1rem;
+  }
+
+
+  &__main {
+    border: 1px solid red;
   }
 
   &__text {
     @include body-text;
+    
     cursor:pointer;
 
     @include tablet {
       @include tablet-text;
     }
     
+  }
+
+  &__user {
+    display: flex;
+    align-items: center;
+    // border: 1px solid red;
+    gap: 1rem;
+    padding: 0 1rem 1rem 1rem;
+  }
+
+  &__username {
+    @include tablet-text;
+    font-weight: 500;
   }
 
   &__container {
