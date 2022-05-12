@@ -101,7 +101,6 @@ export default function Header () {
             </Link>
 
             <div className={dashHeader.header__menu}>
-            {console.log(user.username)}
               <CreateStatusForm handler={postStatus} />
               <Link href="/profile">
                 <a className={dashHeader.header__menu_link}> Profile</a>
