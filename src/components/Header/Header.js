@@ -95,8 +95,7 @@ export default function Header () {
           <div className={dashHeader.header__container}>
             <Link href="/dashboard">
               <a className={dashHeader.header__title}>
-                frm
-                <BubbleChartOutlinedIcon />
+                <BubbleChartOutlinedIcon fontSize = "large" />
               </a>
             </Link>
 
@@ -129,8 +128,7 @@ export default function Header () {
           <div className={dashHeader.header__container_nouser}>
             <Link href="/">
               <a className={dashHeader.header__title}>
-                frm
-                <BubbleChartOutlinedIcon />
+                <BubbleChartOutlinedIcon fontSize="large" />
               </a>
             </Link>
             <div className={dashHeader.header__mobile_menu}>
