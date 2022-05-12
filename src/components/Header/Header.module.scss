@@ -101,7 +101,15 @@
   }
 
   &__mobile_link {
-    @include body-text;
+     
+     display:none;
+
+    @include tablet { 
+      display:block;
+     @include body-text;
+    }
+
+   
   }
 }
 
