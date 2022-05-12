@@ -44,7 +44,7 @@ export default function ProfileCard(props) {
               <Avatar
                 alt="user-img"
                 src={userInfo.user.img_path}
-                sx={{ width: 70, height: 70 }}
+                sx={{ width: 75, height: 75 }}
               />
               <div className={profileCardStyles.profilecard__bio}>
                 <h1 className={profileCardStyles.profilecard__username}>
