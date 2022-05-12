@@ -101,7 +101,8 @@ export default function Dashboard ({feedData,username}) {
       <Box className={userFeedStyles.feed__followers}>
         {feedData.length === 0 ? (
           <div className={userFeedStyles.feed__empty}>
-            <h1 className={userFeedStyles.feed__empty_header}> Follow someone to get started ! </h1>
+          <h1 className={userFeedStyles.feed__empty_header_name}> Welcome {username} ! </h1>
+            <h1 className={userFeedStyles.feed__empty_header}> Follow someone to get started</h1>
             <p className={userFeedStyles.feed__empty_subhead}> Check out recent threads in our discussion section to find other users.</p>
           </div>
         ) : (
