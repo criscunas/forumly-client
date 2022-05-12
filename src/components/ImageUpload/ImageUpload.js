@@ -39,6 +39,7 @@ export default function ImageUpload(props) {
         const img = { img_path: response.data.secure_url };
         handler(img);
         setImageSelected("");
+        setOpen(false)
       })
       .catch(() => {
         setError("Invalid Image")

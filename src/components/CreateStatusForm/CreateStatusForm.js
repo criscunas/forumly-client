@@ -41,6 +41,7 @@ export default function CreateStatusForm (props) {
     },
     onSubmit: (values, { resetForm }) => {
       handler(values)      
+      setOpen(false)
       resetForm();
     },
   });
