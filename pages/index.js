@@ -93,8 +93,18 @@ export default function Home (){
   return (
     <>
       <Box className={homeStyles.home}>
+        <div className={homeStyles.home__image}> 
+          <Image
+            src="/images/logo.png"
+            height="165px"
+            width="600px"
+            layout="responsive"
+            alt='forumly logo'
+            priority = "lazy"
+            quality="75"
+          />
+        </div>
         <div className={homeStyles.home__hero}>
-          <h1 className={homeStyles.home__hero_header}> forumly </h1>
           <p className={homeStyles.home__hero_subhead}>
             Frame your social space.
           </p>
@@ -117,7 +127,7 @@ export default function Home (){
             />
           </div>
           <div className={homeStyles.home__welcome_bot}>
-            <Image src="/images/landingBot.jpg" height="250px" width="200px" />
+            <Image src="/images/landingBot.jpg" height="250px" width="200px" priority = "lazy" />
           </div>
         </div>
         <div className={homeStyles.home__bottom}>
@@ -128,9 +138,7 @@ export default function Home (){
             <h1 className={homeStyles.home__form_header}>
               Lets Get You Started
             </h1>
-            <p className={homeStyles.home__form_error}>
-              {error}
-            </p>
+            <p className={homeStyles.home__form_error}>{error}</p>
             <TextField
               name="username"
               type="text"
@@ -208,7 +216,7 @@ export default function Home (){
               />
               <div className={homeStyles.home__about_text}>
                 We are a new platform that allows users to create & share with
-                each other. User can create blog posts, create threads, post
+                each other. Users can create blog posts, create threads, post
                 status updates, comment on posts, customize thier profile &
                 follow other users to recieve a personal feed. We are in our
                 early stages & constantly working to enhace your time here. I
@@ -252,7 +260,11 @@ export default function Home (){
               <CardHeader
                 className={homeStyles.home__about_header}
                 title="Getting Started"
-                titleTypographyProps={{ variant: "h5", gutterBottom: "true", fontWeight: "500" }}
+                titleTypographyProps={{
+                  variant: "h5",
+                  gutterBottom: "true",
+                  fontWeight: "500",
+                }}
                 subheader="Creating an account is easier than ever. Simply fill out the signup form and your all set to go."
                 subheaderTypographyProps={{ gutterBottom: "true" }}
               />
