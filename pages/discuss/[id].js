@@ -175,7 +175,7 @@ export default function DiscussPage({ user, mainPost }) {
         <CardHeader
           title={linkTo(`/user/${mainPost[0].username}`, mainPost[0].username)}
           titleTypographyProps={{ variant: "subtitle1", fontWeight: "500" }}
-          subheader={mainPost[0].created.slice(12, 19)}
+          subheader={mainPost[0].created.slice(0, 10)}
           style={{ cursor: "pointer" }}
           avatar={
             <Avatar
@@ -211,7 +211,7 @@ export default function DiscussPage({ user, mainPost }) {
               >
                 <CardHeader
                   title={linkTo(`/user/${posts.username}`, posts.username)}
-                  subheader={posts.created.slice(11, 19)}
+                  subheader={posts.created.slice(0, 10)}
                   style={{ cursor: "pointer" }}
                   avatar={
                     <Avatar

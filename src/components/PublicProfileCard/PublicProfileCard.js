@@ -97,21 +97,17 @@ export default function PublicProfileCard(props) {
             
               <Card
                 key={uuidv4()}
-                variant="outlined"
                 className={pubCardStyles.public__status}
-                sx={{
-                  boxShadow: "0 3px 10px rgb(0 0 0 / 0.2)",
-                }}
               >
                 <CardHeader
                   title={user[0].username}
                   titleTypographyProps={{ variant: "subtitle1" }}
-                  subheader={post.created.slice(11, 19)}
+                  subheader={post.created.slice(0,10)}
                   avatar={
                     <Avatar
                       alt="user-img"
                       src={user[0].img_path}
-                      sx={{ width: 44, height: 44 }}
+                      sx={{ width: 46, height: 46 }}
                     />
                   }
                 />
@@ -140,9 +136,6 @@ export default function PublicProfileCard(props) {
               key={uuidv4()}
               variant="outlined"
               className={pubCardStyles.public__status}
-              sx={{
-                boxShadow: "0 3px 10px rgb(0 0 0 / 0.2)",
-              }}
             >
               <CardHeader
                 avatar={
@@ -154,7 +147,7 @@ export default function PublicProfileCard(props) {
                 }
                 title={user[0].username}
                 titleTypographyProps={{ variant: "subtitle1" }}
-                subheader={post.created.slice(11, 19)}
+                subheader={post.created.slice(0, 10)}
               />
               <div className={pubCardStyles.public__blog_content}>
                 <Link href={`/blog/${post.id}`}>
@@ -251,7 +244,7 @@ export default function PublicProfileCard(props) {
               onClick={displayBlogs}
               className={pubCardStyles.public__options_text_right}
             >
-              Recent Posts
+              Blog Posts
             </p>
           </Grid>
         </Grid>

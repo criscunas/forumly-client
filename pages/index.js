@@ -93,18 +93,10 @@ export default function Home (){
   return (
     <>
       <Box className={homeStyles.home}>
-        <div className={homeStyles.home__image}> 
-          <Image
-            src="/images/logo.png"
-            height="165px"
-            width="600px"
-            layout="responsive"
-            alt='forumly logo'
-            priority = "lazy"
-            quality="75"
-          />
-        </div>
         <div className={homeStyles.home__hero}>
+          <h1 className={homeStyles.home__hero_header}>
+            forumly
+          </h1>
           <p className={homeStyles.home__hero_subhead}>
             Frame your social space.
           </p>
@@ -115,9 +107,9 @@ export default function Home (){
             <Typewriter
               options={{
                 strings: [
-                  "Welcome to Forumly",
-                  "Forumly is a new platform that allows you to create, share & connect with everyone. ",
-                  "Host your blog, discuss anything through our forumns, follow other users plus many more exciting features to come",
+                  "Welcome to forumly",
+                  "forumly is a platform that allows you to create, share & connect with everyone. ",
+                  "Host your blog, create a conversation, follow other users plus many more features to come",
                 ],
                 autoStart: true,
                 loop: true,
@@ -201,6 +193,7 @@ export default function Home (){
                 backgroundColor: "#1C6E8C",
                 color: "white",
                 borderRadius: 5,
+                marginTop: 2
               }}
             >
               Submit

@@ -31,13 +31,13 @@ const MainThreadContent = (props) => {
         <CardHeader
           title={linkTo(`/user/${thread[0].username}`, thread[0].username)}
           titleTypographyProps={{ variant: "subtitle1", fontWeight: "500" }}
-          subheader={thread[0].created.slice(12, 19)}
+          subheader={thread[0].created.slice(0, 10)}
           style={{ cursor: "pointer" }}
           avatar={
             <Avatar
               alt="user-img"
               src={thread[0].img_path}
-              sx={{ width: 50, height: 50 }}
+              sx={{ width: 55, height: 55 }}
             />
           }
         />
@@ -64,7 +64,7 @@ const MainThreadContent = (props) => {
             <Card key={uuidv4()} variant="outlined">
               <CardHeader
                 title={linkTo(`/user/${post.username}`, post.username)}
-                subheader={post.created.slice(11, 19)}
+                subheader={post.created.slice(0, 10)}
                 style={{ cursor: "pointer" }}
                 avatar={
                   <Avatar

@@ -131,13 +131,13 @@ export default function Header () {
                 <BubbleChartOutlinedIcon fontSize="large" />
               </a>
             </Link>
-            <div className={dashHeader.header__mobile_menu}>
+            <div className={dashHeader.header__nouser_menu}>
               <Link href="/discuss">
-                <a className={dashHeader.header__mobile_link}>Explore</a>
+                <a className={dashHeader.header__nouser_link}>Explore</a>
               </Link>
               <Link href="/login">
                 <a>
-                  <LoginIcon sx={{ cursor: "pointer" }} htmlColor="white" />
+                  <LoginIcon sx={{ cursor: "pointer" }} htmlColor="white" fontSize = "medium" />
                 </a>
               </Link>
             </div>
