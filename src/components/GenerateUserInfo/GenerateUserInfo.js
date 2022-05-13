@@ -381,23 +381,24 @@ export default function GenerateUserInfo(props) {
         </Grid>
         <Grid item xs={4} sx={{ borderRight: "1px solid white" }}>
           <div className={profileCardStyles.profilecard__followers_length}>
-            <p
-              className={profileCardStyles.profilecard__followers_num}
-            >
+            <p className={profileCardStyles.profilecard__followers_num}>
               {userFollowing.length}
             </p>
             <p
-            onClick={displayFollowing}
-            className={profileCardStyles.profilecard__followers_text}>
+              onClick={displayFollowing}
+              className={profileCardStyles.profilecard__followers_text}
+            >
               Following
             </p>
           </div>
         </Grid>
         <Grid item xs={4}>
           <div className={profileCardStyles.profilecard__followers_length}>
-            <p className={profileCardStyles.profilecard__followers_num}>{personals.length}</p>
+            <p className={profileCardStyles.profilecard__followers_num}>
+              {personals.length}
+            </p>
             <p className={profileCardStyles.profilecard__followers_text}>
-              Updates
+              {personals.length === 1 ? <p> Update </p> : <p> Updates </p>}
             </p>
           </div>
         </Grid>

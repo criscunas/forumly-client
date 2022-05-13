@@ -223,7 +223,9 @@ export default function PublicProfileCard(props) {
                 <p className={pubCardStyles.public__followers_num}>
                   {posts.length}
                 </p>
-                <p className={pubCardStyles.public__followers_text}>Updates</p>
+                <p className={pubCardStyles.public__followers_text}>
+                {posts.length === 1 ? <p> Update </p> : <p> Updates </p>}                
+                </p>
               </div>
             </div>
           </Grid>
