@@ -397,7 +397,7 @@ export default function GenerateUserInfo(props) {
           <div className={profileCardStyles.profilecard__followers_length}>
             <p className={profileCardStyles.profilecard__followers_num}>{personals.length}</p>
             <p className={profileCardStyles.profilecard__followers_text}>
-              Posts
+              Updates
             </p>
           </div>
         </Grid>
