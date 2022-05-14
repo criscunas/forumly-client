@@ -96,11 +96,6 @@ export default function CreateCategorizedPost(props) {
                 helperText={
                   formik.touched.title && formik.errors.title
                 }
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start"></InputAdornment>
-                  ),
-                }}
               />
               <TextField
                 sx={{ display: "flex" }}
@@ -114,11 +109,6 @@ export default function CreateCategorizedPost(props) {
                 onChange={formik.handleChange}
                 error={formik.touched.post && Boolean(formik.errors.post)}
                 helperText={formik.touched.post && formik.errors.post}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start"></InputAdornment>
-                  ),
-                }}
               />
               <Button
                 size="medium"

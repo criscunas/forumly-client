@@ -1,5 +1,5 @@
 import homeStyles from '../styles/Home.module.scss';
-import {TextField, Box, Button, InputAdornment, Card, CardHeader, Grid, CardActions} from "@material-ui/core";
+import {TextField, Box, Button, Card, CardHeader, Grid, CardActions} from "@material-ui/core";
 import {useFormik} from 'formik';
 import useUser from "../lib/useUser";
 import fetchJson from "../lib/fetchJson";
@@ -139,9 +139,7 @@ export default function Home (){
               onChange={formik.handleChange}
               error={formik.touched.username && Boolean(formik.errors.username)}
               helperText={formik.touched.username && formik.errors.username}
-              InputProps={{
-                startAdornment: <InputAdornment position="start" />,
-              }}
+
             />
             <TextField
               name="email"
@@ -151,9 +149,6 @@ export default function Home (){
               onChange={formik.handleChange}
               error={formik.touched.email && Boolean(formik.errors.email)}
               helperText={formik.touched.email && formik.errors.email}
-              InputProps={{
-                startAdornment: <InputAdornment position="start" />,
-              }}
             />
             <TextField
               name="password"
@@ -163,9 +158,6 @@ export default function Home (){
               onChange={formik.handleChange}
               error={formik.touched.password && Boolean(formik.errors.password)}
               helperText={formik.touched.password && formik.errors.password}
-              InputProps={{
-                startAdornment: <InputAdornment position="start" />,
-              }}
             />
             <TextField
               label="Confirm Password"
@@ -180,10 +172,6 @@ export default function Home (){
               helperText={
                 formik.touched.confirmPassword && formik.errors.confirmPassword
               }
-              InputProps={{
-                required: false,
-                startAdornment: <InputAdornment position="start" />,
-              }}
             />
             <Button
               type="submit"
@@ -255,11 +243,10 @@ export default function Home (){
                 title="Getting Started"
                 titleTypographyProps={{
                   variant: "h5",
-                  gutterBottom: "true",
                   fontWeight: "500",
                 }}
                 subheader="Creating an account is easier than ever. Simply fill out the signup form and your all set to go."
-                subheaderTypographyProps={{ gutterBottom: "true" }}
+
               />
               <dl>
                 <dt className={homeStyles.home__about_dt}> Profile </dt>

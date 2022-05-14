@@ -79,11 +79,6 @@ export default function CreatePostForm(props) {
                         props.touched.comment_body && Boolean(props.errors.comment_body)
                       }
                       helperText={props.touched.comment_body && props.errors.comment_body}
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start"></InputAdornment>
-                        ),
-                      }}
                     />
                     <Button
                       style={{

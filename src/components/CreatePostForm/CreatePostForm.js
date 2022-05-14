@@ -2,7 +2,6 @@ import { Formik, Form } from "formik";
 import {
   Card,
   TextField,
-  InputAdornment,
   Button,
   Collapse,
 } from "@mui/material";
@@ -77,11 +76,6 @@ export default function CreatePostForm(props) {
                         props.touched.content && Boolean(props.errors.content)
                       }
                       helperText={props.touched.content && props.errors.content}
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start"></InputAdornment>
-                        ),
-                      }}
                     />
                     <Button
                       style={{

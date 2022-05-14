@@ -1,11 +1,5 @@
 import { Formik, Form } from "formik";
-import {
-  Card,
-  TextField,
-  InputAdornment,
-  Button,
-  Collapse,
-} from "@mui/material";
+import { Card, TextField, Button, Collapse } from "@mui/material";
 import createBlogCommentStyles from "./CreateBlogComment.module.scss";
 import { useState } from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -83,11 +77,6 @@ export default function CreateBlogComment(props) {
                         props.touched.comment_body && Boolean(props.errors.comment_body)
                       }
                       helperText={props.touched.comment_body && props.errors.comment_body}
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start"></InputAdornment>
-                        ),
-                      }}
                     />
                     <Button
                       style={{

@@ -3,8 +3,7 @@ import { useFormik } from "formik";
 import {
   Box,
   Button,
-  TextField,
-  InputAdornment,
+  TextField
 } from "@mui/material";
 import * as Yup from "yup";
 
@@ -50,9 +49,6 @@ export default function CreateThread(props) {
           helperText={
             formik.touched.thread_subject && formik.errors.thread_subject
           }
-          InputProps={{
-            startAdornment: <InputAdornment position="start" />,
-          }}
         />
         <p className={createThreadStyles.createThread__subhead}>
           Describe your title well, while keeping it short as possible.{" "}
@@ -69,9 +65,6 @@ export default function CreateThread(props) {
             formik.touched.initial_post && Boolean(formik.errors.initial_post)
           }
           helperText={formik.touched.initial_post && formik.errors.initial_post}
-          InputProps={{
-            startAdornment: <InputAdornment position="start" />,
-          }}
         />
         <div className={createThreadStyles.createThread__button}>
           <Button

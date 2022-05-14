@@ -12,7 +12,7 @@ export default class MyDocument extends Document {
           href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@600&family=Lato:wght@300;400&display=swap" 
           rel="preload"
           as = "font"
-          crossOrigin=""
+          crossOrigin="anonymous"
           /> 
 
 
