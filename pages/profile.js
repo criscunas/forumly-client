@@ -58,7 +58,7 @@ export default function Profile  ({auth, username}) {
   );
 
   const { data: user } = useSWR(
-    ["https://dgisvr.xyz/user/profile", config],
+    [`https://dgisvr.xyz/user/profile/${username}`, config],
     fetcher
   );
 
