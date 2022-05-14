@@ -32,6 +32,8 @@ export default function Header () {
   }, [user]);
 
 
+  const postStatus = (values) => {
+
     const config = useMemo(
       () => ({
         headers: {
@@ -42,10 +44,6 @@ export default function Header () {
       [user.auth]
     );
 
-
-
-
-  const postStatus = (values) => {
     axios
       .post("https://dgisvr.xyz/personal/post", values, {
         headers: {
