@@ -18,6 +18,7 @@ import axios from 'axios';
 import useSWR, { useSWRConfig} from "swr";
 import { useState, useEffect} from 'react';
 import fetchJson from "../../../lib/fetchJson";
+import { useMemo } from "react";
 
 
 export default function BottomNav() {
@@ -30,6 +31,16 @@ export default function BottomNav() {
   const {mutate} = useSWRConfig()
 
   const Router = useRouter()
+  
+  const config = useMemo(
+    () => ({
+      headers: {
+        Authorization: `Bearer ${user.auth}`,
+        "Content-Type": "application/json",
+      },
+    }),
+    [user.auth]
+  );
 
 
   const postStatus = (values) => {
@@ -41,7 +52,7 @@ export default function BottomNav() {
         },
       })
       .then(() => {
-        mutate(`https://dgisvr.xyz/user/${user.username}/personals`);
+        mutate([`https://dgisvr.xyz/user/profile/${user.username}`, config]);
         setOpen(true)
       })
       .catch((err) => {

@@ -50,16 +50,21 @@ export default function Profile  ({auth, username}) {
   const config = useMemo(
     () => ({
       headers: {
-        Authorization: `Bearer ${auth.token}`,
+        Authorization: `Bearer ${auth}`,
         "Content-Type": "application/json",
       },
     }),
-    [auth.token]
+    [auth]
   );
 
   const { data: user } = useSWR(
     [`https://dgisvr.xyz/user/profile/${username}`, config],
-    fetcher
+    fetcher,
+    {
+      revalidateIfStale: false,
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+    }
   );
 
 

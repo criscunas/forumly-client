@@ -12,6 +12,8 @@ import axios from "axios";
 import useSWR, { useSWRConfig } from "swr";
 import CheckIcon from "@mui/icons-material/Check";
 import BubbleChartOutlinedIcon from "@mui/icons-material/BubbleChartOutlined";
+import { useMemo } from "react";
+
 
 export default function Header () {
   
@@ -29,6 +31,20 @@ export default function Header () {
     }
   }, [user]);
 
+
+    const config = useMemo(
+      () => ({
+        headers: {
+          Authorization: `Bearer ${user.auth}`,
+          "Content-Type": "application/json",
+        },
+      }),
+      [user.auth]
+    );
+
+
+
+
   const postStatus = (values) => {
     axios
       .post("https://dgisvr.xyz/personal/post", values, {
@@ -38,7 +54,7 @@ export default function Header () {
         },
       })
       .then(() => {
-        mutate(`https://dgisvr.xyz/user/${user.username}/personals`);
+        mutate([`https://dgisvr.xyz/user/profile/${user.username}`, config]);
         setOpen(true);
       })
       .catch((err) => {
