@@ -244,6 +244,7 @@ export default function Home (){
                 titleTypographyProps={{
                   variant: "h5",
                   fontWeight: "500",
+                  gutterBottom: true 
                 }}
                 subheader="Creating an account is easier than ever. Simply fill out the signup form and your all set to go."
 

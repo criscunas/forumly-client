@@ -12,7 +12,7 @@ import { sessionOptions } from "../lib/session";
 import {withIronSessionSsr} from 'iron-session/next';
 import fetcher from "../lib/fetcher";
 import useSWR, { useSWRConfig} from "swr";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import CheckIcon from '@mui/icons-material/Check';
 
 
@@ -47,35 +47,26 @@ export default function Profile  ({auth, username}) {
 
   const [open, setOpen] = useState(false);
 
+  const config = useMemo(
+    () => ({
+      headers: {
+        Authorization: `Bearer ${auth.token}`,
+        "Content-Type": "application/json",
+      },
+    }),
+    [auth.token]
+  );
+
   const { data: user } = useSWR(
-    `https://dgisvr.xyz/user/profile/${username}`,
+    ["https://dgisvr.xyz/user/profile", config],
     fetcher
   );
 
-  const { data: personals } = useSWR(
-    `https://dgisvr.xyz/user/${username}/personals`,
-    fetcher
-  );
-
-  const { data: posts } = useSWR(
-    `https://dgisvr.xyz/user/${username}/posts`,
-    fetcher
-  );
-
-  const { data: threads } = useSWR(
-    `https://dgisvr.xyz/user/${username}/threads`,
-    fetcher
-  );
-
-  const { data: blogs } = useSWR(
-    `https://dgisvr.xyz/user/${username}/blogs`,
-    fetcher
-  );
 
   const { mutate } = useSWRConfig();
 
-  const refresh = (url) => {
-    mutate(url)
+  const refresh = () => {
+    mutate([`https://dgisvr.xyz/user/profile/${username}`, config]);
   }
 
   const sendImage = (img) => {
@@ -87,7 +78,7 @@ export default function Profile  ({auth, username}) {
         },
       })
       .then(() => {
-        mutate(`https://dgisvr.xyz/user/profile/${username}`);
+        refresh()
       })
       .catch((err) => {
         console.log(err);
@@ -103,7 +94,7 @@ export default function Profile  ({auth, username}) {
         },
       })
       .then(() => {
-        mutate(`https://dgisvr.xyz/user/${username}/blogs`);
+        refresh()
         setOpen(true);
       })
       .catch((err) => {
@@ -125,7 +116,7 @@ export default function Profile  ({auth, username}) {
       })
       .then(() => {
         setOpen(true)
-        mutate(mutateUrl)
+        refresh()
       })
       .catch(err => {
         console.log(err)
@@ -143,7 +134,7 @@ export default function Profile  ({auth, username}) {
     })
     .then(() => {
       setOpen(true)
-      mutate(`https://dgisvr.xyz/user/profile/${username}`);
+      refresh()
     })
     .catch(err => {
       console.log(err)
@@ -151,12 +142,13 @@ export default function Profile  ({auth, username}) {
     ;
   }
 
-  const isLoading = user && posts && threads && blogs;
+  const isLoading = user;
 
    const handleClose = (event, reason) => {
      if (reason === "clickaway") {
-      setOpen(false);
+      return;
      }
+     setOpen(false);
    };
 
   const CrudAlert = () => {
@@ -171,7 +163,7 @@ export default function Profile  ({auth, username}) {
           <SnackbarContent 
           style = {{backgroundColor: "green"}}
           message = {
-            <p style = {{fontSize: "1rem",display:"flex", justifyContent: "space-between", alignItems:"center", gap:"0.5rem"}} > Success !<span> <CheckIcon/></span></p>
+            <p style = {{fontSize: "1rem",display:"flex", justifyContent: "space-between", alignItems:"center", gap:"0.5rem"}} > Success <span> <CheckIcon/></span></p>
           } />
         </Snackbar>
       </Box>
@@ -199,10 +191,10 @@ export default function Profile  ({auth, username}) {
 
           {CrudAlert()}
           <GenerateUserInfo
-            personals={personals}
-            threads={threads}
-            posts={posts}
-            blogs={blogs}
+            personals={user.personals}
+            threads={user.threads}
+            posts={user.posts}
+            blogs={user.blog}
             userFollowing={user.following}
             userFollowers={user.followers}
             deleteHandle={deleteHandle}

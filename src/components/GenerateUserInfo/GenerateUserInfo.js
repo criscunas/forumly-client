@@ -244,7 +244,7 @@ export default function GenerateUserInfo(props) {
                     sx={{ width: 55, height: 55 }}
                   />
                 }
-                title={post.thread_subject}
+                title={"On: " + post.thread_subject}
                 titleTypographyProps={{ variant: "subtitle1" }}
                 subheader={post.created.slice(0, 10)}
               />

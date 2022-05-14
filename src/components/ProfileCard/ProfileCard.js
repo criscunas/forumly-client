@@ -74,7 +74,7 @@ export default function ProfileCard(props) {
                           <UpdateBio handler = {bioHandle} />
                         </p>
                         <p className={profileCardStyles.profilecard__edit_list}>
-                          <ImageUpload handler = {imgHandle} />
+                          <ImageUpload handler = {imgHandle}  />
                         </p>
                       </div>
                     </Popover>
