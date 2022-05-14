@@ -32,17 +32,16 @@ export default function Header () {
   }, [user]);
 
 
+
+
   const postStatus = (values) => {
 
-    const config = useMemo(
-      () => ({
+    const configs = {
         headers: {
           Authorization: `Bearer ${user.auth}`,
           "Content-Type": "application/json",
-        },
-      }),
-      [user.auth]
-    );
+        }
+      }
 
     axios
       .post("https://dgisvr.xyz/personal/post", values, {
@@ -52,7 +51,7 @@ export default function Header () {
         },
       })
       .then(() => {
-        mutate([`https://dgisvr.xyz/user/profile/${user.username}`, config]);
+        mutate([`https://dgisvr.xyz/user/profile/${user.username}`, configs]);
         setOpen(true);
       })
       .catch((err) => {
@@ -60,12 +59,21 @@ export default function Header () {
       });
   };
 
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
+
+
   const CrudAlert = () => {
     return (
       <Box>
         <Snackbar
           open={open}
-          autoHideDuration={5000}
+          autoHideDuration={3000}
           onClose={handleClose}
           anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
         >
@@ -93,13 +101,6 @@ export default function Header () {
         </Snackbar>
       </Box>
     );
-  };
-
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setOpen(false);
   };
 
   return (

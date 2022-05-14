@@ -161,7 +161,7 @@ export default function Profile  ({auth, username}) {
       <Box>
         <Snackbar
           open={open}
-          autoHideDuration={5000}
+          autoHideDuration={3000}
           onClose={handleClose}
           anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
         >
