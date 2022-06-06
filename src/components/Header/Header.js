@@ -44,14 +44,14 @@ export default function Header () {
       }
 
     axios
-      .post("https://dgisvr.xyz/personal/post", values, {
+      .post("/personal/post", values, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${user.auth}`,
         },
       })
       .then(() => {
-        mutate([`https://dgisvr.xyz/user/profile/${user.username}`, configs]);
+        mutate([`/user/profile/${user.username}`, configs]);
         setOpen(true);
       })
       .catch((err) => {

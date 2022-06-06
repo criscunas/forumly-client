@@ -58,7 +58,7 @@ export default function Profile  ({auth, username}) {
   );
 
   const { data: user } = useSWR(
-    [`https://dgisvr.xyz/user/profile/${username}`, config],
+    [`/user/profile/${username}`, config],
     fetcher,
     {
       revalidateIfStale: false,
@@ -71,12 +71,12 @@ export default function Profile  ({auth, username}) {
   const { mutate } = useSWRConfig();
 
   const refresh = () => {
-    mutate([`https://dgisvr.xyz/user/profile/${username}`, config]);
+    mutate([`/user/profile/${username}`, config]);
   }
 
   const sendImage = (img) => {
     axios
-      .post("https://dgisvr.xyz/user/uploadImage", img, {
+      .post("/user/uploadImage", img, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${auth}`,
@@ -92,7 +92,7 @@ export default function Profile  ({auth, username}) {
 
   const createBlogPost = (values) => {
     axios
-      .post("https://dgisvr.xyz/blog/new", values, {
+      .post("/blog/new", values, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${auth}`,
@@ -131,7 +131,7 @@ export default function Profile  ({auth, username}) {
   const postBio = (values) => {
 
     axios
-    .post("https://dgisvr.xyz/user/bio", values, {
+    .post("/user/bio", values, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${auth}`,

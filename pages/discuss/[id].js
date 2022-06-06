@@ -30,7 +30,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({
 
   const id = params.id;
 
-  const main = await fetch(`https://dgisvr.xyz/post/${id}`);
+  const main = await fetch(`/post/${id}`);
 
   const mainPost = await main.json();
 
@@ -66,7 +66,7 @@ export default function DiscussPage({ user, mainPost }) {
   const { mutate } = useSWRConfig();
 
   const { data: comments } = useSWR(
-    `https://dgisvr.xyz/post/allcomments/${id}`,
+    `/post/allcomments/${id}`,
     fetcher
   );
 
@@ -80,14 +80,14 @@ export default function DiscussPage({ user, mainPost }) {
     };
 
     axios
-      .post("https://dgisvr.xyz/post/comment", obj, {
+      .post("/post/comment", obj, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${user.auth}`,
         },
       })
       .then(() => {
-        mutate(`https://dgisvr.xyz/post/allcomments/${parseInt(id)}`);
+        mutate(`/post/allcomments/${parseInt(id)}`);
         setOpen(true);
       })
       .catch((err) => {
@@ -97,7 +97,7 @@ export default function DiscussPage({ user, mainPost }) {
 
   const deleteComment = (comment_id) => {
     axios
-      .delete("https://dgisvr.xyz/post/deleteComment", {
+      .delete("/post/deleteComment", {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${user.auth}`,
@@ -107,7 +107,7 @@ export default function DiscussPage({ user, mainPost }) {
         },
       })
       .then(() => {
-        mutate(`https://dgisvr.xyz/post/allcomments/${parseInt(id)}`);
+        mutate(`/post/allcomments/${parseInt(id)}`);
         setOpen(true);
       })
       .catch((error) => {

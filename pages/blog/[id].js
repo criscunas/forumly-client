@@ -45,7 +45,7 @@ export default function BlogPage({ user }) {
   const Router = useRouter();
   const {id} = Router.query
 
-  const {data: blogs} = useSWR(`https://dgisvr.xyz/blog/find/${id}`, fetcher)
+  const {data: blogs} = useSWR(`/blog/find/${id}`, fetcher)
   const isLoading = blogs;
 
   const {mutate} = useSWRConfig()
@@ -101,14 +101,14 @@ export default function BlogPage({ user }) {
     };
 
     axios
-      .post("https://dgisvr.xyz/blog/comment", obj, {
+      .post("blog/comment", obj, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${user.auth}`,
         },
       })
       .then(() => {
-        mutate(`https://dgisvr.xyz/blog/find/${id}`);
+        mutate(`blog/find/${id}`);
         setOpen(true)
       })
       .catch((err) => {
@@ -118,7 +118,7 @@ export default function BlogPage({ user }) {
 
   const deleteBlogComment = (comment_id) => {
     axios
-      .delete("https://dgisvr.xyz/blog/comment/delete", {
+      .delete("blog/comment/delete", {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${user.auth}`,
@@ -128,7 +128,7 @@ export default function BlogPage({ user }) {
         },
       })
       .then(() => {
-        mutate(`https://dgisvr.xyz/blog/find/${id}`);
+        mutate(`blog/find/${id}`);
         setOpen(true)
       })
       .catch((error) => {

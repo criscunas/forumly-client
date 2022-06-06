@@ -55,11 +55,11 @@ export default function PublicProfile({ user }) {
   const { username } = Router.query;
 
   const { data: profile } = useSWR(
-    `https://dgisvr.xyz/user/public/${username}`,
+    `/user/public/${username}`,
     fetcher
   );
   const { data: relations } = useSWR(user.isLoggedIn === true ?
-    [`https://dgisvr.xyz/follow/get`, user.auth] : null,
+    [`/follow/get`, user.auth] : null,
     fetchFollow
   );
 
@@ -114,7 +114,7 @@ export default function PublicProfile({ user }) {
   const followUser = () => {
     axios
       .post(
-        "https://dgisvr.xyz/follow",
+        "/follow",
         { id: profile.user[0].user_id },
         {
           headers: {
@@ -123,8 +123,8 @@ export default function PublicProfile({ user }) {
         }
       )
       .then(() => {
-        mutate(["https://dgisvr.xyz/follow/get", user.auth]);
-        mutate(`https://dgisvr.xyz/user/public/${username}`);
+        mutate(["/follow/get", user.auth]);
+        mutate(`/user/public/${username}`);
         setOpen(true)
       })
       .catch((error) => {
@@ -134,7 +134,7 @@ export default function PublicProfile({ user }) {
 
   const unfollowUser = () => {
     axios
-      .delete("https://dgisvr.xyz/follow/unfollow", {
+      .delete("/follow/unfollow", {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${user.auth}`,
@@ -144,8 +144,8 @@ export default function PublicProfile({ user }) {
         },
       })
       .then(() => {
-        mutate(["https://dgisvr.xyz/follow/get", user.auth]);
-        mutate(`https://dgisvr.xyz/user/public/${username}`)
+        mutate(["/follow/get", user.auth]);
+        mutate(`/user/public/${username}`)
         setOpen(true)
       })
       .catch((err) => {

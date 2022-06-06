@@ -9,7 +9,7 @@ export default withIronSessionApiRoute(
   
   const {username, hashed_password} = req.body;  
 
-  const data = await axios.post("https://dgisvr.xyz/user/login", {
+  const data = await axios.post("/user/login", {
     username: username,
     hashed_password: hashed_password,
   });

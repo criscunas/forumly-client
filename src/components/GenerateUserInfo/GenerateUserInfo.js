@@ -119,9 +119,9 @@ export default function GenerateUserInfo(props) {
                   style={{ cursor: "pointer" }}
                   onClick={() => {
                     deleteHandle(
-                      "https://dgisvr.xyz/blog/delete",
+                      "/blog/delete",
                       post.id,
-                      `https://dgisvr.xyz/user/${user.user.username}/blogs`
+                      `/user/${user.user.username}/blogs`
                     );
                   }}
                 />
@@ -165,9 +165,9 @@ export default function GenerateUserInfo(props) {
                       style={{ cursor: "pointer" }}
                       onClick={() => {
                         deleteHandle(
-                          "https://dgisvr.xyz/personal/delete",
+                          "/personal/delete",
                           posts.id,
-                          `https://dgisvr.xyz/user/${user.user.username}/personals`
+                          `/user/${user.user.username}/personals`
                         );
                       }}
                     />
@@ -212,9 +212,9 @@ export default function GenerateUserInfo(props) {
                     style={{ cursor: "pointer" }}
                     onClick={() => {
                       deleteHandle(
-                        "https://dgisvr.xyz/thread/delete",
+                        "/thread/delete",
                         thread.id,
-                        `https://dgisvr.xyz/user/${user.user.username}/threads`
+                        `/user/${user.user.username}/threads`
                       );
                     }}
                   />
@@ -262,9 +262,9 @@ export default function GenerateUserInfo(props) {
                   style={{ cursor: "pointer" }}
                   onClick={() => {
                     deleteHandle(
-                      "https://dgisvr.xyz/post/delete",
+                      "/post/delete",
                       post.id,
-                      `https://dgisvr.xyz/user/${user.user.username}/posts`
+                      `/user/${user.user.username}/posts`
                     );
                   }}
                 />

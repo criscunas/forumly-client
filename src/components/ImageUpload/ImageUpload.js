@@ -34,7 +34,7 @@ export default function ImageUpload(props) {
     formData.append("upload_preset", "qbey2sfk");
 
     axios
-      .post("https://api.cloudinary.com/v1_1/djvcow1p8/image/upload", formData)
+      .post(process.env.CLOUD_URL , formData)
       .then((response) => {
         const img = { img_path: response.data.secure_url };
         handler(img);

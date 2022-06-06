@@ -30,7 +30,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({
     };
   }
 
-  const feed = await axios.get("https://dgisvr.xyz/user/feed", {
+  const feed = await axios.get("/user/feed", {
     headers: {
       Authorization: `Bearer ${user.auth}`,
     },
@@ -49,7 +49,7 @@ sessionOptions);
 
 export default function Dashboard ({feedData,username}) {
   
-  const {data} = useSWR("https://dgisvr.xyz/newsfeed", fetcher)
+  const {data} = useSWR("/newsfeed", fetcher)
 
   return (
     <Container maxWidth="xl" disableGutters className={userFeedStyles.feed}>

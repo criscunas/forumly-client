@@ -45,7 +45,7 @@ export default function UpdateBio(props) {
     onSubmit : (values, { resetForm }) => {
       handler(values);
       setOpen(false)
-      refresh(`https://dgisvr.xyz/user/profile/${username}`);
+      refresh(process.env.URL + `/user/profile/${username}`);
       resetForm();
     }
   });
