@@ -1,64 +1,59 @@
-@use './mixins.scss'as *;
-@use './variables.scss'as *;
-
+@use "./mixins.scss" as *;
+@use "./variables.scss" as *;
 
 .login {
-  height: 100vh;
-  background-position: center;
-  background-size: cover;
+    height: 100vh;
+    background-position: center;
+    background-size: cover;
 
+    &__container {
+        margin: 2rem 1rem;
 
-  &__container {
-    margin: 2rem 1rem;
-
-    @include tablet {
-      margin: 3rem 1.5rem;
+        @include tablet {
+            margin: 3rem 1.5rem;
+        }
     }
-  }
 
-  &__form_header {
-    padding: 1.5rem 0;
-    color: $dark-blue;
-    
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 1.5rem;
-    justify-content: center;
-    
+    &__form_header {
+        padding: 1.5rem 0;
+        color: $dark-blue;
 
-    @include tablet {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1.5rem;
+        justify-content: center;
 
+        @include tablet {
+        }
     }
-  }
 
-  &__form {
-    padding: 0 1rem 1.5rem 1rem;
-    background-color: #fff;
-    border-radius: 5px;
-    box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
-    max-width: 500px;
-    margin: 0 auto;
-  }
+    &__form {
+        padding: 0 1rem 1.5rem 1rem;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: rgba(0, 0, 0, 0.15) 0px 3px 3px 0px;
+        max-width: 500px;
+        margin: 0 auto;
+    }
 
-  &__form_body {
-    display: flex;
-    gap: 2rem;
-    flex-direction: column;
-  }
+    &__form_body {
+        display: flex;
+        gap: 2rem;
+        flex-direction: column;
+    }
 
-  &__form_error {
-    color: red;
-    text-align: center;
-  }
+    &__form_error {
+        color: red;
+        text-align: center;
+    }
 
-  label {
-    font-size: 1.2rem;
-    color: black;
-    
-  }
+    label {
+        font-size: 1.2rem;
+        color: black;
+    }
 
-  input {
-    margin-top: 1rem;
-  }
+    input {
+        margin-top: 1rem;
+    }
 }

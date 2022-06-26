@@ -1,215 +1,207 @@
 import {
-  Box,
-  Snackbar,
-  SnackbarContent,
-  CircularProgress
+    Snackbar,
+    SnackbarContent,
+    CircularProgress,
 } from "@material-ui/core";
-import ProfileCard from '../src/components/ProfileCard/ProfileCard';
+import ProfileCard from "../src/components/ProfileCard/ProfileCard";
 import GenerateUserInfo from "../src/components/GenerateUserInfo/GenerateUserInfo";
-import axios from 'axios';
-import profileStyles from '../styles/Profile.module.scss';
+import axios from "axios";
 import { sessionOptions } from "../lib/session";
-import {withIronSessionSsr} from 'iron-session/next';
+import { withIronSessionSsr } from "iron-session/next";
 import fetcher from "../lib/fetcher";
-import useSWR, { useSWRConfig} from "swr";
+import useSWR, { useSWRConfig } from "swr";
 import { useState, useMemo } from "react";
-import CheckIcon from '@mui/icons-material/Check';
-
+import CheckIcon from "@mui/icons-material/Check";
 
 export const getServerSideProps = withIronSessionSsr(async function ({
-  req,
-  res,
+    req,
+    res,
 }) {
+    const user = req.session.user;
 
-  const user = req.session.user
+    if (user === undefined) {
+        res.setHeader("location", "/login");
+        res.statusCode = 302;
+        res.end();
+        return {
+            props: {
+                user: { isLoggedIn: false },
+            },
+        };
+    }
 
-  if (user === undefined) {
-    res.setHeader("location", "/login");
-    res.statusCode = 302;
-    res.end();
+    const { auth, username } = user;
+
     return {
-      props: {
-        user: { isLoggedIn: false },
-      },
+        props: { auth, username },
     };
-  }
-
-  const {auth, username} = user;
-
-  return { 
-    props: {auth, username},
-  };
 },
 sessionOptions);
 
+export default function Profile({ auth, username }) {
+    const [open, setOpen] = useState(false);
 
-export default function Profile  ({auth, username}) {
+    const config = useMemo(
+        () => ({
+            headers: {
+                Authorization: `Bearer ${auth}`,
+                "Content-Type": "application/json",
+            },
+        }),
+        [auth]
+    );
 
-  const [open, setOpen] = useState(false);
+    const { data: user } = useSWR(
+        [`http://localhost:3050/user/profile/${username}`, config],
+        fetcher,
+        {
+            revalidateIfStale: false,
+            revalidateOnFocus: false,
+            revalidateOnReconnect: false,
+        }
+    );
 
-  const config = useMemo(
-    () => ({
-      headers: {
-        Authorization: `Bearer ${auth}`,
-        "Content-Type": "application/json",
-      },
-    }),
-    [auth]
-  );
+    const { mutate } = useSWRConfig();
 
-  const { data: user } = useSWR(
-    [`/user/profile/${username}`, config],
-    fetcher,
-    {
-      revalidateIfStale: false,
-      revalidateOnFocus: false,
-      revalidateOnReconnect: false,
-    }
-  );
+    const refresh = () => {
+        mutate([`http://localhost:3050/user/profile/${username}`, config]);
+    };
 
+    const sendImage = (img) => {
+        axios
+            .post("/user/uploadImage", img, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${auth}`,
+                },
+            })
+            .then(() => {
+                refresh();
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
 
-  const { mutate } = useSWRConfig();
+    const createBlogPost = (values) => {
+        axios
+            .post("/blog/new", values, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${auth}`,
+                },
+            })
+            .then(() => {
+                refresh();
+                setOpen(true);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
 
-  const refresh = () => {
-    mutate([`/user/profile/${username}`, config]);
-  }
+    const deleteHandle = async (url, id, mutateUrl) => {
+        await axios
+            .delete(url, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${auth}`,
+                },
+                data: {
+                    id: id,
+                },
+            })
+            .then(() => {
+                setOpen(true);
+                refresh();
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
 
-  const sendImage = (img) => {
-    axios
-      .post("/user/uploadImage", img, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${auth}`,
-        },
-      })
-      .then(() => {
-        refresh()
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+    const postBio = (values) => {
+        axios
+            .post("/user/bio", values, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${auth}`,
+                },
+            })
+            .then(() => {
+                setOpen(true);
+                refresh();
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
 
-  const createBlogPost = (values) => {
-    axios
-      .post("/blog/new", values, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${auth}`,
-        },
-      })
-      .then(() => {
-        refresh()
-        setOpen(true);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-  
-  const deleteHandle = async (url, id, mutateUrl) => {
+    const isLoading = user;
 
-    await axios
-      .delete(url, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${auth}`,
-        },
-        data : {
-          id: id,
-        },
-      })
-      .then(() => {
-        setOpen(true)
-        refresh()
-      })
-      .catch(err => {
-        console.log(err)
-      })
-  }
+    const handleClose = (event, reason) => {
+        if (reason === "clickaway") {
+            return;
+        }
+        setOpen(false);
+    };
 
-  const postBio = (values) => {
+    const CrudAlert = () => {
+        return (
+            <div>
+                <Snackbar
+                    open={open}
+                    autoHideDuration={3000}
+                    onClose={handleClose}
+                    anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+                >
+                    <SnackbarContent
+                        style={{ backgroundColor: "green" }}
+                        message={
+                            <div className="text-lg flex justify-between items-center gap-2">
+                                Success
+                                <span>
+                                    <CheckIcon />
+                                </span>
+                            </div>
+                        }
+                    />
+                </Snackbar>
+            </div>
+        );
+    };
 
-    axios
-    .post("/user/bio", values, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${auth}`,
-      },
-    })
-    .then(() => {
-      setOpen(true)
-      refresh()
-    })
-    .catch(err => {
-      console.log(err)
-    })
-    ;
-  }
-
-  const isLoading = user;
-
-   const handleClose = (event, reason) => {
-     if (reason === "clickaway") {
-      return;
-     }
-     setOpen(false);
-   };
-
-  const CrudAlert = () => {
     return (
-      <Box>
-        <Snackbar
-          open={open}
-          autoHideDuration={3000}
-          onClose={handleClose}
-          anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-        >
-          <SnackbarContent 
-          style = {{backgroundColor: "green"}}
-          message = {
-            <p style = {{fontSize: "1rem",display:"flex", justifyContent: "space-between", alignItems:"center", gap:"0.5rem"}} > Success <span> <CheckIcon/></span></p>
-          } />
-        </Snackbar>
-      </Box>
+        <>
+            {!isLoading ? (
+                <div className="text-center mt-12">
+                        <CircularProgress />
+                </div>
+            ) : (
+                <div>
+                    <ProfileCard
+                        userInfo={user}
+                        bioHandle={postBio}
+                        username={username}
+                        refresh={refresh}
+                        imgHandle={sendImage}
+
+                    />
+                    {CrudAlert()}
+                    <GenerateUserInfo
+                        personals={user.personals}
+                        threads={user.threads}
+                        posts={user.posts}
+                        blogs={user.blog}
+                        userFollowing={user.following}
+                        userFollowers={user.followers}
+                        deleteHandle={deleteHandle}
+                        refresh={refresh}
+                        user={user}
+                        createBlog={createBlogPost}
+                    />
+                </div>
+            )}
+        </>
     );
 }
-
-
-  return (
-    <>
-      {!isLoading ? (
-        <Box className={profileStyles.profile}>
-          <div className = {profileStyles.profile__loading}>
-          <CircularProgress />
-          </div>
-        </Box>
-      ) : (
-        <Box className={profileStyles.profile}>
-          <ProfileCard
-            userInfo={user}
-            bioHandle={postBio}
-            username={username}
-            refresh={refresh}
-            imgHandle={sendImage}
-          />
-
-          {CrudAlert()}
-          <GenerateUserInfo
-            personals={user.personals}
-            threads={user.threads}
-            posts={user.posts}
-            blogs={user.blog}
-            userFollowing={user.following}
-            userFollowers={user.followers}
-            deleteHandle={deleteHandle}
-            refresh={refresh}
-            user={user}
-            createBlog={createBlogPost}
-          />
-          
-        </Box>
-      )}
-    </>
-  );
-} 
