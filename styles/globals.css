@@ -2,7 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-
+@layer components {
+    .form-btn {
+        @apply px-3 py-2 bg-medium_blue text-white uppercase font-medium rounded-lg;
+    }
+}
 
 .swiper {
     width: 100%;

@@ -9,7 +9,9 @@ module.exports = {
                 dark_blue: '#1C6E8C',
                 light_gray: '#F9F7F7',
                 light_blue: '#DBE2EF',
-                medium_blue: '#007ee5'
+                medium_blue: '#007ee5',
+                main_bg: '#12141d',
+                forumly_blk: '#28282B'
             },
 
             fontSize: {

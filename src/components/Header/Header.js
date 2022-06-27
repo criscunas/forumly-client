@@ -14,152 +14,156 @@ import CheckIcon from "@mui/icons-material/Check";
 import BubbleChartOutlinedIcon from "@mui/icons-material/BubbleChartOutlined";
 import { useMemo } from "react";
 
+export default function Header() {
+    const [open, setOpen] = useState(false);
 
-export default function Header () {
-  
-  const [open, setOpen] = useState(false);
+    const { user, mutateUser } = useUser();
+    const Router = useRouter();
+    const { mutate } = useSWRConfig();
 
-  const { user, mutateUser } = useUser();
-  const Router = useRouter();
-  const { mutate } = useSWRConfig();
-
-  useEffect(() => {
-    try {
-      mutateUser(fetchJson("/api/user"));
-    } catch (err) {
-      console.log(err);
-    }
-  }, [user]);
-
-
-
-
-  const postStatus = (values) => {
-
-    const configs = {
-        headers: {
-          Authorization: `Bearer ${user.auth}`,
-          "Content-Type": "application/json",
+    useEffect(() => {
+        try {
+            mutateUser(fetchJson("/api/user"));
+        } catch (err) {
+            console.log(err);
         }
-      }
+    }, [user]);
 
-    axios
-      .post("/personal/post", values, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${user.auth}`,
-        },
-      })
-      .then(() => {
-        mutate([`/user/profile/${user.username}`, configs]);
-        setOpen(true);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+    const postStatus = (values) => {
+        const configs = {
+            headers: {
+                Authorization: `Bearer ${user.auth}`,
+                "Content-Type": "application/json",
+            },
+        };
 
+        axios
+            .post("/personal/post", values, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${user.auth}`,
+                },
+            })
+            .then(() => {
+                mutate([`/user/profile/${user.username}`, configs]);
+                setOpen(true);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
 
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setOpen(false);
-  };
+    const handleClose = (event, reason) => {
+        if (reason === "clickaway") {
+            return;
+        }
+        setOpen(false);
+    };
 
+    const CrudAlert = () => {
+        return (
+            <Box>
+                <Snackbar
+                    open={open}
+                    autoHideDuration={3000}
+                    onClose={handleClose}
+                    anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+                >
+                    <SnackbarContent
+                        style={{ backgroundColor: "green" }}
+                        message={
+                            <p
+                                style={{
+                                    fontSize: "1rem",
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                    alignItems: "center",
+                                    gap: "0.5rem",
+                                }}
+                            >
+                                {" "}
+                                Success !
+                                <span>
+                                    {" "}
+                                    <CheckIcon />
+                                </span>
+                            </p>
+                        }
+                    />
+                </Snackbar>
+            </Box>
+        );
+    };
 
-  const CrudAlert = () => {
     return (
-      <Box>
-        <Snackbar
-          open={open}
-          autoHideDuration={3000}
-          onClose={handleClose}
-          anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-        >
-          <SnackbarContent
-            style={{ backgroundColor: "green" }}
-            message={
-              <p
-                style={{
-                  fontSize: "1rem",
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  gap: "0.5rem",
-                }}
-              >
-                {" "}
-                Success !
-                <span>
-                  {" "}
-                  <CheckIcon />
-                </span>
-              </p>
-            }
-          />
-        </Snackbar>
-      </Box>
+        <>
+            {user?.isLoggedIn ? (
+                <header className={dashHeader.header}>
+                    <div className={dashHeader.header__container}>
+                        <Link href="/dashboard">
+                            <a className={dashHeader.header__title}>
+                                <BubbleChartOutlinedIcon fontSize="large" />
+                            </a>
+                        </Link>
+
+                        <div className={dashHeader.header__menu}>
+                            <CreateStatusForm handler={postStatus} />
+                            <Link href="/profile">
+                                <a className={dashHeader.header__menu_link}>
+                                    {" "}
+                                    Profile
+                                </a>
+                            </Link>
+                            <Link href="/discuss">
+                                <a className={dashHeader.header__menu_link}>
+                                    Discuss
+                                </a>
+                            </Link>
+                            <LogoutIcon
+                                sx={{ cursor: "pointer" }}
+                                htmlColor="white"
+                                onClick={async (e) => {
+                                    e.preventDefault();
+                                    mutateUser(
+                                        await fetchJson("/api/logout", {
+                                            method: "POST",
+                                        }),
+                                        false
+                                    );
+                                    Router.push("/");
+                                }}
+                            />
+                        </div>
+                    </div>
+                    {CrudAlert()}
+                </header>
+            ) : (
+                <header className={dashHeader.header}>
+                    <div className={dashHeader.header__container_nouser}>
+                        <Link href="/">
+                            <a className={dashHeader.header__title}>
+                                <BubbleChartOutlinedIcon fontSize="large" />
+                            </a>
+                        </Link>
+                        <div className={dashHeader.header__nouser_menu}>
+                            <Link href="/discuss">
+                                <a className={dashHeader.header__nouser_link}>
+                                    Explore
+                                </a>
+                            </Link>
+                            <Link href="/login">
+                                <a>
+                                    <LoginIcon
+                                        sx={{ cursor: "pointer" }}
+                                        htmlColor="white"
+                                        fontSize="medium"
+                                    />
+                                </a>
+                            </Link>
+                        </div>
+                    </div>
+                </header>
+            )}
+        </>
     );
-  };
-
-  return (
-    <>
-      {user?.isLoggedIn ? (
-        <header className={dashHeader.header}>
-          <div className={dashHeader.header__container}>
-            <Link href="/dashboard">
-              <a className={dashHeader.header__title}>
-                <BubbleChartOutlinedIcon fontSize = "large" />
-              </a>
-            </Link>
-
-            <div className={dashHeader.header__menu}>
-              <CreateStatusForm handler={postStatus} />
-              <Link href="/profile">
-                <a className={dashHeader.header__menu_link}> Profile</a>
-              </Link>
-              <Link href="/discuss">
-                <a className={dashHeader.header__menu_link}>Discuss</a>
-              </Link>
-              <LogoutIcon
-                sx={{ cursor: "pointer" }}
-                htmlColor="white"
-                onClick={async (e) => {
-                  e.preventDefault();
-                  mutateUser(
-                    await fetchJson("/api/logout", { method: "POST" }),
-                    false
-                  );
-                  Router.push("/");
-                }}
-              />
-            </div>
-          </div>
-          {CrudAlert()}
-        </header>
-      ) : (
-        <header className={dashHeader.header}>
-          <div className={dashHeader.header__container_nouser}>
-            <Link href="/">
-              <a className={dashHeader.header__title}>
-                <BubbleChartOutlinedIcon fontSize="large" />
-              </a>
-            </Link>
-            <div className={dashHeader.header__nouser_menu}>
-              <Link href="/discuss">
-                <a className={dashHeader.header__nouser_link}>Explore</a>
-              </Link>
-              <Link href="/login">
-                <a>
-                  <LoginIcon sx={{ cursor: "pointer" }} htmlColor="white" fontSize = "medium" />
-                </a>
-              </Link>
-            </div>
-          </div>
-        </header>
-      )}
-    </>
-  );
-};
-
+}

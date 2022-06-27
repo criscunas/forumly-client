@@ -1,10 +1,9 @@
-import styles from "../styles/Login.module.scss";
 import { useFormik } from "formik";
 import useUser from "../lib/useUser";
 import fetchJson from "../lib/fetchJson";
 import { useEffect, useState } from "react";
 import * as Yup from "yup";
-import { Button, Box, TextField } from "@material-ui/core";
+import {TextField } from "@material-ui/core";
 
 export default function LoginPage() {
     const [error, setError] = useState("");
@@ -60,20 +59,13 @@ export default function LoginPage() {
     });
 
     return (
-        <Box className={styles.login}>
-            <div className={styles.login__container}>
-                <form
-                    onSubmit={formik.handleSubmit}
-                    className={styles.login__form}
-                >
-                    <h1 className={styles.login__form_header}>
-                        {" "}
-                        Welcome Back <span aria-label="wave"> 👋🏼 </span>
-                    </h1>
-                    <p className={styles.login__form_error}> {error} </p>
-                    <div className={styles.login__form_body}>
+            <div className="my-8">
+                <form className="max-w-[500px] bg-white px-4 pb-6 m-auto" onSubmit={formik.handleSubmit}>
+                    <h1 className="text-2xl text-center pt-6 text-dark_blue"> Welcome Back <span aria-label="wave"> 👋🏼 </span></h1>
+                    <p className="text-red-500 text-center"> {error} </p>
+                    <div className="flex flex-col gap-6">
                         <TextField
-                            className={styles.login__form_input}
+                            className="mt-4"
                             label="Username"
                             name="username"
                             type="text"
@@ -89,7 +81,7 @@ export default function LoginPage() {
                             }
                         />
                         <TextField
-                            className={styles.login__form_input}
+                            className="mt-4"
                             label="Password"
                             name="password"
                             type="password"
@@ -104,20 +96,11 @@ export default function LoginPage() {
                                 formik.errors.password
                             }
                         />
-                        <Button
-                            type="submit"
-                            size="medium"
-                            variant="contained"
-                            style={{
-                                backgroundColor: "#0798ec",
-                                color: "white",
-                            }}
-                        >
+                        <button className="form-btn">
                             Submit
-                        </Button>
+                        </button>
                     </div>
                 </form>
             </div>
-        </Box>
     );
 }

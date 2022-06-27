@@ -47,14 +47,14 @@ export default function Dashboard({ feedData, username }) {
     const { data } = useSWR("http://localhost:3050/newsfeed", fetcher);
 
     return (
-        <div className="pt-4">
+        <div className="pt-4 bg-forumly_blk h-[100vh] px-4">
             {!data ? (
                 <div className="flex justify-center">
                     <CircularProgress />
                 </div>
             ) : (
                 <div className="pt-4">
-                    <h1 className="section-head mb-4">Trending</h1>
+                    <h1 className="text-3xl font-semibold text-white mb-4">Trending</h1>
                     <Swiper
                         slidesPerView={1}
                         spaceBetween={20}
@@ -97,14 +97,14 @@ export default function Dashboard({ feedData, username }) {
             )}
             <div>
                 {feedData.length === 0 ? (
-                    <div className="pt-4 text-center">
-                        <h1 className="section-subhead">
+                    <div className="pt-8 text-center text-white">
+                        <h1 className="text-2xl mb-2">
                             Welcome {username} !
                         </h1>
-                        <h1 className="section-subhead">
+                        <h1 className="text-lg mb-2">
                             Follow someone to get started
                         </h1>
-                        <p className="section-body">
+                        <p className="text-lg">
                             Check out recent threads in our discussion section
                             to find other users.
                         </p>

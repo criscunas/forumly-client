@@ -1,82 +1,80 @@
-import createThreadStyles from "./CreateThread.module.scss";
 import { useFormik } from "formik";
-import {
-  Box,
-  Button,
-  TextField
-} from "@mui/material";
+import {TextField } from "@mui/material";
 import * as Yup from "yup";
 
 export default function CreateThread(props) {
-  const { handler, refresh } = props;
+    const { handler, refresh } = props;
 
-  const ThreadSchema = Yup.object({
-    thread_subject: Yup.string().required("Subject Required"),
-    initial_post: Yup.string().required("Post Required")
-  });
+    const ThreadSchema = Yup.object({
+        thread_subject: Yup.string().required("Subject Required"),
+        initial_post: Yup.string().required("Post Required"),
+    });
 
-  const formik = useFormik({
-    validationSchema: ThreadSchema,
-    initialValues: {
-      thread_subject: "",
-      initial_post: "",
-    },
-    onSubmit: (values, { resetForm }) => {
-      handler(values);
-      resetForm();
-    },
-  });
+    const formik = useFormik({
+        validationSchema: ThreadSchema,
+        initialValues: {
+            thread_subject: "",
+            initial_post: "",
+        },
+        onSubmit: (values, { resetForm }) => {
+            handler(values);
+            resetForm();
+        },
+    });
 
-  return (
-    <Box className={createThreadStyles.createThread}>
-      <p className={createThreadStyles.createThread__header}>Create New</p>
-      <form
-        onSubmit={formik.handleSubmit}
-        className={createThreadStyles.createThread__form}
-      >
-        <TextField
-          sx={{ display: "flex" }}
-          name="thread_subject"
-          type="text"
-          label="Title"
-          size="small"
-          value={formik.values.thread_subject}
-          onChange={formik.handleChange}
-          error={
-            formik.touched.thread_subject &&
-            Boolean(formik.errors.thread_subject)
-          }
-          helperText={
-            formik.touched.thread_subject && formik.errors.thread_subject
-          }
-        />
-        <p className={createThreadStyles.createThread__subhead}>
-          Describe your title well, while keeping it short as possible.{" "}
-        </p>
-        <TextField
-          sx={{ display: "flex" }}
-          label="Post"
-          name="initial_post"
-          type="text"
-          multiline
-          value={formik.values.initial_post}
-          onChange={formik.handleChange}
-          error={
-            formik.touched.initial_post && Boolean(formik.errors.initial_post)
-          }
-          helperText={formik.touched.initial_post && formik.errors.initial_post}
-        />
-        <div className={createThreadStyles.createThread__button}>
-          <Button
-            onClick={refresh}
-            size="small"
-            type="submit"
-            variant="contained"
-          >
-            Submit
-          </Button>
+    return (
+        <div className="p-4 md:p-6">
+            <p className="text-dark_blue pb-2 text-2xl">
+                Create New
+            </p>
+            <form
+                onSubmit={formik.handleSubmit}
+                className="my-4 mx-auto"
+            >
+                <TextField
+                    sx={{ display: "flex" }}
+                    name="thread_subject"
+                    type="text"
+                    label="Title"
+                    size="small"
+                    value={formik.values.thread_subject}
+                    onChange={formik.handleChange}
+                    error={
+                        formik.touched.thread_subject &&
+                        Boolean(formik.errors.thread_subject)
+                    }
+                    helperText={
+                        formik.touched.thread_subject &&
+                        formik.errors.thread_subject
+                    }
+                />
+                <p className="text-base py-4">
+                    Describe your title well, while keeping it short as
+                    possible.
+                </p>
+                <TextField
+                    sx={{ display: "flex" }}
+                    label="Post"
+                    name="initial_post"
+                    type="text"
+                    multiline
+                    value={formik.values.initial_post}
+                    onChange={formik.handleChange}
+                    error={
+                        formik.touched.initial_post &&
+                        Boolean(formik.errors.initial_post)
+                    }
+                    helperText={
+                        formik.touched.initial_post &&
+                        formik.errors.initial_post
+                    }
+                />
+                <div className="text-right pt-4">
+                    <button onClick={refresh} class='form-btn'>
+                        Submit
+                    </button>
+                </div>
+            </form>
         </div>
-      </form>
-    </Box>
-  );
+    );
 }

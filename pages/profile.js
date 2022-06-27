@@ -178,7 +178,7 @@ export default function Profile({ auth, username }) {
                         <CircularProgress />
                 </div>
             ) : (
-                <div>
+                <div className="bg-white h-screen">
                     <ProfileCard
                         userInfo={user}
                         bioHandle={postBio}
