@@ -59,7 +59,7 @@ export default function LoginPage() {
     });
 
     return (
-            <div className="my-8">
+            <div className="my-8 mx-4 rounded-lg">
                 <form className="max-w-[500px] bg-white px-4 pb-6 m-auto" onSubmit={formik.handleSubmit}>
                     <h1 className="text-2xl text-center pt-6 text-dark_blue"> Welcome Back <span aria-label="wave"> 👋🏼 </span></h1>
                     <p className="text-red-500 text-center"> {error} </p>

@@ -3,8 +3,23 @@
 @tailwind utilities;
 
 @layer components {
+    .delete {
+        @apply top-[7%] right-[3%] absolute
+    }
+    .post-body {
+        @apply text-base leading-6
+    }
+    .post-header {
+        @apply text-lg leading-8
+    }
+    .section-header {
+        @apply font-semibold text-2xl text-white
+    }
     .form-btn {
         @apply px-3 py-2 bg-medium_blue text-white uppercase font-medium rounded-lg;
+    }
+    .loading {
+        @apply w-[100px] h-[100px] absolute top-0 bottom-0 left-0 right-0 m-auto
     }
 }
 

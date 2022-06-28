@@ -35,7 +35,7 @@ export default function Discuss({ fallbackData, auth }) {
     const [open, setOpen] = useState(false);
 
     const { mutate } = useSWRConfig();
-    const { data } = useSwr("/thread/all", fetcher, {
+    const { data } = useSwr("http://localhost:3050/thread/all", fetcher, {
         fallbackData,
     });
 

@@ -1,102 +1,88 @@
 import { Formik, Form } from "formik";
-import { Card, TextField, Button, Collapse } from "@mui/material";
-import createBlogCommentStyles from "./CreateBlogComment.module.scss";
+import { Card, TextField, Collapse } from "@mui/material";
 import { useState } from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import IconButton from "@mui/material/IconButton";
 import * as Yup from "yup";
 
-export default function CreateBlogComment(props) {
-  
-  const { handler } = props;
+export default function CreateBlogComment({handler}) {
 
-  const [open, setOpen] = useState(false);
-  const [expanded, setExpanded] = useState(false);
+    const [open, setOpen] = useState(false);
+    const [expanded, setExpanded] = useState(false);
 
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
+    const handleExpandClick = () => {
+        setExpanded(!expanded);
+    };
 
-  const handleClose = (reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setOpen(false);
-  };
+    const handleClose = (reason) => {
+        if (reason === "clickaway") {
+            return;
+        }
+        setOpen(false);
+    };
 
-  const PostSchema = Yup.object({
-    comment_body: Yup.string().required("Comment required"),
-  });
+    const PostSchema = Yup.object({
+        comment_body: Yup.string().required("Comment required"),
+    });
 
-  return (
-    <>
-      <Card className={createBlogCommentStyles.blogComment}>
-        <IconButton
-          expand={expanded}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-          <p className={createBlogCommentStyles.blogComment__title}>
-            {" "}
-            Comment{" "}
-          </p>
-        </IconButton>
-        <Collapse in={expanded} timeout="auto">
-          <div>
-            <Formik
-              validationSchema={PostSchema}
-              onSubmit={(values, { resetForm }) => {
-                handler(values);
-                resetForm()
-              }}
-              initialValues={{
-                comment_body: "",
-              }}
-            >
-              {(props) => (
-                <div>
-                  <Form
-                    style={{ padding: "1rem" }}
-                    onSubmit={props.handleSubmit}
-                    className={createBlogCommentStyles.blogComment__form}
-                  >
-                    <TextField
-                      className={
-                        createBlogCommentStyles.blogComment__form_input
-                      }
-                      onChange={props.handleChange}
-                      value={props.values.comment_body}
-                      name="comment_body"
-                      size="medium"
-                      type="text"
-                      multiline
-                      label="Comment"
-                      error={
-                        props.touched.comment_body && Boolean(props.errors.comment_body)
-                      }
-                      helperText={props.touched.comment_body && props.errors.comment_body}
-                    />
-                    <Button
-                      style={{
-                        margin: "1rem 0 0.5rem 0",
-                        maxWidth: "175px",
-                        alignSelf: "flex-end",
-                      }}
-                      size="small"
-                      type="submit"
-                      variant="contained"
-                    >
-                      Submit
-                    </Button>
-                  </Form>
-                </div>
-              )}
-            </Formik>
-          </div>
-        </Collapse>
-      </Card>
-    </>
-  );
+    return (
+        <>
+            <Card>
+                <IconButton
+                    expand={expanded}
+                    onClick={handleExpandClick}
+                    aria-expanded={expanded}
+                    aria-label="show more"
+                >
+                    <ExpandMoreIcon />
+                    <p className="pl-4 text-lg">Comment</p>
+                </IconButton>
+                <Collapse in={expanded} timeout="auto">
+                    <div>
+                        <Formik
+                            validationSchema={PostSchema}
+                            onSubmit={(values, { resetForm }) => {
+                                handler(values);
+                                resetForm();
+                            }}
+                            initialValues={{
+                                comment_body: "",
+                            }}
+                        >
+                            {(props) => (
+                                    <Form
+                                        onSubmit={props.handleSubmit}
+                                        className="flex flex-col m-auto p-4"
+                                    >
+                                        <TextField
+                                            onChange={props.handleChange}
+                                            value={props.values.comment_body}
+                                            name="comment_body"
+                                            size="medium"
+                                            type="text"
+                                            multiline
+                                            label="Comment"
+                                            error={
+                                                props.touched.comment_body &&
+                                                Boolean(
+                                                    props.errors.comment_body
+                                                )
+                                            }
+                                            helperText={
+                                                props.touched.comment_body &&
+                                                props.errors.comment_body
+                                            }
+                                        />
+                                        <button className = "form-btn mt-4">
+                                            Submit
+                                        </button>
+                                    </Form>
+
+                            )}
+                        </Formik>
+                    </div>
+                </Collapse>
+            </Card>
+        </>
+    );
 }

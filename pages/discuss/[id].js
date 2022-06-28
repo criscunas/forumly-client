@@ -1,4 +1,3 @@
-import postIdStyles from "../../styles/PostIDPage.module.scss";
 import { withIronSessionSsr } from "iron-session/next";
 import { useState } from "react";
 import { useRouter } from "next/router";
@@ -30,7 +29,7 @@ export const getServerSideProps = withIronSessionSsr(async function ({
 
     const id = params.id;
 
-    const main = await fetch(`/post/${id}`);
+    const main = await fetch(`http://localhost:3050/post/${id}`);
 
     const mainPost = await main.json();
 
@@ -66,7 +65,7 @@ export default function DiscussPage({ user, mainPost }) {
     const { id } = Router.query;
     const { mutate } = useSWRConfig();
 
-    const { data: comments } = useSWR(`/post/allcomments/${id}`, fetcher);
+    const { data: comments } = useSWR(`http://localhost:3050/post/allcomments/${id}`, fetcher);
 
     const isLoading = comments;
 
@@ -115,7 +114,7 @@ export default function DiscussPage({ user, mainPost }) {
 
     const CrudAlert = () => {
         return (
-            <Box>
+            <div>
                 <Snackbar
                     open={open}
                     autoHideDuration={5000}
@@ -144,7 +143,7 @@ export default function DiscussPage({ user, mainPost }) {
                         }
                     />
                 </Snackbar>
-            </Box>
+            </div>
         );
     };
 
@@ -157,17 +156,16 @@ export default function DiscussPage({ user, mainPost }) {
     };
 
     return (
-        <div className={postIdStyles.postPage}>
-            <div className={postIdStyles.postPage__header}>
-                <h1 className={postIdStyles.postPage__header_text}>
-                    {" "}
+        <div>
+            <div className="px-4 pt-5 pb-2">
+                <h1 className="section-header mb-2">
                     Responding to {mainPost[0].username}
                 </h1>
                 <Link href={`/thread/${mainPost[0].thread_id}`}>
-                    <a> Go back </a>
+                    <a className="text-white text-lg"> Go back </a>
                 </Link>
             </div>
-            <Card variant="outlined" className={postIdStyles.postPage__main}>
+            <Card variant="outlined" className="m-4">
                 <CardHeader
                     title={linkTo(
                         `/user/${mainPost[0].username}`,
@@ -187,31 +185,30 @@ export default function DiscussPage({ user, mainPost }) {
                         />
                     }
                 />
-                <p className={postIdStyles.postPage__content}>
+                <p className="post-body">
                     {mainPost[0].content}
                 </p>
             </Card>
 
             {!user.isLoggedIn ? null : (
-                <div className={postIdStyles.postPage__form}>
+                <div className="mx-4">
                     <CreatePostComment handler={createComment} />
                     {CrudAlert()}
                 </div>
             )}
 
             {!isLoading ? (
-                <div>
-                    {" "}
-                    <CircularProgress />{" "}
+                <div className="loading">
+                    <CircularProgress />
                 </div>
             ) : (
-                <div className={postIdStyles.postPage__comments}>
+                <div>
                     {comments.map((posts, i) => {
                         return (
                             <Card
                                 key={uuidv4()}
                                 variant="outlined"
-                                className={postIdStyles.postPage__comments_card}
+                                className="relative m-4"
                             >
                                 <CardHeader
                                     title={linkTo(
@@ -229,9 +226,7 @@ export default function DiscussPage({ user, mainPost }) {
                                     }
                                 />
                                 <p
-                                    className={
-                                        postIdStyles.postPage__comments_content
-                                    }
+                                    className="post-content"
                                 >
                                     {posts.comment_body}
                                 </p>
@@ -239,9 +234,7 @@ export default function DiscussPage({ user, mainPost }) {
                                 false ? null : user.username ==
                                   posts.username ? (
                                     <DeleteOutlinedIcon
-                                        className={
-                                            postIdStyles.postPage__comments_delete
-                                        }
+                                        className="absolute right-[5%] top-[6%]"
                                         size="small"
                                         htmlColor="red"
                                         onClick={() => {

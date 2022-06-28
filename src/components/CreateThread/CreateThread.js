@@ -24,13 +24,14 @@ export default function CreateThread(props) {
 
     return (
         <div className="p-4 md:p-6">
-            <p className="text-dark_blue pb-2 text-2xl">
+            <p className="section-header">
                 Create New
             </p>
             <form
                 onSubmit={formik.handleSubmit}
-                className="my-4 mx-auto"
+                className="my-4 py-6 px-4 mx-auto bg-white rounded-lg"
             >
+            <p className = "text-xl mb-2">Thread Title</p>
                 <TextField
                     sx={{ display: "flex" }}
                     name="thread_subject"
@@ -48,10 +49,7 @@ export default function CreateThread(props) {
                         formik.errors.thread_subject
                     }
                 />
-                <p className="text-base py-4">
-                    Describe your title well, while keeping it short as
-                    possible.
-                </p>
+                <p className="text-xl mt-4 mb-2">Content</p>
                 <TextField
                     sx={{ display: "flex" }}
                     label="Post"

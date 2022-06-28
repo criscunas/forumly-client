@@ -41,7 +41,7 @@ export default function CreateBlogForm(props) {
     });
 
     return (
-        <div className="my-4">
+        <div className="my-4 bg-white rounded-lg">
             <IconButton
                 expand={expanded}
                 onClick={handleExpandClick}

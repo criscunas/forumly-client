@@ -178,7 +178,7 @@ export default function Profile({ auth, username }) {
                         <CircularProgress />
                 </div>
             ) : (
-                <div className="bg-white h-screen">
+                <div className="max-w-3xl m-auto h-[100vh] p-4 bg-forumly_blk">
                     <ProfileCard
                         userInfo={user}
                         bioHandle={postBio}

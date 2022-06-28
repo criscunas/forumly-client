@@ -4,7 +4,7 @@ import BottomNav from "../BottomNav/BottomNav";
 
 export default function Layout({ children }) {
     return (
-        <div>
+        <div className='bg-forumly_blk'>
             <Header />
             <div className="max-w-5xl lg:m-auto pb-[6rem]">
                 {children}

@@ -28,17 +28,19 @@ export default function ImageUpload(props) {
         formData.append("file", imageSelected);
         formData.append("upload_preset", "qbey2sfk");
 
-        axios
-            .post(process.env.CLOUD_URL, formData)
-            .then((response) => {
+        fetch("cloudinary://938759217152533:MthWmm8F_r8wRtvf6R1IqLz62yk@djvcow1p8", {
+            method: "POST",
+            body: formData
+        })
+        .then((response) => {
                 const img = { img_path: response.data.secure_url };
                 handler(img);
                 setImageSelected("");
                 setOpen(false);
-            })
-            .catch(() => {
-                setError("Invalid Image");
-            });
+        })
+        .catch(() => {
+            setError("Invalid Image");
+        });
     };
 
     return (
@@ -68,7 +70,7 @@ export default function ImageUpload(props) {
                                 setImageSelected(event.target.files[0]);
                             }}
                         />
-                        <button className="font-btn" onClick={UploadImage}>
+                        <button className="form-btn" onClick={UploadImage}>
                             Submit
                         </button>
                     </Box>

@@ -101,9 +101,9 @@ export default function Home() {
     });
 
     return (
-        <>
-            <Box className={homeStyles.home}>
-                <div className={homeStyles.home__hero}>
+
+            <div>
+                <div className="flex flex-col items-center p-4">
                     <h1 className={homeStyles.home__hero_header}>forumly</h1>
                     <p className={homeStyles.home__hero_subhead}>
                         Frame your social space.
@@ -344,7 +344,6 @@ export default function Home() {
                         </Card>
                     </div>
                 </div>
-            </Box>
-        </>
+            </div>
     );
 }

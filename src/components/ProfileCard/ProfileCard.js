@@ -29,8 +29,8 @@ export default function ProfileCard(props) {
                     <h2 className="section-header">{username}</h2>
                 </div>
             ) : (
-                <div className="py-4 max-w-lg m-auto">
-                    <div className="card  flex flex-col items-center">
+                <div className="pt-4 pb-2 bg-white rounded-lg">
+                    <div className="card flex flex-col items-center">
                         <div className="card-title flex gap-2">
                             <figure>
                                 <Avatar
@@ -77,15 +77,15 @@ export default function ProfileCard(props) {
                                 <div className="flex gap-6">
                                     <div>
                                         <p className="font-semibold text-base"> Followers </p>
-                                        <p> {userInfo.followers.length} </p>
+                                        <p className="mt-2"> {userInfo.followers.length} </p>
                                     </div>
                                     <div>
                                         <p className="font-semibold text-base"> Following </p>
-                                        <p> {userInfo.following.length} </p>
+                                        <p className="mt-2"> {userInfo.following.length} </p>
                                     </div>
                                     <div>
                                         <p className="font-semibold text-base"> Blurbs </p>
-                                        <p> {userInfo.followers.length} </p>
+                                        <p className="mt-2"> {userInfo.personals.length} </p>
                                     </div>
                                 </div>
                             </div>

@@ -1,4 +1,3 @@
-import genUserStyles from "./GenerateUserInfo.module.scss";
 import { Grid, Avatar, Card, CardHeader } from "@mui/material";
 import { v4 as uuidv4 } from "uuid";
 import { useState } from "react";
@@ -80,12 +79,12 @@ export default function GenerateUserInfo(props) {
             <div>
                 <CreateBlogForm handler={createBlog} />
                 {blogs.length === 0 ? <p className='mt-12 text-center font-semibold text-lg'> Create a blog post to get started ! </p>
-                : blogs.map((post) => {
+                :
+                blogs.map((post) => {
                     return (
                         <Card
-                            variant="outlined"
                             key={uuidv4()}
-                            className={genUserStyles.user__blog}
+                            className="relative mb-4"
                         >
                             <CardHeader
                                 avatar={
@@ -102,12 +101,12 @@ export default function GenerateUserInfo(props) {
                                 subheader={post.created.slice(0, 10)}
                                 sx={{ cursor: "pointer" }}
                             />
-                            <div className={genUserStyles.user__blog_preview}>
+                            <div className="post-body">
                                 <Link href={`/blog/${post.id}`}>
                                     <a>{post.content.slice(0, 100)}... </a>
                                 </Link>
                             </div>
-                            <p className={genUserStyles.user__delete}>
+                            <div className="delete">
                                 <DeleteOutlinedIcon
                                     color="error"
                                     fontSize="small"
@@ -120,7 +119,8 @@ export default function GenerateUserInfo(props) {
                                         );
                                     }}
                                 />
-                            </p>
+                            </div>
+
                         </Card>
                     );
                 })}
@@ -131,12 +131,13 @@ export default function GenerateUserInfo(props) {
     const renderPersonals = () => {
         return (
             <div>
-            {personals.length === 0 ? <p className='mt-12 text-center font-semibold text-lg'> Post a status update to get started ! </p>
+            <p className ="text-white text-2xl pt-2"> User Blurbs </p>
+            {personals.length === 0 ? <p className='mt-12 text-center font-semibold text-lg text-white'> Post a status update to get started ! </p>
                 : personals.map((posts) => {
                     return (
                         <Card
                             key={uuidv4()}
-                            className={genUserStyles.user__status}
+                            className="relative my-4"
                             variant="outlined"
                         >
                             <CardHeader
@@ -151,8 +152,8 @@ export default function GenerateUserInfo(props) {
                                 titleTypographyProps={{ variant: "subtitle1" }}
                                 subheader={posts.created.slice(0, 10)}
                             />
-                            <p className={genUserStyles.user__status_post}>{posts.personal_post}</p>
-                            <div className={genUserStyles.user__delete}>
+                            <p className="post-body">{posts.personal_post}</p>
+                            <div className="delete">
                                 <DeleteOutlinedIcon
                                     color="error"
                                     fontSize="small"
@@ -176,11 +177,11 @@ export default function GenerateUserInfo(props) {
     const renderThreads = () => {
         return (
             <div>
-            {threads.length === 0 ? <p className='mt-12 text-center font-semibold text-lg'> Create a thread to get started ! </p>
+            {threads.length === 0 ? <p className='mt-12 text-center font-semibold text-lg text-white'> Create a thread to get started ! </p>
                 : threads.map((thread) => {
                     return (
                         <Card
-                            className={genUserStyles.user__threads}
+                            className="relative my-4"
                             variant="outlined"
                             key={uuidv4()}
                         >
@@ -200,10 +201,10 @@ export default function GenerateUserInfo(props) {
                                 subheader={thread.created.slice(0, 10)}
                                 style={{ cursor: "pointer" }}
                             />
-                            <p className={genUserStyles.user__threads_post}>
+                            <p className="post-body">
                                 {thread.initial_post}
                             </p>
-                            <p className={genUserStyles.user__delete}>
+                            <div className="delete">
                                 <DeleteOutlinedIcon
                                     fontSize="small"
                                     color="error"
@@ -216,7 +217,7 @@ export default function GenerateUserInfo(props) {
                                         );
                                     }}
                                 />
-                            </p>
+                            </div>
                         </Card>
                     );
                 })}
@@ -227,11 +228,11 @@ export default function GenerateUserInfo(props) {
     const renderPosts = () => {
         return (
             <div>
-                {posts.length === 0 ? <p className='mt-12 text-center font-semibold text-lg'> Post on a thread to get started ! </p>
+                {posts.length === 0 ? <p className='mt-12 text-center font-semibold text-lg text-white'> Post on a thread to get started ! </p>
                     : posts.map((post) => {
                     return (
                         <Card
-                            className={genUserStyles.user__threads}
+                            className="relative my-4"
                             variant="outlined"
                             key={uuidv4()}
                         >
@@ -248,13 +249,13 @@ export default function GenerateUserInfo(props) {
                                 subheader={post.created.slice(0, 10)}
                             />
 
-                            <div className={genUserStyles.user__threads_post}>
+                            <div className="post-body">
                                 <Link href={`/thread/${post.thread_id}`}>
                                     <a>{post.content}</a>
                                 </Link>
                             </div>
 
-                            <p className={genUserStyles.user__delete}>
+                            <div className="delete">
                                 <DeleteOutlinedIcon
                                     color="error"
                                     fontSize="small"
@@ -267,7 +268,7 @@ export default function GenerateUserInfo(props) {
                                         );
                                     }}
                                 />
-                            </p>
+                            </div>
                         </Card>
                     );
                 })}
@@ -278,14 +279,14 @@ export default function GenerateUserInfo(props) {
     const renderPostOptions = () => {
         return (
             <div className="mt-4">
-                <Grid container className="text-center text-dark_blue">
+                <Grid container className="text-center">
                     <Grid
                         item
                         xs={6}
-                        style={{ borderRight: "1px solid black" }}
+                        style={{ borderRight: "2px solid white" }}
                     >
                         <p
-                            className = "text-base"
+                            className = "text-lg text-white"
                             onClick={() => {
                                 showUserPost(true);
                                 showUserThread(false);
@@ -295,8 +296,7 @@ export default function GenerateUserInfo(props) {
                         </p>
                     </Grid>
                     <Grid item xs={6}>
-                        <p
-                        className = "text-base text-dark_blue"
+                        <p className = "text-lg text-white"
                             onClick={() => {
                                 showUserPost(false);
                                 showUserThread(true);
@@ -357,7 +357,7 @@ export default function GenerateUserInfo(props) {
                         :userFollowing.map((user) => {
                             return (
                                 <Grid item xs={3} sm={4} key={uuidv4()}>
-                                    <div className={genUserStyles.user__follow_box}>
+                                    <div className="flex flex-col gap-2 items-center">
                                         <Link href={`/user/${user.username}`}>
                                             <a>
                                             <Avatar
@@ -382,14 +382,14 @@ export default function GenerateUserInfo(props) {
     };
 
     return (
-        <div className="">
-            <div className ="flex py-2 justify-evenly gap-4 max-w-xl m-auto border-t-2 border-b-2 border-slate-400">
+        <div className=" my-2">
+            <div className ="flex py-2 justify-evenly gap-4 border-t-2 border-b-2 border-slate-400 bg-white rounded-lg">
                 <div className = 'text-xl' onClick={displayBlogs}> Blog </div>
                 <div className = 'text-xl' onClick={displayPersonals} > Blurbs </div>
                 <div className = 'text-xl' onClick={displayPost}> Posts </div>
             </div>
 
-            <div className ="m-auto px-4">
+            <div className ="my-2">
                 {postOptions ? renderPostOptions() : null}
                 {status ? renderPersonals() : null}
                 {blog ? renderBlogs() : null}

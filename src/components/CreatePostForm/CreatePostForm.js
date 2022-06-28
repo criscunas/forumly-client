@@ -1,101 +1,73 @@
 import { Formik, Form } from "formik";
-import {
-  Card,
-  TextField,
-  Button,
-  Collapse,
-} from "@mui/material";
-import createPostStyles from "./CreatePostForm.module.scss";
+import {TextField, Collapse } from "@mui/material";
 import { useState } from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import IconButton from "@mui/material/IconButton";
 import * as Yup from "yup";
 
-export default function CreatePostForm(props) {
-  const { handler } = props;
+export default function CreatePostForm({handler}) {
 
-  const [open, setOpen] = useState(false);
-  const [expanded, setExpanded] = useState(false);
+    const [expanded, setExpanded] = useState(false);
 
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
+    const handleExpandClick = () => {
+        setExpanded(!expanded);
+    };
 
-  const handleClose = (reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setOpen(false);
-  };
+    const PostSchema = Yup.object({
+        content: Yup.string().required("Post required"),
+    });
 
-  const PostSchema = Yup.object({
-    content: Yup.string().required("Post required"),
-  });
-
-  return (
-    <>
-      <Card className={createPostStyles.postCard}>
-        <IconButton
-          expand={expanded}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-          <h1 className={createPostStyles.postCard__title}> Create new post </h1>
-        </IconButton>
-        <Collapse in={expanded} timeout="auto">
-          <div>
-            <Formik
-              validationSchema={PostSchema}
-              onSubmit={(values, { resetForm }) => {
-                handler(values);
-                resetForm();
-              }}
-              initialValues={{
-                content: "",
-              }}
+    return (
+        <div className="bg-white rounded-lg">
+            <IconButton
+                expand={expanded}
+                onClick={handleExpandClick}
+                aria-expanded={expanded}
+                aria-label="show more"
             >
-              {(props) => (
+                <ExpandMoreIcon />
+                <p className="text-lg pl-2">Create new post</p>
+            </IconButton>
+            <Collapse in={expanded} timeout="auto">
                 <div>
-                  <Form
-                    style={{ padding: "1rem" }}
-                    className={createPostStyles.postCard__form}
-                  >
-                    <TextField
-                      className={createPostStyles.postCard__form_input}
-                      onChange={props.handleChange}
-                      value={props.values.content}
-                      name="content"
-                      size="medium"
-                      type="text"
-                      multiline
-                      rows={5}
-                      label="Post"
-                      error={
-                        props.touched.content && Boolean(props.errors.content)
-                      }
-                      helperText={props.touched.content && props.errors.content}
-                    />
-                    <Button
-                      style={{
-                        margin: "1rem 0 0.5rem 0",
-                        maxWidth: "175px",
-                        alignSelf: "flex-end",
-                      }}
-                      size="small"
-                      type="submit"
-                      variant="contained"
+                    <Formik
+                        validationSchema={PostSchema}
+                        onSubmit={(values, { resetForm }) => {
+                            handler(values);
+                            resetForm();
+                        }}
+                        initialValues={{
+                            content: "",
+                        }}
                     >
-                      Submit
-                    </Button>
-                  </Form>
+                        {(props) => (
+                            <div className="px-4 py-2">
+                                <Form className = "flex flex-col m-auto pb-4">
+                                    <TextField
+                                        onChange={props.handleChange}
+                                        value={props.values.content}
+                                        name="content"
+                                        size="medium"
+                                        type="text"
+                                        multiline
+                                        rows={5}
+                                        label="Post"
+                                        error={
+                                            props.touched.content &&
+                                            Boolean(props.errors.content)
+                                        }
+                                        helperText={
+                                            props.touched.content &&
+                                            props.errors.content
+                                        }
+                                    />
+                                    <button className="mt-4 form-btn">Submit</button>
+                                </Form>
+                            </div>
+                        )}
+                    </Formik>
                 </div>
-              )}
-            </Formik>
-          </div>
-        </Collapse>
-      </Card>
-    </>
-  );
+            </Collapse>
+        </div>
+    );
 }
