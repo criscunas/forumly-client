@@ -1,144 +1,117 @@
-import discussStyles from "../styles/Discuss.module.scss";
-import CreateThread from "../src/components/CreateThread/CreateThread";
-import GenerateThreads from "../src/components/GenerateThreads/GenerateThreads";
-import { Container, Box, Snackbar, SnackbarContent, Paper, TableRow, TableHead, TableContainer, TableCell, TableBody, Table} from "@material-ui/core";
+import CreateThread from "../src/components/CreateThread"
+import GenerateThreads from "../src/components/GenerateThreads";
 import axios from "axios";
-import useSwr, { useSWRConfig } from "swr";
-import fetcher from "../lib/fetcher";
 import { sessionOptions } from "../lib/session";
 import { withIronSessionSsr } from "iron-session/next";
-import { useState } from "react";
-import CheckIcon from "@mui/icons-material/Check";
+import { useState, useEffect } from "react";
+import { Notification } from "../src/components/Notification";
 
 
 export const getServerSideProps = withIronSessionSsr(async function ({
-  req,
-  res,
+    req,
+    res,
 }) {
+    const user = req.session.user;
 
-  const user = req.session.user;
-  
-  const data = await fetcher("/thread/all");
+    if (user === undefined) {
+        return {
+            props: {
+                isLoggedIn: false,
+            },
+        };
+    }
 
-  if (user === undefined) {
+    const { auth } = user;
+
     return {
-      props: {
-        isLoggedIn: false,
-        fallbackData: data,
-      },
+        props: { auth },
     };
-  }
-
-  const { auth } = user;
-
-  return {
-    props: { fallbackData: data, auth },
-  };
 },
 sessionOptions);
 
-export default function Discuss({ fallbackData, auth }) {
-  
-  const [open,setOpen] = useState(false)
+export default function Discuss({ auth }) {
 
-  const { mutate } = useSWRConfig();
-  const { data } = useSwr("/thread/all", fetcher, {
-    fallbackData,
-  });
+    const [open, setOpen] = useState(false);
+    const [threads, setThreads] = useState([]);
+    const [loading, setLoading] = useState(true)
 
- const handleClose = (event, reason) => {
-   if (reason === "clickaway") {
-     return;
-   }
-   setOpen(false);
- };
+    const message = "Thread Created !"
 
-  const CrudAlert = () => {
-    return (
-      <Box>
-        <Snackbar
-          open={open}
-          autoHideDuration={3000}
-          onClose ={handleClose}
-          anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-        >
-          <SnackbarContent
-            style={{ backgroundColor: "green" }}
-            message={
-              <p
-                style={{
-                  fontSize: "1rem",
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  gap: "0.5rem",
-                }}
-              >
-                {" "}
-                Success !
-                <span>
-                  {" "}
-                  <CheckIcon />
-                </span>
-              </p>
-            }
-          />
-        </Snackbar>
-      </Box>
-    );
-  };
 
-  const refresh = () => {
-    mutate("/thread/all");
-  };
+    const fetchThreads = async () => {
+        axios
+            .get(`/thread/all`)
+            .then(({data}) => {
+                setLoading(false)
+                setThreads(data)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
 
-  const createThread = (values) => {
-    const headers = {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${auth}`,
+    useEffect(() => {
+        fetchThreads()
+    }, [])
+
+
+    const handleClose = (event, reason) => {
+        if (reason === "clickaway") {
+            return;
+        }
+        setOpen(false);
     };
 
-    axios
-      .post("/thread/create", values, {
-        headers: headers,
-      })
-      .then(() => {
-        setOpen(true);
-        mutate("/thread/all");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
 
-  return (
-    <>
-      {!auth ? (
-        <Container maxWidth="xl" disableGutters>
-          <Box className={discussStyles.discuss}>
-            <div className={discussStyles.discuss__top}>
-            <h1 className={discussStyles.discuss__header}>
-              Sign up or sign in to start posting.
-            </h1>
-            </div>
-            <div className={discussStyles.discuss__bottom}>
-            <GenerateThreads threads={data} auth={false} />
-            </div>
-          </Box>
-        </Container>
-      ) : (
-        <Container maxWidth="xl" disableGutters>
-          <Box className={discussStyles.discuss}>
-            <div className={discussStyles.discuss__top}>
-              <CreateThread handler={createThread} refresh={refresh} />
-              {CrudAlert()}
-            </div>
-            <div className={discussStyles.discuss__bottom}>
-              <GenerateThreads threads={data} />
-            </div>
-          </Box>
-        </Container>
-      )}
-    </>
-  );
+    const createThread = (values) => {
+        const headers = {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${auth}`,
+        };
+
+        axios
+            .post("/thread/create", values, {
+                headers: headers,
+            })
+            .then(() => {
+                fetchThreads()
+                setOpen(true);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
+
+    return (
+        <>
+            {!auth ? (
+                <div className="m-auto pt-4 md:flex md:gap-4 md:pt-8">
+                    <div className="md:w-[35%]">
+                        <h1 className="text-2xl p-4 text-dark_blue">
+                            Sign up or sign in to start posting.
+                        </h1>
+                    </div>
+                    <div className="md:w-[65%]">
+                        <GenerateThreads threads={threads} auth={false} />
+                    </div>
+                </div>
+            ) : (
+                <div className="p-4 max-w-4xl before_tablet:pt-8 before_tablet:flex before_tablet:m-auto before_tablet:items-baseline">
+                    <div className="md:w-[45%]">
+                        <CreateThread
+                            handler={createThread}
+                        />
+                        <Notification open={open} handle={handleClose} message={message} />
+                    </div>
+                    <div className="md:w-[55%]">
+                        {!loading ? (
+                            <div>
+                                <GenerateThreads threads={threads} />
+                            </div>
+                        ) : null}
+                    </div>
+                </div>
+            )}
+        </>
+    );
 }
