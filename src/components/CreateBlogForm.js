@@ -6,8 +6,7 @@ import IconButton from "@mui/material/IconButton";
 import * as Yup from "yup";
 
 export default function CreateBlogForm(props) {
-    const [open, setOpen] = useState(false);
-
+    const [open, setOpen] = useState(false)
     const { handler } = props;
 
     const [expanded, setExpanded] = useState(false);
@@ -85,7 +84,7 @@ export default function CreateBlogForm(props) {
                         }
                     />
                     <div className="text-right">
-                        <button className="px-3 py-2 rounded-lg bg-medium_blue text-white font-semibold">
+                        <button type="submit" className="px-3 py-2 rounded-lg bg-medium_blue text-white font-semibold">
                             Submit
                         </button>
                     </div>

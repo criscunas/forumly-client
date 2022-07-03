@@ -94,7 +94,7 @@ export default function CreateStatusForm(props) {
                                     formik.errors.personal_post
                                 }
                             />
-                            <button className = "px-3 py-2 uppercase text-white font-semibold bg-medium_blue rounded-lg">
+                            <button className = "px-3 py-2 uppercase text-white font-semibold bg-medium_blue rounded-lg" type="submit">
                                 Post
                             </button>
 

@@ -1,13 +1,11 @@
-import CreateThread from "../src/components/CreateThread/CreateThread";
-import GenerateThreads from "../src/components/GenerateThreads/GenerateThreads";
-import {Snackbar, SnackbarContent } from "@material-ui/core";
+import CreateThread from "../src/components/CreateThread"
+import GenerateThreads from "../src/components/GenerateThreads";
 import axios from "axios";
-import useSwr, { useSWRConfig } from "swr";
-import fetcher from "../lib/fetcher";
 import { sessionOptions } from "../lib/session";
 import { withIronSessionSsr } from "iron-session/next";
-import { useState } from "react";
-import CheckIcon from "@mui/icons-material/Check";
+import { useState, useEffect } from "react";
+import { Notification } from "../src/components/Notification";
+
 
 export const getServerSideProps = withIronSessionSsr(async function ({
     req,
@@ -31,13 +29,31 @@ export const getServerSideProps = withIronSessionSsr(async function ({
 },
 sessionOptions);
 
-export default function Discuss({ fallbackData, auth }) {
-    const [open, setOpen] = useState(false);
+export default function Discuss({ auth }) {
 
-    const { mutate } = useSWRConfig();
-    const { data } = useSwr("http://localhost:3050/thread/all", fetcher, {
-        fallbackData,
-    });
+    const [open, setOpen] = useState(false);
+    const [threads, setThreads] = useState([]);
+    const [loading, setLoading] = useState(true)
+
+    const message = "Thread Created !"
+
+
+    const fetchThreads = async () => {
+        axios
+            .get(`/thread/all`)
+            .then(({data}) => {
+                setLoading(false)
+                setThreads(data)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
+
+    useEffect(() => {
+        fetchThreads()
+    }, [])
+
 
     const handleClose = (event, reason) => {
         if (reason === "clickaway") {
@@ -46,32 +62,6 @@ export default function Discuss({ fallbackData, auth }) {
         setOpen(false);
     };
 
-    const CrudAlert = () => {
-        return (
-            <div>
-                <Snackbar
-                    open={open}
-                    autoHideDuration={3000}
-                    onClose={handleClose}
-                    anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-                >
-                    <SnackbarContent
-                        style={{ backgroundColor: "green" }}
-                        message={
-                            <p className="text-base flex justify-between items-center gap-2">
-                                Success !
-                                <span> <CheckIcon /></span>
-                            </p>
-                        }
-                    />
-                </Snackbar>
-            </div>
-        );
-    };
-
-    const refresh = () => {
-        mutate("/thread/all");
-    };
 
     const createThread = (values) => {
         const headers = {
@@ -84,8 +74,8 @@ export default function Discuss({ fallbackData, auth }) {
                 headers: headers,
             })
             .then(() => {
+                fetchThreads()
                 setOpen(true);
-                mutate("/thread/all");
             })
             .catch((err) => {
                 console.log(err);
@@ -102,24 +92,23 @@ export default function Discuss({ fallbackData, auth }) {
                         </h1>
                     </div>
                     <div className="md:w-[65%]">
-                        <GenerateThreads threads={data} auth={false} />
+                        <GenerateThreads threads={threads} auth={false} />
                     </div>
                 </div>
             ) : (
-                <div className="m-auto pt-4 md:flex md:gap-4 md:pt-8">
-                    <div className="md:w-[35%]">
+                <div className="p-4 max-w-4xl before_tablet:pt-8 before_tablet:flex before_tablet:m-auto before_tablet:items-baseline">
+                    <div className="md:w-[45%]">
                         <CreateThread
                             handler={createThread}
-                            refresh={refresh}
                         />
-                        {CrudAlert()}
+                        <Notification open={open} handle={handleClose} message={message} />
                     </div>
-                    <div className="md:w-[65%]">
-                        {!data ? (
-                            <p className="text-center text-xl"> No threads currently </p>
-                        ) : (
-                            <GenerateThreads threads={data} />
-                        )}
+                    <div className="md:w-[55%]">
+                        {!loading ? (
+                            <div>
+                                <GenerateThreads threads={threads} />
+                            </div>
+                        ) : null}
                     </div>
                 </div>
             )}

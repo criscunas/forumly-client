@@ -2,8 +2,8 @@ import { useFormik } from "formik";
 import {TextField } from "@mui/material";
 import * as Yup from "yup";
 
-export default function CreateThread(props) {
-    const { handler, refresh } = props;
+export default function CreateThread({handler}) {
+
 
     const ThreadSchema = Yup.object({
         thread_subject: Yup.string().required("Subject Required"),
@@ -68,7 +68,7 @@ export default function CreateThread(props) {
                     }
                 />
                 <div className="text-right pt-4">
-                    <button onClick={refresh} class='form-btn'>
+                    <button className='form-btn' type="submit">
                         Submit
                     </button>
                 </div>

@@ -1,7 +1,7 @@
 import { Grid, Avatar, Card, CardHeader } from "@mui/material";
 import { v4 as uuidv4 } from "uuid";
 import { useState } from "react";
-import CreateBlogForm from "../CreateBlogForm/CreateBlogForm";
+import CreateBlogForm from "./CreateBlogForm";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import Link from "next/link";
 
@@ -78,7 +78,7 @@ export default function GenerateUserInfo(props) {
         return (
             <div>
                 <CreateBlogForm handler={createBlog} />
-                {blogs.length === 0 ? <p className='mt-12 text-center font-semibold text-lg'> Create a blog post to get started ! </p>
+                {blogs.length === 0 ? <p className='mt-12 text-center font-semibold text-lg text-white'> Create a blog post to get started ! </p>
                 :
                 blogs.map((post) => {
                     return (
@@ -101,9 +101,12 @@ export default function GenerateUserInfo(props) {
                                 subheader={post.created.slice(0, 10)}
                                 sx={{ cursor: "pointer" }}
                             />
-                            <div className="post-body">
+                            <div className="content">
                                 <Link href={`/blog/${post.id}`}>
-                                    <a>{post.content.slice(0, 100)}... </a>
+                                {post.content.length < 100 ? <a> {post.content} </a>
+                                :   <a>{post.content.slice(0, 100)}... </a>
+                                }
+
                                 </Link>
                             </div>
                             <div className="delete">
@@ -115,7 +118,6 @@ export default function GenerateUserInfo(props) {
                                         deleteHandle(
                                             "/blog/delete",
                                             post.id,
-                                            `/user/${user.user.username}/blogs`
                                         );
                                     }}
                                 />
@@ -152,7 +154,7 @@ export default function GenerateUserInfo(props) {
                                 titleTypographyProps={{ variant: "subtitle1" }}
                                 subheader={posts.created.slice(0, 10)}
                             />
-                            <p className="post-body">{posts.personal_post}</p>
+                            <p className="content ">{posts.personal_post}</p>
                             <div className="delete">
                                 <DeleteOutlinedIcon
                                     color="error"
@@ -162,7 +164,6 @@ export default function GenerateUserInfo(props) {
                                         deleteHandle(
                                             "/personal/delete",
                                             posts.id,
-                                            `/user/${user.user.username}/personals`
                                         );
                                     }}
                                 />
@@ -201,9 +202,9 @@ export default function GenerateUserInfo(props) {
                                 subheader={thread.created.slice(0, 10)}
                                 style={{ cursor: "pointer" }}
                             />
-                            <p className="post-body">
+                            <div className="content">
                                 {thread.initial_post}
-                            </p>
+                            </div>
                             <div className="delete">
                                 <DeleteOutlinedIcon
                                     fontSize="small"
@@ -212,8 +213,7 @@ export default function GenerateUserInfo(props) {
                                     onClick={() => {
                                         deleteHandle(
                                             "/thread/delete",
-                                            thread.id,
-                                            `/user/${user.user.username}/threads`
+                                            thread.id
                                         );
                                     }}
                                 />
@@ -249,7 +249,7 @@ export default function GenerateUserInfo(props) {
                                 subheader={post.created.slice(0, 10)}
                             />
 
-                            <div className="post-body">
+                            <div className="content">
                                 <Link href={`/thread/${post.thread_id}`}>
                                     <a>{post.content}</a>
                                 </Link>
@@ -264,7 +264,6 @@ export default function GenerateUserInfo(props) {
                                         deleteHandle(
                                             "/post/delete",
                                             post.id,
-                                            `/user/${user.user.username}/posts`
                                         );
                                     }}
                                 />
@@ -286,7 +285,7 @@ export default function GenerateUserInfo(props) {
                         style={{ borderRight: "2px solid white" }}
                     >
                         <p
-                            className = "text-lg text-white"
+                            className = "text-lg text-white cursor-pointer"
                             onClick={() => {
                                 showUserPost(true);
                                 showUserThread(false);
@@ -296,7 +295,7 @@ export default function GenerateUserInfo(props) {
                         </p>
                     </Grid>
                     <Grid item xs={6}>
-                        <p className = "text-lg text-white"
+                        <p className = "text-lg text-white cursor-pointer"
                             onClick={() => {
                                 showUserPost(false);
                                 showUserThread(true);
@@ -307,7 +306,7 @@ export default function GenerateUserInfo(props) {
                     </Grid>
                 </Grid>
 
-                <div className="my-4">
+                <div className="my-4 ">
                     {userPost ? renderPosts() : null}
                     {userThread ? renderThreads() : null}
                 </div>
@@ -384,9 +383,9 @@ export default function GenerateUserInfo(props) {
     return (
         <div className=" my-2">
             <div className ="flex py-2 justify-evenly gap-4 border-t-2 border-b-2 border-slate-400 bg-white rounded-lg">
-                <div className = 'text-xl' onClick={displayBlogs}> Blog </div>
-                <div className = 'text-xl' onClick={displayPersonals} > Blurbs </div>
-                <div className = 'text-xl' onClick={displayPost}> Posts </div>
+                <div className = 'text-xl cursor-pointer' onClick={displayBlogs}> Blog </div>
+                <div className = 'text-xl cursor-pointer' onClick={displayPersonals} > Blurbs </div>
+                <div className = 'text-xl cursor-pointer' onClick={displayPost}> Posts </div>
             </div>
 
             <div className ="my-2">

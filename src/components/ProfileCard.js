@@ -1,14 +1,12 @@
 import { Avatar, Popover, IconButton } from "@mui/material";
 import { useState } from "react";
-import UpdateBio from "../UpdateBio/UpdateBio";
-import ImageUpload from "../ImageUpload/ImageUpload";
+import UpdateBio from "./UpdateBio";
+import ImageUpload from "./ImageUpload";
 import MoreHorizOutlinedIcon from "@mui/icons-material/MoreHorizOutlined";
 
-export default function ProfileCard(props) {
-    const { userInfo, bioHandle, imgHandle, username } = props;
-
+export default function ProfileCard({userInfo, bioHandle, imgHandle, username}) {
+    
     const [anchorEl, setAnchorEl] = useState(null);
-    const [form, showForm] = useState(false);
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -29,7 +27,7 @@ export default function ProfileCard(props) {
                     <h2 className="section-header">{username}</h2>
                 </div>
             ) : (
-                <div className="pt-4 pb-2 bg-white rounded-lg">
+                <div className="pt-4 pb-2 bg-white rounded-lg before_tablet:pt-8 before_tablet:pb-4 ">
                     <div className="card flex flex-col items-center">
                         <div className="card-title flex gap-2">
                             <figure>
@@ -61,13 +59,9 @@ export default function ProfileCard(props) {
                                         horizontal: "right",
                                     }}
                                 >
-                                    <div className="p-2">
-                                        <div className="">
-                                            <UpdateBio handler={bioHandle} />
-                                        </div>
-                                        <div className="">
-                                            <ImageUpload handler={imgHandle} />
-                                        </div>
+                                    <div className="py-4 px-2 flex flex-col gap-4">
+                                        <UpdateBio handler={bioHandle} />
+                                        <ImageUpload handler={imgHandle} />
                                     </div>
                                 </Popover>
                             </div>

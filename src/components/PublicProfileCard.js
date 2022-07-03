@@ -38,81 +38,60 @@ export default function PublicProfileCard(props) {
         showBlogs(false);
     };
 
-    const renderFollowing = () => {
-        const filterFollowing = followings.following.filter(
-            (o1) => o1.username == user[0].username
-        );
+    // const renderFollowing = () => {
 
-        const filterFollowers = followings.followers.filter(
-            (o1) => o1.username == user[0].username
-        );
+    //     const filterFollowing = followings.following.filter(
+    //         (o1) => o1.username == user[0].username
+    //     );
 
-        if (filterFollowing.length === 1 && filterFollowers.length === 1) {
-            return (
-                <div className="mt-1">
-                    <Button
-                        onClick={unfollowHandle}
-                        variant="contained"
-                        size="small"
-                    >
-                        <PersonRemoveIcon />
-                    </Button>
-                </div>
-            );
-        }
+    //     const filterFollowers = followings.followers.filter(
+    //         (o1) => o1.username == user[0].username
+    //     );
 
-        if (filterFollowing.length === 1) {
-            return (
-                <div className="mt-1">
-                    <Button
-                        onClick={unfollowHandle}
-                        variant="contained"
-                        size="small"
-                    >
-                        <PersonRemoveIcon />
-                    </Button>
-                </div>
-            );
-        }
-        if (filterFollowers.length === 1) {
-            return (
-                <div className="mt-1">
-                    <Button
-                        onClick={followHandle}
-                        variant="contained"
-                        size="small"
-                    >
-                        <PersonAddAltIcon />
-                    </Button>
-                </div>
-            );
-        } else {
-            return (
-                <div className="mt-1">
-                    <Button
-                        onClick={followHandle}
-                        variant="contained"
-                        size="small"
-                    >
-                        <PersonAddAltIcon />
-                    </Button>
-                </div>
-            );
-        }
-    };
+    //     if (filterFollowing.length === 1 && filterFollowers.length === 1) {
+    //         return (
+    //             <div className="mt-1">
+    //                 <button onClick={unfollowHandle} className="form-btn">
+    //                     <PersonRemoveIcon />
+    //                 </button>
+    //             </div>
+    //         );
+    //     }
+
+    //     if (filterFollowing.length === 1) {
+    //         return (
+    //             <div className="mt-1">
+    //                 <button onClick={unfollowHandle} className="form-btn">
+    //                     <PersonRemoveIcon />
+    //                 </button>
+    //             </div>
+    //         );
+    //     }
+    //     if (filterFollowers.length === 1) {
+    //         return (
+    //             <div className="mt-1">
+    //                 <button onClick={followHandle} className="form-btn ">
+    //                     <PersonAddAltIcon />
+    //                 </button>
+    //             </div>
+    //         );
+    //     } else {
+    //         return (
+    //             <div className="mt-1">
+    //                 <button onClick={followHandle} className="form-btn">
+    //                     <PersonAddAltIcon />
+    //                 </button>
+    //             </div>
+    //         );
+    //     }
+    // };
 
     const renderStatus = () => {
         return (
-            <div
-
-                className="pt-2 bg-white"
-            >
+            <div className="pt-2 ">
                 {posts.map((post, i) => {
                     return (
-                        <Card
-                            key={uuidv4()}
-                            className="m-4"
-                        >
+                        <Card key={uuidv4()} className="m-4">
                             <CardHeader
                                 title={user[0].username}
                                 titleTypographyProps={{ variant: "subtitle1" }}
@@ -125,12 +104,8 @@ export default function PublicProfileCard(props) {
                                     />
                                 }
                             />
-                            <CardContent
-                            >
-                                <p
-                                    className="post-body"
-
-                                >
+                            <CardContent>
+                                <p className="post-body">
                                     {post.personal_post}
                                 </p>
                             </CardContent>
@@ -143,16 +118,12 @@ export default function PublicProfileCard(props) {
 
     const renderBlogs = () => {
         return (
-            <div
-                className="pt-2 bg-white"
-            >
-                {blogs.map((post) => {
+            <div className="pt-2">
+
+                {!blogs.length === 0 ?
+                    blogs.map((post) => {
                     return (
-                        <Card
-                            key={uuidv4()}
-                            variant="outlined"
-                            className="m-4"
-                        >
+                        <Card key={uuidv4()} variant="outlined" className="m-4">
                             <CardHeader
                                 avatar={
                                     <Avatar
@@ -167,11 +138,7 @@ export default function PublicProfileCard(props) {
                             />
                             <div className="py-2 px-4">
                                 <Link href={`/blog/${post.id}`}>
-                                    <a
-                                        className="pb-2 text-base"
-
-
-                                    >
+                                    <a className="pb-2 text-base">
                                         {post.title}
                                     </a>
                                 </Link>
@@ -182,25 +149,25 @@ export default function PublicProfileCard(props) {
                             </div>
                         </Card>
                     );
-                })}
+                }) : <p className="text-center font-semibold mt-8"> No blogs created  </p>}
             </div>
         );
     };
 
     return (
-        <div>
+        <div className="bg-slate-100 py-4">
             <Grid container>
                 <Grid item xs={12}>
                     <div className="flex items-center justify-center py-4 px-4 gap-8">
-                        <div className="flex flex-col gap-4 mt-6">
+                        <div className="flex flex-col gap-4">
                             <Avatar
                                 alt="user-img"
                                 src={user[0].img_path}
                                 sx={{ width: 75, height: 75 }}
                             />
-                            {loggedin ? renderFollowing() : null}
+
                         </div>
-                        <div className="text-white flex flex-col gap-2 mt-2">
+                        <div className="flex flex-col gap-2">
                             <h1 className="text-base">{user[0].username}</h1>
                             <p className="text-sm">{user[0].bio}</p>
                             <p className="text-sm">
@@ -212,40 +179,26 @@ export default function PublicProfileCard(props) {
                 </Grid>
             </Grid>
 
-            <Grid container>
-                <Grid item xs={12}>
-                    <div className="flex justify-evenly text-center py-4 text-white">
-                        <div>
-                            {!followCount ? <p> 0 </p> : <p>{followCount}</p>}
-                            <p className="text-center">
-                                Followers
-                            </p>
-                        </div>
-                        <div>
-                            {!followingCount ? (
-                                <p> 0 </p>
-                            ) : (
-                                <p>{followingCount}</p>
-                            )}
-                            <p className="text-center">
-                                Followers
-                            </p>
-                        </div>
-                        <div>
-                            <p className="text-center">
-                                {posts.length}
-                            </p>
-                            <p className="text-center">
-                                {posts.length === 1 ? (
-                                    <p> Update </p>
-                                ) : (
-                                    <p> Updates </p>
-                                )}
-                            </p>
-                        </div>
+            <div className="flex justify-evenly text-center py-4 ">
+                <div>
+                    {!followCount ? <p> 0 </p> : <p>{followCount}</p>}
+                    <p className="text-center">Followers</p>
+                </div>
+                <div>
+                    {!followingCount ? <p> 0 </p> : <p>{followingCount}</p>}
+                    <p className="text-center">Followers</p>
+                </div>
+                <div>
+                    <p className="text-center">{posts.length}</p>
+                    <div className="text-center">
+                        {posts.length === 1 ? (
+                            <p> Update </p>
+                        ) : (
+                            <p> Updates </p>
+                        )}
                     </div>
-                </Grid>
-            </Grid>
+                </div>
+            </div>
 
             <Grid container>
                 <Grid item xs={6}>

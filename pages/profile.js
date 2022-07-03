@@ -1,17 +1,12 @@
-import {
-    Snackbar,
-    SnackbarContent,
-    CircularProgress,
-} from "@material-ui/core";
-import ProfileCard from "../src/components/ProfileCard/ProfileCard";
-import GenerateUserInfo from "../src/components/GenerateUserInfo/GenerateUserInfo";
+import { CircularProgress } from "@material-ui/core";
+import ProfileCard from "../src/components/ProfileCard";
+import GenerateUserInfo from "../src/components/GenerateUserInfo";
 import axios from "axios";
 import { sessionOptions } from "../lib/session";
 import { withIronSessionSsr } from "iron-session/next";
-import fetcher from "../lib/fetcher";
-import useSWR, { useSWRConfig } from "swr";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import CheckIcon from "@mui/icons-material/Check";
+import { Notification } from "../src/components/Notification";
 
 export const getServerSideProps = withIronSessionSsr(async function ({
     req,
@@ -40,6 +35,10 @@ sessionOptions);
 
 export default function Profile({ auth, username }) {
     const [open, setOpen] = useState(false);
+    const [user, setUser] = useState([])
+    const [loading, setLoading] = useState(true)
+    const [message, setMessage] = useState("")
+
 
     const config = useMemo(
         () => ({
@@ -51,32 +50,28 @@ export default function Profile({ auth, username }) {
         [auth]
     );
 
-    const { data: user } = useSWR(
-        [`http://localhost:3050/user/profile/${username}`, config],
-        fetcher,
-        {
-            revalidateIfStale: false,
-            revalidateOnFocus: false,
-            revalidateOnReconnect: false,
-        }
-    );
+    const fetchUser = async () => {
+        axios
+            .get(`/user/profile/${username}`, config)
+            .then(({data}) => {
+                setLoading(false)
+                setUser(data)
 
-    const { mutate } = useSWRConfig();
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
 
-    const refresh = () => {
-        mutate([`http://localhost:3050/user/profile/${username}`, config]);
-    };
+    useEffect(() => {
+        fetchUser()
+    }, [])
 
     const sendImage = (img) => {
         axios
-            .post("/user/uploadImage", img, {
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${auth}`,
-                },
-            })
+            .post("/user/uploadImage", img, config)
             .then(() => {
-                refresh();
+
             })
             .catch((err) => {
                 console.log(err);
@@ -85,14 +80,10 @@ export default function Profile({ auth, username }) {
 
     const createBlogPost = (values) => {
         axios
-            .post("/blog/new", values, {
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${auth}`,
-                },
-            })
+            .post("/blog/new", values, config)
             .then(() => {
-                refresh();
+                fetchUser()
+                setMessage('Blog Created')
                 setOpen(true);
             })
             .catch((err) => {
@@ -100,7 +91,8 @@ export default function Profile({ auth, username }) {
             });
     };
 
-    const deleteHandle = async (url, id, mutateUrl) => {
+    const deleteHandle = async (url, id) => {
+
         await axios
             .delete(url, {
                 headers: {
@@ -112,8 +104,8 @@ export default function Profile({ auth, username }) {
                 },
             })
             .then(() => {
-                setOpen(true);
-                refresh();
+                setMessage('Deleted !')
+                fetchUser()
             })
             .catch((err) => {
                 console.log(err);
@@ -122,22 +114,16 @@ export default function Profile({ auth, username }) {
 
     const postBio = (values) => {
         axios
-            .post("/user/bio", values, {
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${auth}`,
-                },
-            })
+            .post("/user/bio", values, config)
             .then(() => {
                 setOpen(true);
-                refresh();
+                setMessage('Updated Bio!')
+                fetchUser()
             })
             .catch((err) => {
                 console.log(err);
             });
     };
-
-    const isLoading = user;
 
     const handleClose = (event, reason) => {
         if (reason === "clickaway") {
@@ -146,48 +132,24 @@ export default function Profile({ auth, username }) {
         setOpen(false);
     };
 
-    const CrudAlert = () => {
-        return (
-            <div>
-                <Snackbar
-                    open={open}
-                    autoHideDuration={3000}
-                    onClose={handleClose}
-                    anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-                >
-                    <SnackbarContent
-                        style={{ backgroundColor: "green" }}
-                        message={
-                            <div className="text-lg flex justify-between items-center gap-2">
-                                Success
-                                <span>
-                                    <CheckIcon />
-                                </span>
-                            </div>
-                        }
-                    />
-                </Snackbar>
-            </div>
-        );
-    };
+
 
     return (
         <>
-            {!isLoading ? (
+            {loading ? (
                 <div className="text-center mt-12">
-                        <CircularProgress />
+                    <CircularProgress />
                 </div>
             ) : (
-                <div className="max-w-3xl m-auto h-[100vh] p-4 bg-forumly_blk">
+                <div className="max-w-4xl m-auto p-4 bg-forumly_blk before_tablet:p-8">
                     <ProfileCard
                         userInfo={user}
                         bioHandle={postBio}
                         username={username}
-                        refresh={refresh}
-                        imgHandle={sendImage}
 
+                        imgHandle={sendImage}
                     />
-                    {CrudAlert()}
+                    <Notification open={open} handle = {handleClose} message = {message}  />
                     <GenerateUserInfo
                         personals={user.personals}
                         threads={user.threads}
@@ -196,7 +158,7 @@ export default function Profile({ auth, username }) {
                         userFollowing={user.following}
                         userFollowers={user.followers}
                         deleteHandle={deleteHandle}
-                        refresh={refresh}
+
                         user={user}
                         createBlog={createBlogPost}
                     />

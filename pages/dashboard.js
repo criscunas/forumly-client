@@ -1,10 +1,9 @@
-import GenerateFollowFeed from "../src/components/GenerateFollowFeed/GenerateFollowFeed";
+import {GenerateFollowFeed} from "../src/components/GenerateFollowFeed";
 import axios from "axios";
+import useRequest from "../lib/useRequest";
 import { sessionOptions } from "../lib/session";
 import { withIronSessionSsr } from "iron-session/next";
-import fetcher from "../lib/fetcher";
 import { CircularProgress } from "@material-ui/core";
-import useSWR from "swr";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -26,35 +25,42 @@ export const getServerSideProps = withIronSessionSsr(async function ({
         };
     }
 
-    const feed = await axios.get("/user/feed", {
-        headers: {
-            Authorization: `Bearer ${user.auth}`,
-        },
-    });
 
-    const feedData = await feed.data;
-    const { username } = user;
+    const news = await axios.get('/newsfeed')
+    const newsFeed = news.data
+
+    const { username, auth } = user;
+
     return {
         props: {
-            feedData,
             username,
+            auth,
+            newsFeed
         },
     };
 },
 sessionOptions);
 
-export default function Dashboard({ feedData, username }) {
-    const { data } = useSWR("http://localhost:3050/newsfeed", fetcher);
+export default function Dashboard({ username, newsFeed, auth }) {
+
+
+    const {data} = useRequest({
+        url: '/user/feed',
+        headers : {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${auth}`,
+        }
+    })
 
     return (
-        <div className="pt-4 px-4">
-            {!data ? (
+        <div className="p-4 max-w-2xl before_tablet:m-auto before_tablet:pt-8">
+            {!newsFeed ? (
                 <div className="flex justify-center">
                     <CircularProgress />
                 </div>
             ) : (
                 <div className="pt-4">
-                    <h1 className="text-3xl font-semibold mb-4">Trending</h1>
+                    <h1 className="text-3xl font-semibold mb-4 text-white">Trending</h1>
                     <Swiper
                         slidesPerView={1}
                         spaceBetween={20}
@@ -74,16 +80,16 @@ export default function Dashboard({ feedData, username }) {
                         }}
                         modules={[Autoplay, Navigation]}
                     >
-                        {data.articles.map((article, i) => {
+                        {newsFeed.articles.map((article, i) => {
                             return (
                                 <SwiperSlide key={i}>
-                                    <div className="flex flex-col">
+                                    <div className="flex flex-col bg-forumly_blk">
                                         <img
                                             src={article.urlToImage}
                                             alt="newsimg"
                                         />
                                         <a
-                                            className="section-body"
+                                            className="section-body text-white mt-2"
                                             href={article.url}
                                         >
                                             {article.title}
@@ -96,26 +102,29 @@ export default function Dashboard({ feedData, username }) {
                 </div>
             )}
             <div>
-                {feedData.length === 0 ? (
-                    <div className="pt-8 text-center">
-                        <h1 className="text-2xl mb-2">
-                            Welcome {username} !
-                        </h1>
-                        <h1 className="text-lg mb-2">
-                            Follow someone to get started
-                        </h1>
-                        <p className="text-lg">
-                            Check out recent threads in our discussion section
-                            to find other users.
-                        </p>
+
+
+                {data ?  (
+                    <div className="pt-4 max-w-2xl before_tablet:m-auto before_tablet:pt-8">
+                        <h1 className="section-header">{username}'s feed.</h1>
+                        <GenerateFollowFeed feed={data} />
                     </div>
                 ) : (
-                    <div>
-                        <h1 className="section-subhead">{username}'s feed.</h1>
-                        <GenerateFollowFeed feed={feedData} />
+                    <div className="pt-8 text-center text-white">
+                    <h1 className="text-2xl mb-2">
+                        Welcome {username} !
+                    </h1>
+                    <h1 className="text-lg mb-2">
+                        Follow someone to get started
+                    </h1>
+                    <p className="text-lg">
+                        Check out recent threads in our discussion section
+                        to find other users.
+                    </p>
                     </div>
                 )}
             </div>
         </div>
     );
 }
+

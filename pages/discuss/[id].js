@@ -1,24 +1,15 @@
 import { withIronSessionSsr } from "iron-session/next";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import fetcher from "../../lib/fetcher";
-import useSWR, { useSWRConfig } from "swr";
+import { Notification } from "../../src/components/Notification";
 import { sessionOptions } from "../../lib/session";
 import axios from "axios";
-import {
-    CardHeader,
-    Avatar,
-    Card,
-    Snackbar,
-    SnackbarContent,
-    Box,
-    CircularProgress,
-} from "@mui/material";
+import { CardHeader, Avatar, Card } from "@mui/material";
 import { v4 as uuidv4 } from "uuid";
-import CreatePostComment from "../../src/components/CreatePostComment/CreatePostComment";
+import CreatePostComment from "../../src/components/CreatePostComment";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
-import CheckIcon from "@mui/icons-material/Check";
+import { CircularProgress } from "@material-ui/core";
 
 export const getServerSideProps = withIronSessionSsr(async function ({
     req,
@@ -27,17 +18,10 @@ export const getServerSideProps = withIronSessionSsr(async function ({
 }) {
     const user = req.session.user;
 
-    const id = params.id;
-
-    const main = await fetch(`http://localhost:3050/post/${id}`);
-
-    const mainPost = await main.json();
-
     if (user === undefined) {
         return {
             props: {
                 user: { isLoggedIn: false },
-                mainPost,
             },
         };
     }
@@ -45,14 +29,51 @@ export const getServerSideProps = withIronSessionSsr(async function ({
     return {
         props: {
             user,
-            mainPost,
         },
     };
 },
 sessionOptions);
 
-export default function DiscussPage({ user, mainPost }) {
+export default function DiscussPage({ user }) {
     const [open, setOpen] = useState(false);
+    const [mainPost, setMainPost] = useState(false);
+    const [comments, setComments] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [message, setMessage] = useState("");
+
+    const Router = useRouter();
+    const { id } = Router.query;
+
+    const fetchMainPost = () => {
+        axios
+            .get(`/post/${id}`)
+            .then(({ data }) => {
+                setMainPost(data);
+                setLoading(false);
+                console.log(data)
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
+
+    const fetchComments = () => {
+        axios
+            .get(`/post/allcomments/${id}`)
+            .then(({ data }) => {
+                setComments(data);
+                setLoading(false);
+                console.log(data)
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
+
+    useEffect(() => {
+        fetchMainPost();
+        fetchComments();
+    }, []);
 
     const handleClose = (event, reason) => {
         if (reason === "clickaway") {
@@ -60,14 +81,6 @@ export default function DiscussPage({ user, mainPost }) {
         }
         setOpen(false);
     };
-
-    const Router = useRouter();
-    const { id } = Router.query;
-    const { mutate } = useSWRConfig();
-
-    const { data: comments } = useSWR(`http://localhost:3050/post/allcomments/${id}`, fetcher);
-
-    const isLoading = comments;
 
     const createComment = (values) => {
         let obj = {
@@ -84,7 +97,8 @@ export default function DiscussPage({ user, mainPost }) {
                 },
             })
             .then(() => {
-                mutate(`/post/allcomments/${parseInt(id)}`);
+                setMessage("Comment Posted");
+                fetchComments()
                 setOpen(true);
             })
             .catch((err) => {
@@ -104,47 +118,13 @@ export default function DiscussPage({ user, mainPost }) {
                 },
             })
             .then(() => {
-                mutate(`/post/allcomments/${parseInt(id)}`);
+                fetchComments();
+                setMessage("Comment deleted");
                 setOpen(true);
             })
             .catch((error) => {
                 console.log(error);
             });
-    };
-
-    const CrudAlert = () => {
-        return (
-            <div>
-                <Snackbar
-                    open={open}
-                    autoHideDuration={5000}
-                    onClose={handleClose}
-                    anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-                >
-                    <SnackbarContent
-                        style={{ backgroundColor: "green" }}
-                        message={
-                            <p
-                                style={{
-                                    fontSize: "1rem",
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                    alignItems: "center",
-                                    gap: "0.5rem",
-                                }}
-                            >
-                                {" "}
-                                Success !
-                                <span>
-                                    {" "}
-                                    <CheckIcon />
-                                </span>
-                            </p>
-                        }
-                    />
-                </Snackbar>
-            </div>
-        );
     };
 
     const linkTo = (url, txt) => {
@@ -156,50 +136,61 @@ export default function DiscussPage({ user, mainPost }) {
     };
 
     return (
-        <div>
-            <div className="px-4 pt-5 pb-2">
-                <h1 className="section-header mb-2">
-                    Responding to {mainPost[0].username}
-                </h1>
-                <Link href={`/thread/${mainPost[0].thread_id}`}>
-                    <a className="text-white text-lg"> Go back </a>
-                </Link>
-            </div>
-            <Card variant="outlined" className="m-4">
-                <CardHeader
-                    title={linkTo(
-                        `/user/${mainPost[0].username}`,
-                        mainPost[0].username
-                    )}
-                    titleTypographyProps={{
-                        variant: "subtitle1",
-                        fontWeight: "500",
-                    }}
-                    subheader={mainPost[0].created.slice(0, 10)}
-                    style={{ cursor: "pointer" }}
-                    avatar={
-                        <Avatar
-                            alt="user-img"
-                            src={mainPost[0].img_path}
-                            sx={{ width: 50, height: 50 }}
+        <div className="p-4 max-w-2xl before_tablet:m-auto before_tablet:pt-8">
+            {loading ? (
+                <div className="loading">
+                    {" "}
+                    <CircularProgress />{" "}
+                </div>
+            ) : (
+                <div>
+                    <div className="px-4 pt-5 pb-2">
+                        <h1 className="section-header mb-2">
+                            Responding to {mainPost[0].username}
+                        </h1>
+                        <Link href={`/thread/${mainPost[0].thread_id}`}>
+                            <a className="text-white text-lg"> Go back </a>
+                        </Link>
+                    </div>
+                    <Card variant="outlined" className="m-4">
+                        <CardHeader
+                            title={linkTo(
+                                `/user/${mainPost[0].username}`,
+                                mainPost[0].username
+                            )}
+                            titleTypographyProps={{
+                                variant: "subtitle1",
+                                fontWeight: "500",
+                            }}
+                            subheader={mainPost[0].created.slice(0, 10)}
+                            style={{ cursor: "pointer" }}
+                            avatar={
+                                <Avatar
+                                    alt="user-img"
+                                    src={mainPost[0].img_path}
+                                    sx={{ width: 50, height: 50 }}
+                                />
+                            }
                         />
-                    }
-                />
-                <p className="post-body">
-                    {mainPost[0].content}
-                </p>
-            </Card>
+                        <p className="content">{mainPost[0].content}</p>
+                    </Card>
+                </div>
+            )}
 
             {!user.isLoggedIn ? null : (
                 <div className="mx-4">
                     <CreatePostComment handler={createComment} />
-                    {CrudAlert()}
+                    <Notification
+                        handle={handleClose}
+                        open={open}
+                        message={message}
+                    />
                 </div>
             )}
 
-            {!isLoading ? (
-                <div className="loading">
-                    <CircularProgress />
+            {comments.length === 0 ? (
+                <div className="text-center text-white mt-8 font-semibold text-xl">
+                    <p> No comments yet </p>
                 </div>
             ) : (
                 <div>
@@ -225,11 +216,7 @@ export default function DiscussPage({ user, mainPost }) {
                                         />
                                     }
                                 />
-                                <p
-                                    className="post-content"
-                                >
-                                    {posts.comment_body}
-                                </p>
+                                <p className="content">{posts.comment_body}</p>
                                 {user.isLoggedIn ===
                                 false ? null : user.username ==
                                   posts.username ? (

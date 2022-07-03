@@ -12,6 +12,12 @@
     .post-header {
         @apply text-lg leading-8
     }
+    .content {
+        @apply post-body px-4 pb-4 pt-2 md:px-6 md:pb-6 md:pt-4
+    }
+    .content-title {
+        @apply text-lg leading-8 px-4 md:px-6
+    }
     .section-header {
         @apply font-semibold text-2xl text-white
     }
@@ -27,9 +33,11 @@
     width: 100%;
     height: fit-content;
     border-bottom: 2px solid $dark-blue;
+
 }
 
 .swiper-slide {
+
     text-align: center;
     background: #fff;
     margin-bottom: 1rem;
@@ -54,3 +62,4 @@
     height: 155px;
     object-fit: contain;
 }
+

@@ -1,25 +1,20 @@
 import {
-    Box,
     CardHeader,
     Card,
     CardContent,
     Avatar,
-    Snackbar,
-    SnackbarContent,
     CircularProgress,
 } from "@material-ui/core";
 import { useRouter } from "next/router";
-import CreateBlogComment from "../../src/components/CreateBlogComment/CreateBlogComment";
+import CreateBlogComment from "../../src/components/CreateBlogComment";
 import { v4 as uuidv4 } from "uuid";
 import { sessionOptions } from "../../lib/session";
 import { withIronSessionSsr } from "iron-session/next";
-import fetcher from "../../lib/fetcher";
-import useSWR, { useSWRConfig } from "swr";
 import axios from "axios";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
-import CheckIcon from "@mui/icons-material/Check";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import Notification from '../../src/components/Notification';
 
 export const getServerSideProps = withIronSessionSsr(async function ({
     req,
@@ -45,17 +40,25 @@ sessionOptions);
 
 export default function BlogPage({ user }) {
     const [open, setOpen] = useState(false);
+    const [loading, setLoading] = useState(true)
+    const [message, setMessage] = useState("Posted")
+    const [blog, setBlog] = useState([])
 
     const Router = useRouter();
     const { id } = Router.query;
 
-    const { data: blogs } = useSWR(
-        `http://localhost:3050/blog/find/${id}`,
-        fetcher
-    );
-    const isLoading = blogs;
+    const fetchBlog = () => {
+        axios
+            .get(`/blog/find/${id}`)
+            .then(({data}) => {
+                setBlog(data)
+                setLoading(false)
+            })
+    }
 
-    const { mutate } = useSWRConfig();
+    useEffect(() => {
+        fetchBlog()
+    }, [])
 
     const handleClose = (event, reason) => {
         if (reason === "clickaway") {
@@ -64,30 +67,6 @@ export default function BlogPage({ user }) {
         setOpen(false);
     };
 
-    const CrudAlert = () => {
-        return (
-            <Box>
-                <Snackbar
-                    open={open}
-                    autoHideDuration={3000}
-                    onClose={handleClose}
-                    anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-                >
-                    <SnackbarContent
-                        style={{ backgroundColor: "green" }}
-                        message={
-                            <p className="text-base flex items-center justify-between gap-2">
-                                Success !
-                                <span>
-                                    <CheckIcon />
-                                </span>
-                            </p>
-                        }
-                    />
-                </Snackbar>
-            </Box>
-        );
-    };
 
     const createBlogComment = (values) => {
         let obj = {
@@ -103,7 +82,7 @@ export default function BlogPage({ user }) {
                 },
             })
             .then(() => {
-                mutate(`blog/find/${id}`);
+                fetchBlog()
                 setOpen(true);
             })
             .catch((err) => {
@@ -123,7 +102,7 @@ export default function BlogPage({ user }) {
                 },
             })
             .then(() => {
-                mutate(`blog/find/${id}`);
+                fetchBlog()
                 setOpen(true);
             })
             .catch((error) => {
@@ -141,7 +120,7 @@ export default function BlogPage({ user }) {
 
     return (
         <>
-            {!isLoading ? (
+            {loading ? (
                 <div className="loading">
                     {" "}
                     <CircularProgress />{" "}
@@ -153,26 +132,26 @@ export default function BlogPage({ user }) {
                             avatar={
                                 <Avatar
                                     alt="user-img"
-                                    src={blogs.user[0].img_path}
+                                    src={blog.user[0].img_path}
                                     style={{ height: 65, width: 65 }}
                                 />
                             }
                             title={linkTo(
-                                `/user/${blogs.user[0].username}`,
-                                blogs.user[0].username
+                                `/user/${blog.user[0].username}`,
+                                blog.user[0].username
                             )}
                             titleTypographyProps={{ variant: "h6" }}
                         />
                         <CardContent>
                             <h1 className="post-header">
-                                {blogs.post[0].title}
+                                {blog.post[0].title}
                             </h1>
                             <p className="pb-4">
-                                Posted on {blogs.post[0].created.slice(0, 10)}{" "}
+                                Posted on {blog.post[0].created.slice(0, 10)}{" "}
                             </p>
                             <p className="post-body px-0">
                                 {" "}
-                                {blogs.post[0].content}{" "}
+                                {blog.post[0].content}{" "}
                             </p>
                         </CardContent>
                     </Card>
@@ -181,8 +160,7 @@ export default function BlogPage({ user }) {
                         {!user.isLoggedIn ? null : (
                             <CreateBlogComment handler={createBlogComment} />
                         )}
-                        {CrudAlert()}
-                        {blogs.comments.map((posts, i) => {
+                        {blog.comments.map((posts, i) => {
                             return (
                                 <Card
                                     key={uuidv4()}
@@ -195,7 +173,7 @@ export default function BlogPage({ user }) {
                                             posts.username
                                         )}
                                         subheader={posts.created.slice(11, 19)}
-                                        style={{ cursor: "pointer" }}
+                                        style={{ cursor: "pointer"}}
                                         avatar={
                                             <Avatar
                                                 alt="user-img"
@@ -207,7 +185,7 @@ export default function BlogPage({ user }) {
                                             />
                                         }
                                     />
-                                    <p className="post-body">
+                                    <p className="content">
                                         {" "}
                                         {posts.comment_body}
                                     </p>

@@ -10,7 +10,7 @@ import IconButton from "@mui/material/IconButton";
 import * as Yup from "yup";
 
 export default function CreatePostForm({handler}) {
-    
+
     const [expanded, setExpanded] = useState(false);
 
     const handleExpandClick = () => {
@@ -67,7 +67,10 @@ export default function CreatePostForm({handler}) {
                                         props.errors.comment_body
                                     }
                                 />
-                                <button className="form-btn">Submit</button>
+                                <div className="mt-4 text-right">
+                                <button type="submit" className="form-btn">Submit</button>
+                                </div>
+
                             </Form>
                         )}
                     </Formik>

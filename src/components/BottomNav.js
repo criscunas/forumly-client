@@ -1,27 +1,18 @@
-import { Grid, Snackbar, SnackbarContent, Box } from "@mui/material";
-import CheckIcon from "@mui/icons-material/Check";
-import useUser from "../../../lib/useUser";
+import { Grid } from "@mui/material";
+import useUser from "../../lib/useUser";
 import ChatIcon from "@mui/icons-material/Chat";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
-import bottomNav from "./BottomNav.module.scss";
-import { useRouter } from "next/router";
 import Link from "next/link";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import CssBaseline from "@mui/material/CssBaseline";
-import CreateStatusForm from "../CreateStatusForm/CreateStatusForm";
+import CreateStatusForm from "./CreateStatusForm";
 import axios from "axios";
-import useSWR, { useSWRConfig } from "swr";
 import { useState, useEffect } from "react";
-import fetchJson from "../../../lib/fetchJson";
+import fetchJson from "../../lib/fetchJson"
 
 export default function BottomNav() {
     const [open, setOpen] = useState(false);
-
     const { user, mutateUser } = useUser();
-
-    const { mutate } = useSWRConfig();
-
-    const Router = useRouter();
 
     const postStatus = (values) => {
         const configs = {
@@ -32,43 +23,12 @@ export default function BottomNav() {
         };
 
         axios
-            .post("/personal/post", values, {
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${user.auth}`,
-                },
-            })
-            .then(() => {
-                mutate([`/user/profile/${user.username}`, configs]);
-                setOpen(true);
-            })
+            .post("/personal/post", values, configs)
             .catch((err) => {
                 console.log(err);
             });
     };
 
-    const CrudAlert = () => {
-        return (
-            <div>
-                <Snackbar
-                    open={open}
-                    autoHideDuration={5000}
-                    onClose={handleClose}
-                    anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-                >
-                    <SnackbarContent
-                        style={{ backgroundColor: "green" }}
-                        message={
-                            <p className="text-lg flex justify-between items-center gap-2">
-                            Success !
-                            <span> <CheckIcon /></span>
-                            </p>
-                        }
-                    />
-                </Snackbar>
-            </div>
-        );
-    };
 
     const handleClose = (event, reason) => {
         if (reason === "clickaway") {
@@ -89,13 +49,12 @@ export default function BottomNav() {
         <>
             <CssBaseline />
             {user?.isLoggedIn === true ? (
-                <div className={bottomNav.bottomNav}>
-                    {CrudAlert()}
-                    <Grid className={bottomNav.bottomNav__menu} container>
+                <div className="bg-dark_blue py-2 before_tablet:hidden">
+                    <Grid className="text-center py-2" container>
                         <Grid
                             item
                             xs={3}
-                            className={bottomNav.bottomNav__menu_link}
+                            className="text-center text-white"
                         >
                             <Link href="/profile">
                                 <a>
@@ -106,7 +65,7 @@ export default function BottomNav() {
                         <Grid
                             item
                             xs={3}
-                            className={bottomNav.bottomNav__menu_link}
+                            className="text-center text-white"
                         >
                             <Link href="/dashboard">
                                 <a>
@@ -117,7 +76,7 @@ export default function BottomNav() {
                         <Grid
                             item
                             xs={3}
-                            className={bottomNav.bottomNav__menu_link}
+                            className="text-center text-white"
                         >
                             <Link href="/discuss">
                                 <a>
@@ -128,23 +87,22 @@ export default function BottomNav() {
                         <Grid
                             item
                             xs={3}
-                            className={bottomNav.bottomNav__menu_link}
+                            className="text-center text-white"
                         >
                             <CreateStatusForm handler={postStatus} />
                         </Grid>
                     </Grid>
                 </div>
             ) : (
-                <div className={bottomNav.bottomNav}>
+                <div className="bg-dark_blue py-4 before_tablet:hidden">
                     <Grid
-                        className={bottomNav.bottomNav__menu_nonuser}
                         container
                         spacing={1}
                     >
                         <Grid
                             item
                             xs={12}
-                            className={bottomNav.bottomNav__menu_nonuser_link}
+                            className="text-center text-white"
                         >
                             <Link href="/discuss">
                                 <a>

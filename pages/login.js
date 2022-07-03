@@ -21,7 +21,7 @@ export default function LoginPage() {
 
         try {
             mutateUser(
-                await fetchJson("/api/login", {
+                await fetchJson("api/login", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(body),

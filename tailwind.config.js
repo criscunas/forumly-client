@@ -13,7 +13,11 @@ module.exports = {
                 main_bg: '#12141d',
                 forumly_blk: '#28282B'
             },
-
+            screens: {
+                mobile: '496px',
+                before_tablet:'672px',
+                midpoint_size: '900px',
+            },
             fontSize: {
                 xs: [
                     "0.75rem",

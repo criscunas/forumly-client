@@ -1,13 +1,9 @@
-import MainThreadContent from "../../src/components/MainThreadContent/MainThreadContent";
+import MainThreadContent from "../../src/components/MainThreadContent";
 import axios from "axios";
-import fetcher from "../../lib/fetcher";
-import useSWR, { useSWRConfig } from "swr";
 import { useRouter } from "next/router";
 import { withSessionSsr } from "../../lib/session";
 import CircularProgress from "@mui/material/CircularProgress";
-import CreatePostForm from "../../src/components/CreatePostForm/CreatePostForm";
-import { useState, useEffect } from "react";
-import useUser from "../../lib/useUser";
+import { useMemo, useEffect, useState } from "react";
 
 export const getServerSideProps = withSessionSsr(
     async function getServerSideProps({ req }) {
@@ -30,22 +26,38 @@ export const getServerSideProps = withSessionSsr(
 );
 
 export default function ThreadPage({ user }) {
-    const [comments, setComments] = useState([]);
-
     const Router = useRouter();
     const { id } = Router.query;
+    const [thread, setThread] = useState([])
+    const [loading, setLoading] = useState(true)
 
-    const { mutate } = useSWRConfig();
-    const { data, error } = useSWR(
-        `http://localhost:3050/thread/${id}`,
-        fetcher
+    const config = useMemo(
+        () => ({
+            headers: {
+                Authorization: `Bearer ${user.auth}`,
+                "Content-Type": "application/json",
+            },
+        }),
+        [user.auth]
     );
 
-    const refresh = (link) => {
-        mutate(link);
-    };
+    const fetchThreads = () => {
+        axios
+            .get(`/thread/${id}`)
+            .then(({data}) => {
+                setThread(data)
+                setLoading(false)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
 
-    const isLoading = data;
+    useEffect(() => {
+        fetchThreads()
+    },[])
+
+
 
     const createPost = (values) => {
         let obj = {
@@ -53,14 +65,9 @@ export default function ThreadPage({ user }) {
             thread_id: id,
         };
         axios
-            .post("/post/create", obj, {
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${user.auth}`,
-                },
-            })
+            .post("/post/create", obj, config)
             .then(() => {
-                mutate(`/thread/${id}`);
+                fetchThreads()
             })
             .catch((err) => {
                 console.log(err);
@@ -68,18 +75,21 @@ export default function ThreadPage({ user }) {
     };
 
     const deletePost = (post_id) => {
+
+        let data = {
+            id : post_id
+        }
+
         axios
             .delete("/post/delete", {
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${user.auth}`,
                 },
-                data: {
-                    id: post_id,
-                },
+                data,
             })
             .then(() => {
-                mutate(`/thread/${id}`);
+                fetchThreads()
             })
             .catch((error) => {
                 console.log(error);
@@ -88,19 +98,18 @@ export default function ThreadPage({ user }) {
 
     if (user.isLoggedIn) {
         return (
-            <div className="mx-4">
-                {!isLoading ? (
+            <div className="p-4 max-w-2xl before_tablet:m-auto before_tablet:pt-8">
+                {loading ? (
                     <div className="loading">
                         <CircularProgress />
                     </div>
                 ) : (
                     <div>
                         <MainThreadContent
-                            main={data}
+                            main={thread}
                             username={user.username}
                             deleteHandle={deletePost}
-                            refresh={refresh}
-                            createHandle={createPost}
+                            handle={createPost}
                             loggedIn={true}
                         />
                     </div>
@@ -111,14 +120,14 @@ export default function ThreadPage({ user }) {
 
     if (!user.isLoggedIn) {
         return (
-            <div className="mx-4">
-                {!isLoading ? (
+            <div className="p-4 max-w-2xl before_tablet:m-auto before_tablet:pt-8">
+                {loading ? (
                     <div className="loading">
                         <CircularProgress />
                     </div>
                 ) : (
                     <div>
-                        <MainThreadContent main={data} loggedIn={false} />
+                        <MainThreadContent main={thread} loggedIn={false} />
                     </div>
                 )}
             </div>

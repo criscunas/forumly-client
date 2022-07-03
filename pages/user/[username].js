@@ -1,23 +1,13 @@
-import {Snackbar, SnackbarContent } from "@material-ui/core";
-import PublicProfileCard from "../../src/components/PublicProfileCard/PublicProfileCard";
+
+import PublicProfileCard from "../../src/components/PublicProfileCard";
 import axios from "axios";
 import CircularProgress from "@mui/material/CircularProgress";
 import { withIronSessionSsr } from "iron-session/next";
 import { useRouter } from "next/router";
-import fetcher from "../../lib/fetcher";
-import useSWR, { useSWRConfig } from "swr";
 import { sessionOptions } from "../../lib/session";
-import { useState } from "react";
-import CheckIcon from "@mui/icons-material/Check";
+import { useState, useMemo, useEffect } from "react";
+import { Notification } from "../../src/components/Notification";
 
-const fetchFollow = (url, token) =>
-    axios
-        .get(url, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        })
-        .then((res) => res.data);
 
 export const getServerSideProps = withIronSessionSsr(async function ({
     req,
@@ -49,19 +39,62 @@ export const getServerSideProps = withIronSessionSsr(async function ({
 sessionOptions);
 
 export default function PublicProfile({ user }) {
+
     const [open, setOpen] = useState(false);
+    const [message, setMessage] = useState('')
+    const [loading, setLoading] = useState(true)
+    const [profile, setProfile] = useState([])
+    const [relations, setRelations] = useState([])
+
     const Router = useRouter();
     const { username } = Router.query;
 
-    const { data: profile } = useSWR(`http://localhost:3050/user/public/${username}`, fetcher);
-    const { data: relations } = useSWR(
-        user.isLoggedIn === true ? [`http://localhost:3050/follow/get`, user.auth] : null,
-        fetchFollow
+
+    const config = useMemo(
+        () => ({
+            headers: {
+                Authorization: `Bearer ${user.auth}`,
+                "Content-Type": "application/json",
+            },
+        }),
+        [user.auth]
     );
 
-    const { mutate } = useSWRConfig();
 
-    const isLoading = profile && relations;
+    const fetchProfile = () => {
+        axios
+        .get(`/user/public/${username}`)
+        .then(({data}) => {
+            setLoading(false)
+            setProfile(data)
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+    }
+
+    const fetchRelations = () => {
+        axios
+        .get(`/follow/get`, config)
+        .then(({data}) => {
+            setLoading(false)
+            console.log(data)
+            setRelations(data)
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+    }
+
+    useEffect(() => {
+
+        fetchProfile()
+
+        if(user.isLoggedIn === true) {
+            fetchRelations()
+        }
+
+    }, [])
 
     const handleClose = (event, reason) => {
         if (reason === "clickaway") {
@@ -70,55 +103,11 @@ export default function PublicProfile({ user }) {
         setOpen(false);
     };
 
-    const CrudAlert = () => {
-        return (
-            <div>
-                <Snackbar
-                    open={open}
-                    autoHideDuration={3000}
-                    onClose={handleClose}
-                    anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-                >
-                    <SnackbarContent
-                        style={{ backgroundColor: "green" }}
-                        message={
-                            <p
-                                style={{
-                                    fontSize: "1rem",
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                    alignItems: "center",
-                                    gap: "0.5rem",
-                                }}
-                            >
-                                {" "}
-                                Success !
-                                <span>
-                                    {" "}
-                                    <CheckIcon />
-                                </span>
-                            </p>
-                        }
-                    />
-                </Snackbar>
-            </div>
-        );
-    };
-
     const followUser = () => {
-        axios
-            .post(
-                "/follow",
-                { id: profile.user[0].user_id },
-                {
-                    headers: {
-                        Authorization: `Bearer ${user.auth}`,
-                    },
-                }
-            )
+        axios.post("/follow", { id: profile.user[0].user_id }, config)
             .then(() => {
-                mutate(["/follow/get", user.auth]);
-                mutate(`/user/public/${username}`);
+                setMessage('User followed')
+                fetchProfile()
                 setOpen(true);
             })
             .catch((error) => {
@@ -138,8 +127,8 @@ export default function PublicProfile({ user }) {
                 },
             })
             .then(() => {
-                mutate(["/follow/get", user.auth]);
-                mutate(`/user/public/${username}`);
+                setMessage('User unfollowed')
+                fetchProfile()
                 setOpen(true);
             })
             .catch((err) => {
@@ -155,7 +144,7 @@ export default function PublicProfile({ user }) {
                         <CircularProgress />
                     </div>
                 ) : (
-                    <div>
+                    <div className="p-4 max-w-2xl before_tablet:m-auto before_tablet:pt-8">
                         <div className="bg-forumly_blk">
                             <PublicProfileCard
                                 user={profile.user}
@@ -166,12 +155,12 @@ export default function PublicProfile({ user }) {
                         </div>
                     </div>
                 )
-            ) : !isLoading ? (
+            ) : loading ? (
                 <div className="absolute top-0 bottom-0 left-0 right-0 m-auto">
                     <CircularProgress />
                 </div>
             ) : (
-                <div>
+                <div className="p-4 max-w-2xl before_tablet:m-auto before_tablet:pt-8">
                     <div className="bg-forumly_blk">
                         <PublicProfileCard
                             user={profile.user}
@@ -184,7 +173,7 @@ export default function PublicProfile({ user }) {
                             unfollowHandle={unfollowUser}
                             loggedin={true}
                         />
-                        {CrudAlert()}
+                        <Notification open={open} handle={handleClose} message = {message} />
                     </div>
                 </div>
             )}

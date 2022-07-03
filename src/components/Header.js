@@ -1,25 +1,20 @@
 import { useRouter } from "next/router";
-import dashHeader from "./Header.module.scss";
 import Link from "next/link";
 import LogoutIcon from "@mui/icons-material/Logout";
-import fetchJson from "../../../lib/fetchJson";
-import useUser from "../../../lib/useUser";
+import fetchJson from "../../lib/fetchJson"
+import useUser from "../../lib/useUser";
 import LoginIcon from "@mui/icons-material/Login";
 import { useState, useEffect } from "react";
-import { Box, Snackbar, SnackbarContent } from "@mui/material";
-import CreateStatusForm from "../CreateStatusForm/CreateStatusForm";
+import CreateStatusForm from "./CreateStatusForm";
 import axios from "axios";
-import useSWR, { useSWRConfig } from "swr";
-import CheckIcon from "@mui/icons-material/Check";
 import BubbleChartOutlinedIcon from "@mui/icons-material/BubbleChartOutlined";
-import { useMemo } from "react";
+import { Notification } from "./Notification";
 
 export default function Header() {
     const [open, setOpen] = useState(false);
 
     const { user, mutateUser } = useUser();
     const Router = useRouter();
-    const { mutate } = useSWRConfig();
 
     useEffect(() => {
         try {
@@ -38,14 +33,8 @@ export default function Header() {
         };
 
         axios
-            .post("/personal/post", values, {
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${user.auth}`,
-                },
-            })
+            .post("/personal/post", values, configs)
             .then(() => {
-                mutate([`/user/profile/${user.username}`, configs]);
                 setOpen(true);
             })
             .catch((err) => {
@@ -60,67 +49,33 @@ export default function Header() {
         setOpen(false);
     };
 
-    const CrudAlert = () => {
-        return (
-            <Box>
-                <Snackbar
-                    open={open}
-                    autoHideDuration={3000}
-                    onClose={handleClose}
-                    anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-                >
-                    <SnackbarContent
-                        style={{ backgroundColor: "green" }}
-                        message={
-                            <p
-                                style={{
-                                    fontSize: "1rem",
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                    alignItems: "center",
-                                    gap: "0.5rem",
-                                }}
-                            >
-                                {" "}
-                                Success !
-                                <span>
-                                    {" "}
-                                    <CheckIcon />
-                                </span>
-                            </p>
-                        }
-                    />
-                </Snackbar>
-            </Box>
-        );
-    };
-
     return (
         <>
+            <Notification  open = {open} handle = {handleClose} message ={"Posted"}/>
             {user?.isLoggedIn ? (
-                <header className={dashHeader.header}>
-                    <div className={dashHeader.header__container}>
+                <header className="bg-dark_blue">
+                <div className="flex justify-between items-center px-4 py-3">
                         <Link href="/dashboard">
-                            <a className={dashHeader.header__title}>
+                            <a className="cursor-pointer text-white">
                                 <BubbleChartOutlinedIcon fontSize="large" />
                             </a>
                         </Link>
 
-                        <div className={dashHeader.header__menu}>
+                        <div className="before_tablet:flex items-center before_tablet:gap-4 ">
                             <CreateStatusForm handler={postStatus} />
                             <Link href="/profile">
-                                <a className={dashHeader.header__menu_link}>
+                                <a className="hidden before_tablet:block text-white">
                                     {" "}
                                     Profile
                                 </a>
                             </Link>
                             <Link href="/discuss">
-                                <a className={dashHeader.header__menu_link}>
+                                <a className="hidden before_tablet:block text-white">
                                     Discuss
                                 </a>
                             </Link>
                             <LogoutIcon
-                                sx={{ cursor: "pointer" }}
+                                className="ml-4 cursor-pointer"
                                 htmlColor="white"
                                 onClick={async (e) => {
                                     e.preventDefault();
@@ -135,19 +90,19 @@ export default function Header() {
                             />
                         </div>
                     </div>
-                    {CrudAlert()}
+
                 </header>
             ) : (
-                <header className={dashHeader.header}>
-                    <div className={dashHeader.header__container_nouser}>
+                <header className="bg-dark_blue">
+                    <div className="flex justify-between items-center px-4 py-3">
                         <Link href="/">
-                            <a className={dashHeader.header__title}>
+                            <a className="cursor-pointer text-white">
                                 <BubbleChartOutlinedIcon fontSize="large" />
                             </a>
                         </Link>
-                        <div className={dashHeader.header__nouser_menu}>
+                        <div className="flex items-center">
                             <Link href="/discuss">
-                                <a className={dashHeader.header__nouser_link}>
+                                <a className="hidden md:block pr-8 text-white font-semibold text-lg">
                                     Explore
                                 </a>
                             </Link>
